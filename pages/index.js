@@ -4,37 +4,37 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import dynamic from "next/dynamic";
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import NextHead from 'next/head';
 //import cx from "clsx";
 //import { useStore } from "laco-react";
 //import debounce from "lodash.debounce";
 
 //import store from "~/store.js";
-import getArticle from "~/api-layer/getArticle";
-import getNewsList from "~/api-layer/getNewsList";
-import getQueryParams from "~/utils/getQueryParams";
-import { filterItemsByCriteria } from "~/utils/filter";
+import getArticle from '~/api-layer/getArticle';
+import getNewsList from '~/api-layer/getNewsList';
+import getQueryParams from '~/utils/getQueryParams';
+import { filterItemsByCriteria } from '~/utils/filter';
 
-import Header from "~/components/header/Header";
-import Overview from "~/components/overview/Overview";
+import Header from '~/components/header/Header';
+import Overview from '~/components/overview/Overview';
 //import Details from "~/components/details/Details";
 //import Footer from "~/components/footer/Footer";
 //import Filter from "~/components/filter/Filter";
 
-const Details = dynamic(() => import("~/components/details/Details"), {
-  ssr: false
+const Details = dynamic(() => import('~/components/details/Details'), {
+  ssr: false,
 });
-const Footer = dynamic(() => import("~/components/footer/Footer"), {
-  ssr: false
+const Footer = dynamic(() => import('~/components/footer/Footer'), {
+  ssr: false,
 });
-const Filter = dynamic(() => import("~/components/filter/Filter"), {
-  ssr: false
+const Filter = dynamic(() => import('~/components/filter/Filter'), {
+  ssr: false,
 });
 
-const defaultDocTitle = "DFDS NEWS";
+const defaultDocTitle = 'DFDS NEWS';
 
 const Index = ({ items: itemsProp = [] }) => {
   let cache = React.useRef({}).current;
@@ -91,9 +91,9 @@ const Index = ({ items: itemsProp = [] }) => {
 
   React.useEffect(() => {
     if (isFilter3Active) {
-      document.body.style.fontFamily = "Roboto, sans-serif";
+      document.body.style.fontFamily = 'Roboto, sans-serif';
     } else {
-      document.body.style.fontFamily = "";
+      document.body.style.fontFamily = '';
     }
   }, [isFilter3Active]);
 
@@ -102,7 +102,7 @@ const Index = ({ items: itemsProp = [] }) => {
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active
+      is2019: isFilter2Active,
     });
     setRenderedItems(result);
   }, [items, isFilter1Active, isFilter2Active]);
@@ -148,12 +148,12 @@ const Index = ({ items: itemsProp = [] }) => {
     if (history.pushState) {
       var newurl =
         window.location.protocol +
-        "//" +
+        '//' +
         window.location.host +
         window.location.pathname +
-        "?id=" +
+        '?id=' +
         id;
-      window.history.pushState({ path: newurl }, "", newurl);
+      window.history.pushState({ path: newurl }, '', newurl);
     }
 
     setIsDetailsOpen(true);
@@ -161,25 +161,20 @@ const Index = ({ items: itemsProp = [] }) => {
 
   return (
     <>
-      <Head>
+      <NextHead>
         <title>{defaultDocTitle}</title>
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1"
-          key="viewport"
-        />
-      </Head>
+      </NextHead>
       <Overview
         {...{
           items: renderedItems,
           onItemClick,
-          isDetailsOpen
+          isDetailsOpen,
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
-          setIsFilterOpen
+          setIsFilterOpen,
         }}
       />
 
@@ -189,7 +184,7 @@ const Index = ({ items: itemsProp = [] }) => {
           setIsDetailsOpen,
           selectedArticle,
           isDetailsExpanded,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s)
+          toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
 
@@ -202,7 +197,7 @@ const Index = ({ items: itemsProp = [] }) => {
           onFilterClick1,
           onFilterClick2,
           onFilterClick3,
-          onClose: () => setIsFilterOpen(false)
+          onClose: () => setIsFilterOpen(false),
         }}
       />
 
