@@ -1,0 +1,43 @@
+/* Workaround for max() and min() https://github.com/sass/sass/issues/2378 */
+@function max($numbers...) {
+  @return m#{a}x(#{$numbers});
+}
+@function min($numbers...) {
+  @return m#{i}n(#{$numbers});
+}
+
+/* Should target iOS devides only */
+@mixin notch {
+  @supports (padding: max(0px)) {
+    @content;
+  }
+}
+
+/* Standalone/PWA */
+@mixin pwa {
+  @media all and (display-mode: standalone) {
+    @content;
+  }
+}
+
+@mixin preventOverscroll {
+  -webkit-overflow-scrolling: touch;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: none;
+}
+
+@mixin elevation-1 {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 2px 1px -1px;
+}
+
+@mixin elevation-3 {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
+    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+}
+
+@mixin device-width {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}

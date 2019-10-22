@@ -1,0 +1,14 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    // Editor config
+    "editorconfig.editorconfig",
+    // Trim only touched lines.
+    "NathanRidley.autotrim",
+    // ESLint support.
+    "dbaeumer.vscode-eslint",
+    // Prettier support.
+    "esbenp.prettier-vscode"
+  ]
+}

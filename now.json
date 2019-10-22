@@ -1,0 +1,21 @@
+{
+  "name": "news-ssr",
+  "version": 2,
+  "regions": ["bru1"],
+  "builds": [{ "src": "next.config.js", "use": "@now/next" }],
+  "env": {},
+  "routes": [
+    {
+      "src": "/",
+      "headers": {
+        "cache-control": "s-maxage=31536000, maxage=0, stale-while-revalidate"
+      }
+    },
+    {
+      "src": "^/_next/static/(?:[^/]+/pages|chunks|runtime)/.+$",
+      "headers": {
+        "cache-control": "immutable"
+      }
+    }
+  ]
+}
