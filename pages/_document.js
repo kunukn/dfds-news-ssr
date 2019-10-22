@@ -13,7 +13,6 @@ export default class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
           <meta name="description" content="DFDS news" />
           <meta name="keywords" content="DFDS news" />
           <link rel="canonical" href="https://shipping-news.tech" />
@@ -22,28 +21,28 @@ export default class MyDocument extends Document {
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Regular.woff2"
             as="font"
             type="font/woff2"
-            crossorigin
+            crossorigin="anonymous"
           />
           <link
             rel="preload"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Bold.woff2"
             as="font"
             type="font/woff2"
-            crossorigin
+            crossorigin="anonymous"
           />
           <link
             rel="preload"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Light.woff2"
             as="font"
             type="font/woff2"
-            crossorigin
+            crossorigin="anonymous"
           />
           <link
             rel="preload"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Italic.woff2"
             as="font"
             type="font/woff2"
-            crossorigin
+            crossorigin="anonymous"
           />
           <link
             rel="stylesheet"

@@ -5,6 +5,9 @@
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
 import dynamic from "next/dynamic";
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
 //import cx from "clsx";
 //import { useStore } from "laco-react";
 //import debounce from "lodash.debounce";
@@ -158,6 +161,14 @@ const Index = ({ items: itemsProp = [] }) => {
 
   return (
     <>
+      <Head>
+        <title>{'DFDS News'}</title>
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1"
+          key="viewport"
+        />
+      </Head>
       <Overview
         {...{
           items: renderedItems,
