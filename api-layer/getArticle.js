@@ -9,7 +9,7 @@ export default async function getArticle(id) {
     let url = `${process.env.apiEntriesUrl}/${id}?access_token=${process.env.tokenContentful}`;
 
     if (process.env.NODE_ENV === 'development') {
-      console.log(id, url);
+      //console.log(id, url);
       let data;
       if (id === '18rghKiRarsmtklwZ8JbQn') {
         data = require('~/data-layer/article-1');
