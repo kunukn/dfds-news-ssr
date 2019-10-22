@@ -39,6 +39,7 @@ const defaultDocTitle = 'DFDS NEWS';
 const Index = ({ items: itemsProp = [] }) => {
   let cache = React.useRef({}).current;
 
+  const router = useRouter();
   //const { somethingTempVariable } = useStore(store);
 
   let [items, setItems] = React.useState(itemsProp);
@@ -75,17 +76,17 @@ const Index = ({ items: itemsProp = [] }) => {
   }, []);
 
   React.useEffect(() => {
-    let params = getQueryParams();
+    let query = router.query;
 
-    if (+params.filter) setIsFilterOpen(true);
+    if (+query.filter) setIsFilterOpen(true);
 
-    if (+params.roboto) setIsFilter3Active(true);
+    if (+query.roboto) setIsFilter3Active(true);
 
-    if (+params.item) {
-      let index = +params.item;
+    if (+query.item) {
+      let index = +query.item;
       index && onItemClick(items[index - 1].sys.id);
-    } else if (params.id) {
-      onItemClick(params.id);
+    } else if (query.id) {
+      onItemClick(query.id);
     }
   }, [items]);
 
