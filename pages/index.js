@@ -4,34 +4,38 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import showdown from "showdown";
-import Collapse from "@kunukn/react-collapse";
-import cx from "clsx";
-import { useStore } from "laco-react";
-import debounce from "lodash.debounce";
+//import cx from "clsx";
+//import { useStore } from "laco-react";
+//import debounce from "lodash.debounce";
 
-import store from "~/store.js";
+//import store from "~/store.js";
 import getArticle from "~/api-layer/getArticle";
 import getNewsList from "~/api-layer/getNewsList";
 import getQueryParams from "~/utils/getQueryParams";
+import { filterItemsByCriteria } from "~/utils/filter";
 
 import Header from "~/components/header/Header";
 import Overview from "~/components/overview/Overview";
-import Details from "~/components/details/Details";
-import Footer from "~/components/footer/Footer";
-import Filter from "~/components/filter/Filter";
+//import Details from "~/components/details/Details";
+//import Footer from "~/components/footer/Footer";
+//import Filter from "~/components/filter/Filter";
 
-import DFDSLogo from "~/public/static/icons/DFDSLogo.svg";
-import CloseIcon from "~/public/static/icons/Close.svg";
-import NextIcon from "~/public/static/icons/Next.svg";
-import PreviousIcon from "~/public/static/icons/Previous.svg";
+const Details = dynamic(() => import("~/components/details/Details"), {
+  ssr: false
+});
+const Footer = dynamic(() => import("~/components/footer/Footer"), {
+  ssr: false
+});
+const Filter = dynamic(() => import("~/components/filter/Filter"), {
+  ssr: false
+});
 
 const defaultDocTitle = "DFDS NEWS";
 
 const Index = ({ items: itemsProp = [] }) => {
   let cache = React.useRef({}).current;
 
-  const { somethingTempVariable } = useStore(store);
+  //const { somethingTempVariable } = useStore(store);
 
   let [items, setItems] = React.useState(itemsProp);
   let [renderedItems, setRenderedItems] = React.useState(itemsProp);
@@ -179,7 +183,7 @@ const Index = ({ items: itemsProp = [] }) => {
         }}
       />
 
-      {true && <Footer {...{}} />}
+      <Footer {...{}} />
       <style jsx>{``}</style>
     </>
   );
@@ -190,19 +194,3 @@ Index.getInitialProps = async ({ req, query }) => {
 };
 
 export default Index;
-
-let filterItemsByCriteria = ({ items, isDfds, is2019, is2018 }) => {
-  let result = [...items];
-
-  if (isDfds) {
-    result = result.filter(item => /dfds/i.test(item.fields.entryTitle));
-  }
-  if (is2019) {
-    result = result.filter(item => /2019-/i.test(item.fields.publicationDate));
-  }
-  if (is2018) {
-    result = result.filter(item => /2018-/i.test(item.fields.publicationDate));
-  }
-
-  return result;
-};
