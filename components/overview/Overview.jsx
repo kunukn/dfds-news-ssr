@@ -1,19 +1,15 @@
-import showdown from 'showdown';
-import Collapse from '@kunukn/react-collapse';
-import cx from 'clsx';
+import cx from "clsx";
 
-import { formatShortDate, formatLongDate } from '~/utils/date';
-import DFDSLogo from '~/public/static/icons/DFDSLogo.svg';
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
+import { formatShortDate } from "~/utils/date";
+
+// TODO: use links instead of buttons
 
 const Overview = ({ items, onItemClick, isDetailsOpen }) => {
   let years = {};
 
   return (
     <>
-      <div className={cx('overview', { 'overview--locked': isDetailsOpen })}>
+      <div className={cx("overview", { "overview--locked": isDetailsOpen })}>
         {items.map((item, index) => {
           let year = getYearFromDate(item.fields.publicationDate);
 
@@ -98,7 +94,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
           padding: 0;
           background: white;
         }
-        .year-mark{
+        .year-mark {
           _outline: 1px solid red;
           position: relative;
           top: -60px;
