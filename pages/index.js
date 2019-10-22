@@ -162,7 +162,7 @@ const Index = ({ items: itemsProp = [] }) => {
   return (
     <>
       <Head>
-        <title>{'DFDS News'}</title>
+        <title>{defaultDocTitle}</title>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1"
