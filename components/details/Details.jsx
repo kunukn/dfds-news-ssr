@@ -1,12 +1,12 @@
-import React from 'react';
-import showdown from 'showdown';
-import Collapse from '@kunukn/react-collapse';
+import React from "react";
+import showdown from "showdown";
+import Collapse from "@kunukn/react-collapse";
 
-import { formatShortDate, formatLongDate } from '~/utils/date';
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
-import UpIcon from '~/public/static/icons/Up.svg';
+import { formatShortDate, formatLongDate } from "~/utils/date";
+import CloseIcon from "~/public/static/icons/Close.svg";
+import NextIcon from "~/public/static/icons/Next.svg";
+import PreviousIcon from "~/public/static/icons/Previous.svg";
+import UpIcon from "~/public/static/icons/Up.svg";
 
 let converter = new showdown.Converter();
 
@@ -15,13 +15,13 @@ const Details = ({
   setIsDetailsOpen,
   selectedArticle,
   isDetailsExpanded,
-  toggleExpanded,
+  toggleExpanded
 }) => {
   let fields = selectedArticle && selectedArticle.fields;
 
   return (
     <>
-      <div className="detail" style={{ display: isDetailsOpen ? '' : 'none' }}>
+      <div className="detail" style={{ display: isDetailsOpen ? "" : "none" }}>
         <div className="detail__content">
           {fields && (
             <>
@@ -32,13 +32,13 @@ const Details = ({
 
               <h3 className="detail__teaser">{fields.subtitle}</h3>
               <button className="toggle" onClick={toggleExpanded}>
-                {isDetailsExpanded ? 'Read less' : 'Read more'}
+                {isDetailsExpanded ? "Read less" : "Read more"}
               </button>
               <Collapse isOpen={isDetailsExpanded}>
                 <div
                   className="detail__content"
                   dangerouslySetInnerHTML={{
-                    __html: converter.makeHtml(fields.content),
+                    __html: converter.makeHtml(fields.content)
                   }}
                 ></div>
               </Collapse>
@@ -68,7 +68,6 @@ const Details = ({
           position: fixed;
           top: 5px;
           right: 5px;
-          _transform: translateX(-50%);
           overflow-y: auto;
           max-height: calc(100% - 50px);
           @include elevation-3;
@@ -80,6 +79,9 @@ const Details = ({
           max-width: 80vw;
           @media (min-width: 700px) {
             max-width: 85vw;
+          }
+          @media (min-width: 1500px) {
+            width: 800px;
           }
           @media (min-width: 2100px) {
             right: 5%;
