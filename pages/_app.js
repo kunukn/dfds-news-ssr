@@ -1,9 +1,9 @@
 import React from 'react';
 import App from 'next/app';
-import { useStore } from 'laco-react';
+//import { useStore } from 'laco-react';
 
 import GlobalStyles from '../components/GlobalStyles';
-import store from '~/store.js';
+//import store from '~/store.js';
 
 if (process.browser) {
 }
