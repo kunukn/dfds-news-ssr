@@ -4,29 +4,29 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import showdown from 'showdown';
-import Collapse from '@kunukn/react-collapse';
-import cx from 'clsx';
-import { useStore } from 'laco-react';
-import debounce from 'lodash.debounce';
+import showdown from "showdown";
+import Collapse from "@kunukn/react-collapse";
+import cx from "clsx";
+import { useStore } from "laco-react";
+import debounce from "lodash.debounce";
 
-import store from '~/store.js';
-import getArticle from '~/api-layer/getArticle';
-import getNewsList from '~/api-layer/getNewsList';
-import getQueryParams from '~/utils/getQueryParams';
+import store from "~/store.js";
+import getArticle from "~/api-layer/getArticle";
+import getNewsList from "~/api-layer/getNewsList";
+import getQueryParams from "~/utils/getQueryParams";
 
-import Header from '~/components/header/Header';
-import Overview from '~/components/overview/Overview';
-import Details from '~/components/details/Details';
-import Footer from '~/components/footer/Footer';
-import Filter from '~/components/filter/Filter';
+import Header from "~/components/header/Header";
+import Overview from "~/components/overview/Overview";
+import Details from "~/components/details/Details";
+import Footer from "~/components/footer/Footer";
+import Filter from "~/components/filter/Filter";
 
-import DFDSLogo from '~/public/static/icons/DFDSLogo.svg';
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
+import DFDSLogo from "~/public/static/icons/DFDSLogo.svg";
+import CloseIcon from "~/public/static/icons/Close.svg";
+import NextIcon from "~/public/static/icons/Next.svg";
+import PreviousIcon from "~/public/static/icons/Previous.svg";
 
-const defaultDocTitle = 'DFDS NEWS';
+const defaultDocTitle = "DFDS NEWS";
 
 const Index = ({ items: itemsProp = [] }) => {
   let cache = React.useRef({}).current;
@@ -77,19 +77,15 @@ const Index = ({ items: itemsProp = [] }) => {
       let index = +params.item;
       index && onItemClick(items[index - 1].sys.id);
     } else if (params.id) {
-      let id = +params.id;
-
-      console.log(id)
-
-      id && onItemClick(id);
+      onItemClick(params.id);
     }
-  }, []);
+  }, [items]);
 
   React.useEffect(() => {
     if (isFilter3Active) {
-      document.body.style.fontFamily = 'Roboto, sans-serif';
+      document.body.style.fontFamily = "Roboto, sans-serif";
     } else {
-      document.body.style.fontFamily = '';
+      document.body.style.fontFamily = "";
     }
   }, [isFilter3Active]);
 
@@ -98,7 +94,7 @@ const Index = ({ items: itemsProp = [] }) => {
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active,
+      is2019: isFilter2Active
     });
     setRenderedItems(result);
   }, [items, isFilter1Active, isFilter2Active]);
@@ -127,7 +123,7 @@ const Index = ({ items: itemsProp = [] }) => {
     } else {
       document.title = defaultDocTitle;
     }
-  }, [isDetailsOpen]);
+  }, [isDetailsOpen, selectedArticle]);
 
   if (!items) return <div className="news">Failed loading data, sorry.</div>;
 
@@ -150,13 +146,13 @@ const Index = ({ items: itemsProp = [] }) => {
         {...{
           items: renderedItems,
           onItemClick,
-          isDetailsOpen,
+          isDetailsOpen
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
-          setIsFilterOpen,
+          setIsFilterOpen
         }}
       />
 
@@ -166,7 +162,7 @@ const Index = ({ items: itemsProp = [] }) => {
           setIsDetailsOpen,
           selectedArticle,
           isDetailsExpanded,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s),
+          toggleExpanded: () => setIsDetailsExpanded(s => !s)
         }}
       />
 
@@ -179,7 +175,7 @@ const Index = ({ items: itemsProp = [] }) => {
           onFilterClick1,
           onFilterClick2,
           onFilterClick3,
-          onClose: () => setIsFilterOpen(false),
+          onClose: () => setIsFilterOpen(false)
         }}
       />
 
