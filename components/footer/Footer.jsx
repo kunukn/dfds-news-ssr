@@ -19,7 +19,6 @@ const Footer = ({ children }) => {
             <a href="#2013">13´</a>
             <a href="#2012">12´</a>
             <a href="#2011">11´</a>
-            <a href="#last-news-item">Last</a>
           </div>
         </div>
       </div>

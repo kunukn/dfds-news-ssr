@@ -6,39 +6,44 @@ import { formatShortDate } from '~/utils/date';
 
 const Overview = ({ items, onItemClick, isDetailsOpen }) => {
   let years = {};
+  let toBeAdded = null;
 
   return (
     <>
       <div className={cx('overview', { 'overview--locked': isDetailsOpen })}>
         {items.map((item, index) => {
           let StartMarkup = () => null;
-          let EndMarkup = () => null;
+          let YearMarkup = () => null;
 
           if (index === 0) {
             StartMarkup = () => (
-              <div className="year-mark-start" id="first-news-item"></div>
+              <div className="year-mark-first" id="first-news-item"></div>
             );
           }
 
           if (items.length - 1 === index) {
-            EndMarkup = () => (
-              <div className="year-mark-end" id="last-news-item"></div>
-            );
+            if (toBeAdded) {
+              let year = toBeAdded + '';
+              YearMarkup = () => <div className="year-mark" id={year}></div>;
+              toBeAdded = null;
+            }
           }
 
           let year = getYearFromDate(item.fields.publicationDate);
 
-          let YearMarkup = () => null;
-
           if (!years[year]) {
             years[year] = true;
-            YearMarkup = () => <div className="year-mark" id={year}></div>;
+            if (toBeAdded) {
+              YearMarkup = () => (
+                <div className="year-mark" id={`${+year + 1}`}></div>
+              );
+            }
+            toBeAdded = year;
           }
 
           return (
             <React.Fragment key={item.sys.id}>
               <StartMarkup />
-              <EndMarkup />
               <YearMarkup />
               <button
                 id={item.sys.id}
@@ -112,11 +117,14 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
           padding: 0;
           background: white;
         }
-        .year-mark,
-        .year-mark-start {
-          _outline: 1px solid red;
+
+        .year-mark-first {
           position: relative;
           top: -60px;
+        }
+        .year-mark {
+          position: relative;
+          top: -120px;
         }
         :global(.button-overview-item) {
           margin-bottom: 10px;
