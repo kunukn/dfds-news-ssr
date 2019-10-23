@@ -176,6 +176,7 @@ const Index = ({ items: itemsProp = [] }) => {
       <NextHead>
         <title>{defaultDocTitle}</title>
       </NextHead>
+      <div className={true ? 'fixed-background' : ''} />
       <Overview
         {...{
           items: renderedItems,
@@ -216,7 +217,18 @@ const Index = ({ items: itemsProp = [] }) => {
       />
 
       <Footer {...{}} />
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .fixed-background {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          /* https://stackoverflow.com/questions/23208200/how-to-darken-a-background-using-css */
+          background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
+            url($backgroundImageUrl) no-repeat center center/cover;
+        }
+      `}</style>
     </>
   );
 };

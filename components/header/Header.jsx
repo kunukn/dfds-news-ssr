@@ -27,7 +27,6 @@ const Header = ({ count, setIsFilterOpen }) => {
 
       <style jsx>{`
         .header {
-
           position: fixed;
           top: 0;
           left: 0;
@@ -50,7 +49,6 @@ const Header = ({ count, setIsFilterOpen }) => {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            _justify-content: center;
             font-size: 20px;
             text-transform: uppercase;
 
@@ -77,9 +75,7 @@ const Header = ({ count, setIsFilterOpen }) => {
           padding: 10px;
           background: rgba($color-background, 0.85);
           @supports (backdrop-filter: blur(10px)) {
-            background: linear-gradient(90deg, rgba($color-background, 0.6) 50%, transparent);
-            background: transparent;
-            background: rgba($color-background, 0.5);
+            background: rgba($color-background, 0.9);
             backdrop-filter: saturate(180%) blur(4px);
           }
         }

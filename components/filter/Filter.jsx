@@ -99,7 +99,7 @@ const Filter = ({
           max-height: calc(100% - 40px);
           padding-bottom: 20px;
           @include elevation-8;
-          background: rgba(255, 255, 255, 1);
+          background: rgba(white, .98);
           padding: 10px;
         }
 

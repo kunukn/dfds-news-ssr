@@ -28,6 +28,7 @@ let GlobalStyles = () => (
     #__next {
       @include device-width;
       min-height: 100vh;
+      
     }
 
     a {

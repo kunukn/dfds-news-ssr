@@ -115,7 +115,12 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
           border: none;
           box-shadown: none;
           padding: 0;
-          background: white;
+          border-radius: 1px;
+          background: rgba(white,.95);
+          @supports (backdrop-filter: blur(10px)) {
+            _background: rgba($color-background, 0.7);
+            _backdrop-filter: saturate(180%) blur(4px);
+          }
         }
 
         .year-mark-first {
