@@ -27,7 +27,6 @@ const Header = ({ count, setIsFilterOpen }) => {
 
       <style jsx>{`
         .header {
-          @include elevation-2;
 
           position: fixed;
           top: 0;
@@ -69,6 +68,7 @@ const Header = ({ count, setIsFilterOpen }) => {
         .header__viewport {
           @include device-width;
           pointer-events: none;
+          @include elevation-2;
         }
         .header__content {
           pointer-events: all;
