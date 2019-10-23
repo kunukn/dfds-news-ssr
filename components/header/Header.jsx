@@ -27,7 +27,7 @@ const Header = ({ count, setIsFilterOpen }) => {
 
       <style jsx>{`
         .header {
-          include: elevation-1;
+          @include elevation-2;
 
           position: fixed;
           top: 0;

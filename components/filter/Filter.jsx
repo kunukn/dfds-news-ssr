@@ -1,9 +1,11 @@
+import React from 'react';
 import Collapse from '@kunukn/react-collapse';
 import cx from 'clsx';
 
 import CloseIcon from '~/public/static/icons/Close.svg';
 import NextIcon from '~/public/static/icons/Next.svg';
 import PreviousIcon from '~/public/static/icons/Previous.svg';
+import useClickOutside from '~/hooks/useClickOutside';
 
 const Filter = ({
   isFilterOpen,
@@ -15,9 +17,20 @@ const Filter = ({
   onFilterClick3,
   onClose,
 }) => {
+  let onOutsideClick = () => {
+    isFilterOpen && onClose && onClose();
+  };
+
+  const clickRef = React.useRef();
+  useClickOutside(clickRef, onOutsideClick);
+
   return (
-    <>
-      <div className="filter" style={{ display: isFilterOpen ? '' : 'none' }}>
+    <React.Fragment>
+      <div
+        ref={clickRef}
+        className="filter"
+        style={{ display: isFilterOpen ? '' : 'none' }}
+      >
         <div className="filter__viewport">
           <div className="filter__content">
             <div>Filter</div>
@@ -77,7 +90,7 @@ const Filter = ({
         .filter__content {
           pointer-events: all;
           position: relative;
-          top: 60px;
+          top: 70px;
           left: 5px;
           overflow-y: auto;
           width: 700px;
@@ -85,7 +98,7 @@ const Filter = ({
           max-width: 200px;
           max-height: calc(100% - 40px);
           padding-bottom: 20px;
-          @include elevation-3;
+          @include elevation-8;
           background: rgba(255, 255, 255, 1);
           padding: 10px;
         }
@@ -133,7 +146,7 @@ const Filter = ({
           background: #333;
         }
       `}</style>
-    </>
+    </React.Fragment>
   );
 };
 

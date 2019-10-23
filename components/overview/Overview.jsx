@@ -66,7 +66,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
 
       <style jsx>{`
         .overview {
-          padding: 60px 10px 40px;
+          padding: $spaceTopOverview 10px 40px;
           position: absolute;
           position: relative;
           top: 0;
@@ -120,11 +120,11 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
 
         .year-mark-first {
           position: relative;
-          top: -60px;
+          top: -$spaceTopOverview;
         }
         .year-mark {
           position: relative;
-          top: -120px;
+          top: -$spaceTopOverview*2;
         }
         :global(.button-overview-item) {
           margin-bottom: 10px;
