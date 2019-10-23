@@ -1,3 +1,5 @@
+import { sortByDateDescending, sortByDateAscending } from '~/utils/sort';
+
 export default async function getNewsList(count = 10) {
   try {
     const url = `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`;
@@ -15,6 +17,11 @@ export default async function getNewsList(count = 10) {
       let json = data.default || data;
 
       let items = json && json.total && json.items;
+
+      if (Array.isArray(items)) {
+        items = items.sort(sortByDateDescending);
+      }
+
       return Promise.resolve({ items });
     }
 

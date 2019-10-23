@@ -1,6 +1,6 @@
-import cx from "clsx";
+import cx from 'clsx';
 
-import { formatShortDate } from "~/utils/date";
+import { formatShortDate } from '~/utils/date';
 
 // TODO: use links instead of buttons
 
@@ -9,11 +9,27 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
 
   return (
     <>
-      <div className={cx("overview", { "overview--locked": isDetailsOpen })}>
+      <div className={cx('overview', { 'overview--locked': isDetailsOpen })}>
         {items.map((item, index) => {
+          let StartMarkup = () => null;
+          let EndMarkup = () => null;
+
+          if (index === 0) {
+            StartMarkup = () => (
+              <div className="year-mark-start" id="first-news-item"></div>
+            );
+          }
+
+          if (items.length - 1 === index) {
+            EndMarkup = () => (
+              <div className="year-mark-end" id="last-news-item"></div>
+            );
+          }
+
           let year = getYearFromDate(item.fields.publicationDate);
 
           let YearMarkup = () => null;
+
           if (!years[year]) {
             years[year] = true;
             YearMarkup = () => <div className="year-mark" id={year}></div>;
@@ -21,6 +37,8 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
 
           return (
             <React.Fragment key={item.sys.id}>
+              <StartMarkup />
+              <EndMarkup />
               <YearMarkup />
               <button
                 id={item.sys.id}
@@ -94,13 +112,14 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
           padding: 0;
           background: white;
         }
-        .year-mark {
+        .year-mark,
+        .year-mark-start {
           _outline: 1px solid red;
           position: relative;
           top: -60px;
         }
-        :global(.button-overview-item + .button-overview-item) {
-          margin-top: 10px;
+        :global(.button-overview-item) {
+          margin-bottom: 10px;
         }
       `}</style>
     </>

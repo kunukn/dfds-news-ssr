@@ -9,6 +9,7 @@ const Footer = ({ children }) => {
       <div className="footer">
         <div className="footer__content">
           <div className="year-group">
+            <a href="#first-news-item">First</a>
             <a href="#2019">19´</a>
             <a href="#2018">18´</a>
             <a href="#2017">17´</a>
@@ -18,6 +19,7 @@ const Footer = ({ children }) => {
             <a href="#2013">13´</a>
             <a href="#2012">12´</a>
             <a href="#2011">11´</a>
+            <a href="#last-news-item">Last</a>
           </div>
         </div>
       </div>
