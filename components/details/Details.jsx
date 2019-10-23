@@ -1,12 +1,12 @@
-import React from "react";
-import showdown from "showdown";
-import Collapse from "@kunukn/react-collapse";
+import React from 'react';
+import showdown from 'showdown';
+import Collapse from '@kunukn/react-collapse';
 
-import { formatShortDate, formatLongDate } from "~/utils/date";
-import CloseIcon from "~/public/static/icons/Close.svg";
-import NextIcon from "~/public/static/icons/Next.svg";
-import PreviousIcon from "~/public/static/icons/Previous.svg";
-import UpIcon from "~/public/static/icons/Up.svg";
+import { formatShortDate, formatLongDate } from '~/utils/date';
+import CloseIcon from '~/public/static/icons/Close.svg';
+import NextIcon from '~/public/static/icons/Next.svg';
+import PreviousIcon from '~/public/static/icons/Previous.svg';
+import UpIcon from '~/public/static/icons/Up.svg';
 
 let converter = new showdown.Converter();
 
@@ -15,13 +15,18 @@ const Details = ({
   setIsDetailsOpen,
   selectedArticle,
   isDetailsExpanded,
-  toggleExpanded
+  toggleExpanded,
+  forwardedRef,
 }) => {
   let fields = selectedArticle && selectedArticle.fields;
 
   return (
     <>
-      <div className="detail" style={{ display: isDetailsOpen ? "" : "none" }}>
+      <div
+        className="detail"
+        ref={forwardedRef}
+        style={{ display: isDetailsOpen ? '' : 'none' }}
+      >
         <div className="detail__content">
           {fields && (
             <>
@@ -32,13 +37,13 @@ const Details = ({
 
               <h3 className="detail__teaser">{fields.subtitle}</h3>
               <button className="toggle" onClick={toggleExpanded}>
-                {isDetailsExpanded ? "Read less" : "Read more"}
+                {isDetailsExpanded ? 'Read less' : 'Read more'}
               </button>
               <Collapse isOpen={isDetailsExpanded}>
                 <div
                   className="detail__content"
                   dangerouslySetInnerHTML={{
-                    __html: converter.makeHtml(fields.content)
+                    __html: converter.makeHtml(fields.content),
                   }}
                 ></div>
               </Collapse>
@@ -140,4 +145,4 @@ const Details = ({
   );
 };
 
-export default Details;
+export default React.forwardRef(Details);

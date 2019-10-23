@@ -27,6 +27,10 @@ import Overview from '~/components/overview/Overview';
 const Details = dynamic(() => import('~/components/details/Details'), {
   ssr: false,
 });
+const DetailsForwardedRef = React.forwardRef((props, ref) => (
+  <Details {...props} forwardedRef={ref} />
+));
+
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
   ssr: false,
 });
@@ -42,6 +46,7 @@ const Index = ({ items: itemsProp = [] }) => {
   const router = useRouter();
   //const { somethingTempVariable } = useStore(store);
 
+  const detailsRef = React.createRef();
   let [items, setItems] = React.useState(itemsProp);
   let [renderedItems, setRenderedItems] = React.useState(itemsProp);
   let [isDetailsExpanded, setIsDetailsExpanded] = React.useState(true);
@@ -62,6 +67,12 @@ const Index = ({ items: itemsProp = [] }) => {
   let onFilterClick3 = () => {
     setIsFilter3Active(s => !s);
   };
+
+  React.useEffect(() => {
+    if (selectedArticle && isDetailsOpen && detailsRef && detailsRef.current) {
+      detailsRef.current.scrollTop = 0;
+    }
+  }, [isDetailsOpen, detailsRef, selectedArticle]);
 
   React.useEffect(() => {
     document.title = defaultDocTitle;
@@ -179,8 +190,10 @@ const Index = ({ items: itemsProp = [] }) => {
         }}
       />
 
-      <Details
+      <DetailsForwardedRef
         {...{
+          forwardedRef: detailsRef,
+          ref: detailsRef,
           isDetailsOpen,
           setIsDetailsOpen,
           selectedArticle,
