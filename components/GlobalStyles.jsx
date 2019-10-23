@@ -15,7 +15,7 @@ let GlobalStyles = () => (
     body {
       font-family: DFDS, Verdana, sans-serif;
       margin: 0;
-      color: $color-text;
+      color: $color-textGrey;
       background-color: $color-background;
       position: relative;
       min-height: 100vh;

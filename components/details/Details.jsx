@@ -93,9 +93,13 @@ const Details = ({
           }
         }
         .detail__content {
+          :global(p){
+            line-height: 1.5;
+          }
         }
         .detail__title {
           padding-right: 10px;
+          color: $color-groupBlue;
         }
         .detail__button-close-top {
           position: absolute;
