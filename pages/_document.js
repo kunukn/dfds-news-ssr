@@ -26,28 +26,28 @@ export default class MyDocument extends Document {
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Regular.woff2"
             as="font"
             type="font/woff2"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Bold.woff2"
             as="font"
             type="font/woff2"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Light.woff2"
             as="font"
             type="font/woff2"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Italic.woff2"
             as="font"
             type="font/woff2"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
           <link
             rel="stylesheet"
