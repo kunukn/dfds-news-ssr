@@ -97,11 +97,11 @@ const Index = ({ items: itemsProp = [] }) => {
   React.useEffect(() => {
     let query = router.query;
 
-    if (+query.filter) setIsFilterOpen(true);
+    if (query.filter) setIsFilterOpen(true);
 
-    if (+query.roboto) setIsFilter3Active(true);
+    if (query.roboto) setIsFilter3Active(true);
 
-    if (+query.background) setIsBackgroundImageEnabled(true);
+    if (query.background) setIsBackgroundImageEnabled(true);
 
     if (+query.item) {
       let index = +query.item;
