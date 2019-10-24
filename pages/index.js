@@ -54,6 +54,9 @@ const Index = ({ items: itemsProp = [] }) => {
   let [isDetailsExpanded, setIsDetailsExpanded] = React.useState(true);
   let [selectedArticle, setSelectedArticle] = React.useState();
   let [isDetailsOpen, setIsDetailsOpen] = React.useState(false);
+  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = React.useState(
+    false
+  );
   let [isFilterOpen, setIsFilterOpen] = React.useState(false);
 
   let [isFilter1Active, setIsFilter1Active] = React.useState(false);
@@ -68,6 +71,9 @@ const Index = ({ items: itemsProp = [] }) => {
   };
   let onFilterClick3 = () => {
     setIsFilter3Active(s => !s);
+  };
+  let onBackgroundImageToggle = () => {
+    setIsBackgroundImageEnabled(s => !s);
   };
 
   React.useEffect(() => {
@@ -94,6 +100,8 @@ const Index = ({ items: itemsProp = [] }) => {
     if (+query.filter) setIsFilterOpen(true);
 
     if (+query.roboto) setIsFilter3Active(true);
+
+    if (+query.background) setIsBackgroundImageEnabled(true);
 
     if (+query.item) {
       let index = +query.item;
@@ -178,7 +186,7 @@ const Index = ({ items: itemsProp = [] }) => {
       <NextHead>
         <title>{defaultDocTitle}</title>
       </NextHead>
-      <BackgroundImage isEnabled />
+      <BackgroundImage isEnabled={isBackgroundImageEnabled} />
       <Overview
         {...{
           items: renderedItems,
@@ -214,6 +222,8 @@ const Index = ({ items: itemsProp = [] }) => {
           onFilterClick1,
           onFilterClick2,
           onFilterClick3,
+          isBackgroundImageEnabled,
+          onBackgroundImageToggle,
           onClose: () => setIsFilterOpen(false)
         }}
       />

@@ -1,11 +1,11 @@
-import React from 'react';
-import Collapse from '@kunukn/react-collapse';
-import cx from 'clsx';
+import React from "react";
+import Collapse from "@kunukn/react-collapse";
+import cx from "clsx";
 
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
-import useClickOutside from '~/hooks/useClickOutside';
+import CloseIcon from "~/public/static/icons/Close.svg";
+import NextIcon from "~/public/static/icons/Next.svg";
+import PreviousIcon from "~/public/static/icons/Previous.svg";
+import useClickOutside from "~/hooks/useClickOutside";
 
 const Filter = ({
   isFilterOpen,
@@ -15,7 +15,9 @@ const Filter = ({
   onFilterClick1,
   onFilterClick2,
   onFilterClick3,
-  onClose,
+  isBackgroundImageEnabled,
+  onBackgroundImageToggle,
+  onClose
 }) => {
   let onOutsideClick = () => {
     isFilterOpen && onClose && onClose();
@@ -29,23 +31,24 @@ const Filter = ({
       <div
         ref={clickRef}
         className="filter"
-        style={{ display: isFilterOpen ? '' : 'none' }}
+        style={{ display: isFilterOpen ? "" : "none" }}
       >
         <div className="filter__viewport">
           <div className="filter__content">
             <div>Filter</div>
+
             <div className="button-group">
               <button
-                className={cx('button-filter', {
-                  'button-filter--active': isFilter1Active,
+                className={cx("button-filter", {
+                  "button-filter--active": isFilter1Active
                 })}
                 onClick={onFilterClick1}
               >
                 DFDS
               </button>
               <button
-                className={cx('button-filter', {
-                  'button-filter--active': isFilter2Active,
+                className={cx("button-filter", {
+                  "button-filter--active": isFilter2Active
                 })}
                 onClick={onFilterClick2}
               >
@@ -53,14 +56,23 @@ const Filter = ({
               </button>
               <div>Settings</div>
               <button
-                className={cx('button-filter', {
-                  'button-filter--active': isFilter3Active,
+                className={cx("button-filter", {
+                  "button-filter--active": isFilter3Active
                 })}
                 onClick={onFilterClick3}
               >
                 Roboto Font
               </button>
+              <button
+                className={cx("button-filter", {
+                  "button-filter--active": isBackgroundImageEnabled
+                })}
+                onClick={onBackgroundImageToggle}
+              >
+                Background image
+              </button>
             </div>
+
             <button
               aria-label="close filter"
               onClick={onClose}
@@ -99,7 +111,7 @@ const Filter = ({
           max-height: calc(100% - 40px);
           padding-bottom: 20px;
           @include elevation-8;
-          background: rgba(white, .98);
+          background: rgba(white, 0.98);
           padding: 10px;
         }
 
