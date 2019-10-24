@@ -1,6 +1,6 @@
-import cx from 'clsx';
+import cx from "clsx";
 
-import { formatShortDate } from '~/utils/date';
+import { formatShortDate } from "~/utils/date";
 
 // TODO: use links instead of buttons
 
@@ -10,7 +10,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
 
   return (
     <>
-      <div className={cx('overview', { 'overview--locked': isDetailsOpen })}>
+      <div className={cx("overview", { "overview--locked": isDetailsOpen })}>
         {items.map((item, index) => {
           let StartMarkup = () => null;
           let YearMarkup = () => null;
@@ -23,7 +23,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
 
           if (items.length - 1 === index) {
             if (toBeAdded) {
-              let year = toBeAdded + '';
+              let year = toBeAdded + "";
               YearMarkup = () => <div className="year-mark" id={year}></div>;
               toBeAdded = null;
             }
@@ -82,7 +82,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
         :global(.overview-item) {
           padding: 10px;
           font-size: 14px;
-          border-radius: 2px;
+          _border-radius: 2px;
 
           @media (min-width: 700px) {
             _display: flex;
@@ -115,8 +115,8 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
           border: none;
           box-shadown: none;
           padding: 0;
-          border-radius: 1px;
-          background: rgba(white,.95);
+          _border-radius: 2px;
+          background: rgba(white, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             _background: rgba($color-background, 0.7);
             _backdrop-filter: saturate(180%) blur(4px);
@@ -129,7 +129,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
         }
         .year-mark {
           position: relative;
-          top: -$spaceTopOverview*2;
+          top: -$spaceTopOverview * 2;
         }
         :global(.button-overview-item) {
           margin-bottom: 10px;
