@@ -11,8 +11,10 @@ const BackgroundImage = props => (
         top: 0;
         left: 0;
         /* https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser */
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
+        __min-height: -webkit-fill-available;
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        transition: 1s;
         width: 100%;
         /* https://stackoverflow.com/questions/23208200/how-to-darken-a-background-using-css */
         background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),

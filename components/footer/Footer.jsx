@@ -1,7 +1,7 @@
-import DFDSLogo from '~/public/static/icons/DFDSLogo.svg';
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
+import DFDSLogo from "~/public/static/icons/DFDSLogo.svg";
+import CloseIcon from "~/public/static/icons/Close.svg";
+import NextIcon from "~/public/static/icons/Next.svg";
+import PreviousIcon from "~/public/static/icons/Previous.svg";
 
 const Footer = ({ children }) => {
   return (
@@ -39,7 +39,7 @@ const Footer = ({ children }) => {
           padding: 0;
           background: rgba(white, 0.7);
           @supports (backdrop-filter: blur(10px)) {
-            background-color: rgba($color-background, 0.7);
+            background: rgba($color-background, 0.9);
             backdrop-filter: saturate(180%) blur(4px);
           }
           box-shadow: 0 0 10px darkgray;
