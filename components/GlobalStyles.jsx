@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 let GlobalStyles = () => (
   <style jsx global>{`
@@ -19,6 +19,7 @@ let GlobalStyles = () => (
       background-color: $color-background;
       position: relative;
       min-height: 100vh;
+      min-height: -webkit-fill-available;
     }
     button {
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -28,7 +29,6 @@ let GlobalStyles = () => (
     #__next {
       @include device-width;
       min-height: 100vh;
-      
     }
 
     a {

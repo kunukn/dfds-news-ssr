@@ -48,6 +48,6 @@
 
 @mixin device-width {
   width: 100%;
-  max-width: 1000px;
+  max-width: $app-width;
   margin: 0 auto;
 }
