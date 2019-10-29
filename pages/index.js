@@ -9,10 +9,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import NextHead from "next/head";
 //import cx from "clsx";
-//import { useStore } from "laco-react";
+import { useStore } from "laco-react";
 //import debounce from "lodash.debounce";
 
-//import store from "~/store.js";
+import store from "~/store.js";
 import getArticle from "~/api-layer/getArticle";
 import getNewsList from "~/api-layer/getNewsList";
 import getQueryParams from "~/utils/getQueryParams";
@@ -44,6 +44,7 @@ const defaultDocTitle = "DFDS NEWS";
 
 const Index = ({ items: itemsProp = [] }) => {
   let cache = React.useRef({}).current;
+  let { windowHeight, windowWidth } = useStore(store);
 
   const router = useRouter();
   //const { somethingTempVariable } = useStore(store);

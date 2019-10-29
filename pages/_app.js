@@ -1,10 +1,10 @@
 import React from "react";
 import App from "next/app";
-import debounce from "lodash.debounce";
-//import { useStore } from 'laco-react';
+import throttle from "lodash.throttle";
+import { useStore } from "laco-react";
 
+import store from "~/store.js";
 import GlobalStyles from "../components/GlobalStyles";
-//import store from '~/store.js';
 
 if (process.browser) {
 }
@@ -31,16 +31,21 @@ class MyApp extends App {
   }
 }
 
+export const dispatchResize = () => {
+  store.set(state => ({
+    windowHeight: window.innerHeight,
+    windowWidth: window.innerWidth
+  }));
+};
+
 const GlobalEffects = () => {
-  let onResize = debounce(() => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }, 20);
+
+  let onResize = throttle(() => {
+    dispatchResize();
+  }, 1);
 
   React.useEffect(() => {
-    // https://stackoverflow.com/a/56986938/815507
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
+    setTimeout(dispatchResize, 30);
     window.addEventListener("resize", onResize);
 
     if ("serviceWorker" in navigator) {
