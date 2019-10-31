@@ -1,5 +1,5 @@
 // https://nextjs.org/docs/#custom-document
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -52,6 +52,10 @@ export default class MyDocument extends Document {
           <link
             rel="stylesheet"
             href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/font.css"
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
           />
         </Head>
         <body>

@@ -3,6 +3,8 @@ import App from "next/app";
 import throttle from "lodash.throttle";
 import { useStore } from "laco-react";
 
+import "~/init/nprogress";
+import "~/init/router-change-events";
 import store from "~/store.js";
 import GlobalStyles from "../components/GlobalStyles";
 
@@ -39,7 +41,6 @@ export const dispatchResize = () => {
 };
 
 const GlobalEffects = () => {
-
   let onResize = throttle(() => {
     dispatchResize();
   }, 1);

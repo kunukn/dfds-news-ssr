@@ -1,8 +1,8 @@
-import DFDSLogo from '~/public/static/icons/DFDSLogo.svg';
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
-import BurgerMenu from '~/public/static/icons/BurgerMenu.svg';
+import DFDSLogo from "~/public/static/icons/DFDSLogo.svg";
+import CloseIcon from "~/public/static/icons/Close.svg";
+import NextIcon from "~/public/static/icons/Next.svg";
+import PreviousIcon from "~/public/static/icons/Previous.svg";
+import BurgerMenu from "~/public/static/icons/BurgerMenu.svg";
 
 const Header = ({ count, setIsFilterOpen }) => {
   return (
@@ -73,7 +73,7 @@ const Header = ({ count, setIsFilterOpen }) => {
           display: inline-block;
           display: block;
           padding: 10px;
-          background: rgba($color-background, 0.85);
+          background: rgba($color-background, 0.9);
           @supports (backdrop-filter: blur(10px)) {
             background: rgba($color-background, 0.9);
             backdrop-filter: saturate(180%) blur(4px);
@@ -89,8 +89,7 @@ const Header = ({ count, setIsFilterOpen }) => {
           pointer-events: all;
           font-size: 20px;
           line-height: 1;
-          :global(svg){
-
+          :global(svg) {
           }
         }
       `}</style>
