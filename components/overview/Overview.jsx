@@ -46,15 +46,17 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
             toBeAdded = year;
           }
 
+          let id = item.sys.id;
+
           return (
-            <React.Fragment key={item.sys.id}>
+            <React.Fragment key={id}>
               <StartMarkup />
               <YearMarkup />
-              <Link href="/id">
+              <Link href={`/id/${id}`}>
                 <a
-                  id={item.sys.id}
+                  id={id}
                   className="button-overview-item"
-                  onClick={event => onItemClick(event, item.sys.id)}
+                  onClick={event => onItemClick({ event, id })}
                 >
                   <div className="overview-item">
                     <div className="overview-item__date">

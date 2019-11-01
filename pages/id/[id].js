@@ -23,10 +23,6 @@ import Header from "~/components/header/Header";
 import Overview from "~/components/overview/Overview";
 import BackgroundImage from "~/components/website-background-image/BackgroundImage";
 
-//import Details from "~/components/details/Details";
-//import Footer from "~/components/footer/Footer";
-//import Filter from "~/components/filter/Filter";
-
 const Details = dynamic(() => import("~/components/details/Details"), {
   ssr: false
 });
@@ -48,11 +44,6 @@ const Index = ({ items: itemsProp = [] }) => {
   let { windowHeight, windowWidth } = useStore(store);
 
   const router = useRouter();
-  const { id } = router.query;
-
-  console.log("id", id);
-
-  //const { somethingTempVariable } = useStore(store);
 
   const detailsRef = React.createRef();
   let [items, setItems] = React.useState(itemsProp);
@@ -82,6 +73,17 @@ const Index = ({ items: itemsProp = [] }) => {
     setIsBackgroundImageEnabled(s => !s);
   };
 
+  let onDetailsClose = event => {
+    event && event.preventDefault && event.preventDefault();
+
+    // Quick coding: the state should be updated by url changes. Here I do both.
+    // I could use router-change-events.js to update the global state.
+    setIsDetailsOpen(false); // Update State
+    const href = `/`;
+    const as = `/`;
+    Router.push(href, as, { shallow: true }); // Update url
+  };
+
   React.useEffect(() => {
     if (selectedArticle && isDetailsOpen && detailsRef && detailsRef.current) {
       detailsRef.current.scrollTop = 0;
@@ -100,6 +102,7 @@ const Index = ({ items: itemsProp = [] }) => {
     //setTimeout(getNews, 2000);
   }, []);
 
+  // Updatey by query strings
   React.useEffect(() => {
     let query = router.query;
 
@@ -113,9 +116,9 @@ const Index = ({ items: itemsProp = [] }) => {
       let index = +query.item;
       index && onItemClick(items[index - 1].sys.id);
     } else if (query.id) {
-      onItemClick(query.id);
+      onItemClick({ id: query.id });
     }
-  }, [items]);
+  }, []);
 
   React.useEffect(() => {
     if (isFilter3Active) {
@@ -163,10 +166,16 @@ const Index = ({ items: itemsProp = [] }) => {
 
   if (!items) return <div className="news">Failed loading data, sorry.</div>;
 
-  let onItemClick = async (event, id) => {
-    console.log('event',event, 'id',id);
-    //event && event.preventDefault();
+  let onItemClick = async ({ event, id }) => {
+    event && event.preventDefault && event.preventDefault();
 
+    // Quick coding: the state should be updated by url changes. Here I do both.
+    // I could use router-change-events.js to update the global state.
+    const href = `/?id=${id}`;
+    const as = `/id/${id}`;
+    Router.push(href, as, { shallow: true }); // Update Url
+
+    // Update State
     if (cache[id]) {
       let result = cache[id];
       setSelectedArticle(result);
@@ -174,20 +183,7 @@ const Index = ({ items: itemsProp = [] }) => {
       let result = await getArticle(id);
       cache[id] = result;
       setSelectedArticle(result);
-
-      try {
-        const href = `/?id=${id}`;
-        const as = `/id/${id}`;
-        Router.push(href, as, { shallow: true });
-      } catch (ex) {
-        console.error(ex.toString());
-      }
     }
-
-    // if (window.history.pushState) {
-    //   let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?id=${id}`;
-    //   window.history.pushState({ path: newurl }, "", newurl);
-    // }
 
     setIsDetailsOpen(true);
   };
@@ -217,7 +213,7 @@ const Index = ({ items: itemsProp = [] }) => {
           forwardedRef: detailsRef,
           ref: detailsRef,
           isDetailsOpen,
-          setIsDetailsOpen,
+          onDetailsClose,
           selectedArticle,
           isDetailsExpanded,
           toggleExpanded: () => setIsDetailsExpanded(s => !s)

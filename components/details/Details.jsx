@@ -1,22 +1,22 @@
-import React from 'react';
-import showdown from 'showdown';
-import Collapse from '@kunukn/react-collapse';
+import React from "react";
+import showdown from "showdown";
+import Collapse from "@kunukn/react-collapse";
 
-import { formatShortDate, formatLongDate } from '~/utils/date';
-import CloseIcon from '~/public/static/icons/Close.svg';
-import NextIcon from '~/public/static/icons/Next.svg';
-import PreviousIcon from '~/public/static/icons/Previous.svg';
-import UpIcon from '~/public/static/icons/Up.svg';
+import { formatShortDate, formatLongDate } from "~/utils/date";
+import CloseIcon from "~/public/static/icons/Close.svg";
+import NextIcon from "~/public/static/icons/Next.svg";
+import PreviousIcon from "~/public/static/icons/Previous.svg";
+import UpIcon from "~/public/static/icons/Up.svg";
 
 let converter = new showdown.Converter();
 
 const Details = ({
   isDetailsOpen,
-  setIsDetailsOpen,
+  onDetailsClose,
   selectedArticle,
   isDetailsExpanded,
   toggleExpanded,
-  forwardedRef,
+  forwardedRef
 }) => {
   let fields = selectedArticle && selectedArticle.fields;
 
@@ -25,7 +25,7 @@ const Details = ({
       <div
         className="detail"
         ref={forwardedRef}
-        style={{ display: isDetailsOpen ? '' : 'none' }}
+        style={{ display: isDetailsOpen ? "" : "none" }}
       >
         <div className="detail__content">
           {fields && (
@@ -37,20 +37,20 @@ const Details = ({
 
               <h3 className="detail__teaser">{fields.subtitle}</h3>
               <button className="toggle" onClick={toggleExpanded}>
-                {isDetailsExpanded ? 'Read less' : 'Read more'}
+                {isDetailsExpanded ? "Read less" : "Read more"}
               </button>
               <Collapse isOpen={isDetailsExpanded}>
                 <div
                   className="detail__content"
                   dangerouslySetInnerHTML={{
-                    __html: converter.makeHtml(fields.content),
+                    __html: converter.makeHtml(fields.content)
                   }}
                 ></div>
               </Collapse>
               <button
                 aria-label="close"
                 className="detail__button-close-top"
-                onClick={() => setIsDetailsOpen(false)}
+                onClick={onDetailsClose}
               >
                 <CloseIcon />
               </button>
@@ -59,7 +59,7 @@ const Details = ({
                 <button
                   aria-label="close"
                   className="detail__button-close-bottom"
-                  onClick={() => setIsDetailsOpen(false)}
+                  onClick={onDetailsClose}
                 >
                   <CloseIcon />
                 </button>
@@ -78,7 +78,7 @@ const Details = ({
           @include elevation-3;
           pointer-events: all;
           padding-bottom: 20px;
-          background: rgba(255, 255, 255, 1);
+          background: rgba(white, 1);
           padding: 10px;
           width: 700px;
           max-width: 80vw;
@@ -93,7 +93,7 @@ const Details = ({
           }
         }
         .detail__content {
-          :global(p){
+          :global(p) {
             line-height: 1.5;
           }
         }
