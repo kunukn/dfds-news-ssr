@@ -37,7 +37,7 @@ const Footer = ({ children }) => {
           height: inherit;
           @include device-width;
           padding: 0;
-          background: rgba($color-background, 0.9);
+          background: rgba($color-background, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             background: rgba($color-background, 0.9);
             backdrop-filter: saturate(180%) blur(4px);
