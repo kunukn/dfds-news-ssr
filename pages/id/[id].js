@@ -4,43 +4,48 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import NextHead from "next/head";
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import NextHead from 'next/head';
 //import cx from "clsx";
-import { useStore } from "laco-react";
+import { useStore } from 'laco-react';
 //import debounce from "lodash.debounce";
-import Router from "next/router";
+import Router from 'next/router';
 
-import store from "~/store.js";
-import getArticle from "~/api-layer/getArticle";
-import getNewsList from "~/api-layer/getNewsList";
-import getQueryParams from "~/utils/getQueryParams";
-import { filterItemsByCriteria } from "~/utils/filter";
+import store from '~/store.js';
+import getArticle from '~/api-layer/getArticle';
+import getNewsList from '~/api-layer/getNewsList';
+import getQueryParams from '~/utils/getQueryParams';
+import { filterItemsByCriteria } from '~/utils/filter';
 
-import Header from "~/components/header/Header";
-import Overview from "~/components/overview/Overview";
-import BackgroundImage from "~/components/website-background-image/BackgroundImage";
+import Header from '~/components/header/Header';
+import Overview from '~/components/overview/Overview';
+import BackgroundImage from '~/components/website-background-image/BackgroundImage';
 
-const Details = dynamic(() => import("~/components/details/Details"), {
-  ssr: false
+const Details = dynamic(() => import('~/components/details/Details'), {
+  ssr: true,
 });
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ));
 
-const Footer = dynamic(() => import("~/components/footer/Footer"), {
-  ssr: false
+const Footer = dynamic(() => import('~/components/footer/Footer'), {
+  ssr: false,
 });
-const Filter = dynamic(() => import("~/components/filter/Filter"), {
-  ssr: false
+const Filter = dynamic(() => import('~/components/filter/Filter'), {
+  ssr: false,
 });
 
-const defaultDocTitle = "DFDS NEWS";
+const defaultDocTitle = 'DFDS NEWS';
 
-const Index = ({ items: itemsProp = [] }) => {
+const Index = ({ items: itemsProp = [], article = null, id }) => {
   let cache = React.useRef({}).current;
+
+  if (id && article) {
+    cache[id] = article;
+  }
+
   let { windowHeight, windowWidth } = useStore(store);
 
   const router = useRouter();
@@ -49,8 +54,8 @@ const Index = ({ items: itemsProp = [] }) => {
   let [items, setItems] = React.useState(itemsProp);
   let [renderedItems, setRenderedItems] = React.useState(itemsProp);
   let [isDetailsExpanded, setIsDetailsExpanded] = React.useState(true);
-  let [selectedArticle, setSelectedArticle] = React.useState();
-  let [isDetailsOpen, setIsDetailsOpen] = React.useState(false);
+  let [selectedArticle, setSelectedArticle] = React.useState(article);
+  let [isDetailsOpen, setIsDetailsOpen] = React.useState(!!article);
   let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = React.useState(
     false
   );
@@ -114,17 +119,15 @@ const Index = ({ items: itemsProp = [] }) => {
 
     if (+query.item) {
       let index = +query.item;
-      index && onItemClick(items[index - 1].sys.id);
-    } else if (query.id) {
-      onItemClick({ id: query.id });
+      index && selectArticleById(items[index - 1].sys.id);
     }
   }, []);
 
   React.useEffect(() => {
     if (isFilter3Active) {
-      document.body.style.fontFamily = "Roboto, sans-serif";
+      document.body.style.fontFamily = 'Roboto, sans-serif';
     } else {
-      document.body.style.fontFamily = "";
+      document.body.style.fontFamily = '';
     }
   }, [isFilter3Active]);
 
@@ -133,7 +136,7 @@ const Index = ({ items: itemsProp = [] }) => {
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active
+      is2019: isFilter2Active,
     });
     setRenderedItems(result);
   }, [items, isFilter1Active, isFilter2Active]);
@@ -166,7 +169,7 @@ const Index = ({ items: itemsProp = [] }) => {
 
   if (!items) return <div className="news">Failed loading data, sorry.</div>;
 
-  let onItemClick = async ({ event, id }) => {
+  let selectArticleById = async ({ event, id }) => {
     event && event.preventDefault && event.preventDefault();
 
     // Quick coding: the state should be updated by url changes. Here I do both.
@@ -177,8 +180,8 @@ const Index = ({ items: itemsProp = [] }) => {
 
     // Update State
     if (cache[id]) {
-      let result = cache[id];
-      setSelectedArticle(result);
+      console.log('cachel hit');
+      setSelectedArticle(cache[id]);
     } else {
       let result = await getArticle(id);
       cache[id] = result;
@@ -197,14 +200,14 @@ const Index = ({ items: itemsProp = [] }) => {
       <Overview
         {...{
           items: renderedItems,
-          onItemClick,
-          isDetailsOpen
+          selectArticleById,
+          isDetailsOpen,
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
-          setIsFilterOpen
+          setIsFilterOpen,
         }}
       />
 
@@ -216,7 +219,7 @@ const Index = ({ items: itemsProp = [] }) => {
           onDetailsClose,
           selectedArticle,
           isDetailsExpanded,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s)
+          toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
 
@@ -231,7 +234,7 @@ const Index = ({ items: itemsProp = [] }) => {
           onFilterClick3,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false)
+          onClose: () => setIsFilterOpen(false),
         }}
       />
 
@@ -242,6 +245,11 @@ const Index = ({ items: itemsProp = [] }) => {
 };
 
 Index.getInitialProps = async ({ req, query }) => {
+  if (query.id) {
+    let article = await getArticle(query.id);
+    return { id: query.id, article };
+  }
+
   return getNewsList();
 };
 

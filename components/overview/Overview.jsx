@@ -7,9 +7,7 @@ const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 };
 
-// TODO: use links instead of buttons
-
-const Overview = ({ items, onItemClick, isDetailsOpen }) => {
+const Overview = ({ items, selectArticleById, isDetailsOpen }) => {
   let years = {};
   let toBeAdded = null;
 
@@ -56,7 +54,7 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
                 <a
                   id={id}
                   className="button-overview-item"
-                  onClick={event => onItemClick({ event, id })}
+                  onClick={event => selectArticleById({ event, id })}
                 >
                   <div className="overview-item">
                     <div className="overview-item__date">
