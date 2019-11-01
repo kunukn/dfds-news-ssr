@@ -48,6 +48,10 @@ const Index = ({ items: itemsProp = [] }) => {
   let { windowHeight, windowWidth } = useStore(store);
 
   const router = useRouter();
+  const { id } = router.query;
+
+  console.log("id", id);
+
   //const { somethingTempVariable } = useStore(store);
 
   const detailsRef = React.createRef();
@@ -159,7 +163,10 @@ const Index = ({ items: itemsProp = [] }) => {
 
   if (!items) return <div className="news">Failed loading data, sorry.</div>;
 
-  let onItemClick = async id => {
+  let onItemClick = async (event, id) => {
+    console.log('event',event, 'id',id);
+    //event && event.preventDefault();
+
     if (cache[id]) {
       let result = cache[id];
       setSelectedArticle(result);
@@ -168,19 +175,19 @@ const Index = ({ items: itemsProp = [] }) => {
       cache[id] = result;
       setSelectedArticle(result);
 
-      // try {
-      //   const href = `/?id=${id}`;
-      //   const as = `/id/${id}`;
-      //   Router.push(href, as, { shallow: true });
-      // } catch (ex) {
-      //   console.error(ex.toString());
-      // }
+      try {
+        const href = `/?id=${id}`;
+        const as = `/id/${id}`;
+        Router.push(href, as, { shallow: true });
+      } catch (ex) {
+        console.error(ex.toString());
+      }
     }
 
-    if (window.history.pushState) {
-      let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?id=${id}`;
-      window.history.pushState({ path: newurl }, "", newurl);
-    }
+    // if (window.history.pushState) {
+    //   let newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?id=${id}`;
+    //   window.history.pushState({ path: newurl }, "", newurl);
+    // }
 
     setIsDetailsOpen(true);
   };

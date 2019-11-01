@@ -1,6 +1,11 @@
 import cx from "clsx";
 
 import { formatShortDate } from "~/utils/date";
+import Link from "next/link";
+
+const noop = () => {
+  // This onTouchStart is a workaround to trigger the active state on IOS
+};
 
 // TODO: use links instead of buttons
 
@@ -45,20 +50,22 @@ const Overview = ({ items, onItemClick, isDetailsOpen }) => {
             <React.Fragment key={item.sys.id}>
               <StartMarkup />
               <YearMarkup />
-              <button
-                id={item.sys.id}
-                className="button-overview-item"
-                onClick={() => onItemClick(item.sys.id)}
-              >
-                <div className="overview-item">
-                  <div className="overview-item__date">
-                    {formatShortDate(item.fields.publicationDate)}
+              <Link href="/id">
+                <a
+                  id={item.sys.id}
+                  className="button-overview-item"
+                  onClick={event => onItemClick(event, item.sys.id)}
+                >
+                  <div className="overview-item">
+                    <div className="overview-item__date">
+                      {formatShortDate(item.fields.publicationDate)}
+                    </div>
+                    <div className="overview-item__title">
+                      {item.fields.entryTitle}
+                    </div>
                   </div>
-                  <div className="overview-item__title">
-                    {item.fields.entryTitle}
-                  </div>
-                </div>
-              </button>
+                </a>
+              </Link>
             </React.Fragment>
           );
         })}
