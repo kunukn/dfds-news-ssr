@@ -1,19 +1,20 @@
-import cx from "clsx";
+import cx from 'clsx';
 
-import { formatShortDate } from "~/utils/date";
-import Link from "next/link";
+import { formatShortDate } from '~/utils/date';
+import Link from 'next/link';
 
 const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 };
 
-const Overview = ({ items, selectArticleById, isDetailsOpen }) => {
+const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
   let years = {};
   let toBeAdded = null;
 
   return (
     <>
-      <div className={cx("overview", { "overview--locked": isDetailsOpen })}>
+      <div className={cx('overview', { 'overview--locked': isDetailsOpen })}>
+        {children}
         {items.map((item, index) => {
           let StartMarkup = () => null;
           let YearMarkup = () => null;
@@ -26,7 +27,7 @@ const Overview = ({ items, selectArticleById, isDetailsOpen }) => {
 
           if (items.length - 1 === index) {
             if (toBeAdded) {
-              let year = toBeAdded + "";
+              let year = toBeAdded + '';
               YearMarkup = () => <div className="year-mark" id={year}></div>;
               toBeAdded = null;
             }
@@ -50,7 +51,7 @@ const Overview = ({ items, selectArticleById, isDetailsOpen }) => {
             <React.Fragment key={id}>
               <StartMarkup />
               <YearMarkup />
-              <Link href={`/id/${id}`}>
+              <Link href={`/id/${id}`} prefetch={false}>
                 <a
                   id={id}
                   className="button-overview-item"

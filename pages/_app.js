@@ -12,14 +12,13 @@ if (process.browser) {
 }
 
 class MyApp extends App {
-  // Don't prefetch static pages
-  static async getInitialProps({ Component, ctx }) {
-      let pageProps = {}
-      if (Component.getInitialProps) {
-          pageProps = await Component.getInitialProps(ctx)
-      }
-      return { pageProps }
-  }
+  // static async getInitialProps({ Component, ctx }) {
+  //     let pageProps = {}
+  //     if (Component.getInitialProps) {
+  //         pageProps = await Component.getInitialProps(ctx)
+  //     }
+  //     return { pageProps }
+  // }
 
   render() {
     const { Component, pageProps } = this.props;

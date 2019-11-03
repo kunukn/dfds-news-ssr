@@ -5,18 +5,18 @@
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
+//import Link from 'next/link';
 import { useRouter } from 'next/router';
 import NextHead from 'next/head';
 //import cx from "clsx";
-import { useStore } from 'laco-react';
+//import { useStore } from 'laco-react';
 //import debounce from "lodash.debounce";
 import Router from 'next/router';
 
-import store from '~/store.js';
+//import store from '~/store.js';
 import getArticle from '~/api-layer/getArticle';
 import getNewsList from '~/api-layer/getNewsList';
-import getQueryParams from '~/utils/getQueryParams';
+//import getQueryParams from '~/utils/getQueryParams';
 import { filterItemsByCriteria } from '~/utils/filter';
 
 import Header from '~/components/header/Header';
@@ -39,14 +39,25 @@ const Filter = dynamic(() => import('~/components/filter/Filter'), {
 
 const defaultDocTitle = 'DFDS NEWS';
 
-const Index = ({ items: itemsProp = [], article = null, id }) => {
+let pageMode = '';
+
+const Index = ({
+  items: itemsProp = [],
+  article = null,
+  id,
+  detailsSSR,
+  overviewSSR,
+}) => {
   let cache = React.useRef({}).current;
+
+  if (overviewSSR) pageMode = 'overview';
+  if (detailsSSR) pageMode = 'details';
 
   if (id && article) {
     cache[id] = article;
   }
 
-  let { windowHeight, windowWidth } = useStore(store);
+  //let { windowHeight, windowWidth } = useStore(store);
 
   const router = useRouter();
 
@@ -79,7 +90,7 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
   };
 
   let onDetailsClose = event => {
-    event && event.preventDefault && event.preventDefault();
+    event?.preventDefault && event.preventDefault();
 
     // Quick coding: the state should be updated by url changes. Here I do both.
     // I could use router-change-events.js to update the global state.
@@ -87,6 +98,7 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
     const href = `/`;
     const as = `/`;
     Router.push(href, as, { shallow: true }); // Update url
+    pageMode = 'overview';
   };
 
   React.useEffect(() => {
@@ -95,16 +107,16 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
     }
   }, [isDetailsOpen, detailsRef, selectedArticle]);
 
+  let getAllNews = async () => {
+    let news = await getNewsList(200);
+    setItems((news && news.items) || []);
+  };
+
   React.useEffect(() => {
-    document.title = defaultDocTitle;
-
-    let getNews = async () => {
-      let news = await getNewsList(200);
-      setItems((news && news.items) || []);
-    };
-
-    getNews();
-    //setTimeout(getNews, 2000);
+    if (overviewSSR) {
+      document.title = defaultDocTitle;
+      getAllNews();
+    }
   }, []);
 
   // Updatey by query strings
@@ -142,10 +154,6 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
   }, [items, isFilter1Active, isFilter2Active]);
 
   React.useEffect(() => {
-    window.items = items;
-  }, [items]);
-
-  React.useEffect(() => {
     if (isDetailsOpen) {
       //document.body.style.overflow = 'hidden';
     } else {
@@ -155,11 +163,7 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
 
   React.useEffect(() => {
     if (isDetailsOpen) {
-      if (
-        selectedArticle &&
-        selectedArticle.fields &&
-        selectedArticle.fields.title
-      ) {
+      if (selectedArticle?.fields?.title) {
         document.title = selectedArticle.fields.title;
       }
     } else {
@@ -177,10 +181,10 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
     const href = `/?id=${id}`;
     const as = `/id/${id}`;
     Router.push(href, as, { shallow: true }); // Update Url
+    pageMode = 'details';
 
     // Update State
     if (cache[id]) {
-      console.log('cachel hit');
       setSelectedArticle(cache[id]);
     } else {
       let result = await getArticle(id);
@@ -203,7 +207,13 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
           selectArticleById,
           isDetailsOpen,
         }}
-      />
+      >
+        {renderedItems.length === 0 && (
+          <button className="btn-get-all-news" onClick={getAllNews}>
+            Load news
+          </button>
+        )}
+      </Overview>
       <Header
         {...{
           count: renderedItems.length,
@@ -239,7 +249,12 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
       />
 
       <Footer {...{}} />
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .btn-get-all-news {
+          padding: 10px;
+          font-size: 16px;
+        }
+      `}</style>
     </>
   );
 };
@@ -247,10 +262,11 @@ const Index = ({ items: itemsProp = [], article = null, id }) => {
 Index.getInitialProps = async ({ req, query }) => {
   if (query.id) {
     let article = await getArticle(query.id);
-    return { id: query.id, article };
+    return { id: query.id, article, detailsSSR: true };
   }
 
-  return getNewsList();
+  let { items } = await getNewsList();
+  return { items, overviewSSR: true };
 };
 
 export default Index;
