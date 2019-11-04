@@ -1,13 +1,16 @@
 import Router from 'next/router'
 import RouterEvents from '~/lib/router-events'
 
-let counter = 0
+import store from '~/store.js'
 
 RouterEvents.on('routeChangeStart', url => {})
 
 RouterEvents.on('routeChangeComplete', url => {
-  //console.log(Router.query.id, counter++)
-  // TODO: update details by id
+  if (Router.query.id) {
+    store.set(state => ({ pageMode: 'details' }))
+  } else {
+    store.set(state => ({ pageMode: 'overview' }))
+  }
 })
 
 RouterEvents.on('routeChangeError', url => {})

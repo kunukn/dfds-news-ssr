@@ -1,19 +1,19 @@
-import cx from "clsx"
+import cx from 'clsx'
 
-import { formatShortDate } from "~/utils/date"
-import Link from "next/link"
+import { formatShortDate } from '~/utils/date'
+import Link from 'next/link'
 
 const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 }
 
-const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
+const Overview = ({ items, selectArticleById, children }) => {
   let years = {}
   let toBeAdded = null
 
   return (
     <>
-      <div className={cx("overview", { "overview--locked": isDetailsOpen })}>
+      <div className={cx('overview')}>
         {children}
         {items.map((item, index) => {
           let StartMarkup = () => null
@@ -27,7 +27,7 @@ const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
 
           if (items.length - 1 === index) {
             if (toBeAdded) {
-              let year = toBeAdded + ""
+              let year = toBeAdded + ''
               YearMarkup = () => <div className='year-mark' id={year}></div>
               toBeAdded = null
             }
@@ -83,9 +83,6 @@ const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
           width: 100%;
           height: 100%;
           overflow-y: auto;
-        }
-
-        .overview--locked {
         }
 
         :global(.overview-item) {
@@ -148,6 +145,6 @@ const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
   )
 }
 
-export default Overview
+export default React.memo(Overview)
 
 let getYearFromDate = date => date.substring(0, 4)

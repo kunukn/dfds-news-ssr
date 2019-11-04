@@ -5,15 +5,15 @@
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
 import dynamic from 'next/dynamic'
-//import Link from 'next/link';
 import { useRouter } from 'next/router'
 import NextHead from 'next/head'
 //import cx from "clsx";
-//import { useStore } from 'laco-react';
+import { useStore } from 'laco-react'
 //import debounce from "lodash.debounce";
+//import throttle from "lodash.throttle";
 import Router from 'next/router'
 
-//import store from '~/store.js';
+import store from '~/store.js'
 import getArticle from '~/api-layer/getArticle'
 import getNewsList from '~/api-layer/getNewsList'
 //import getQueryParams from '~/utils/getQueryParams';
@@ -39,8 +39,6 @@ const Filter = dynamic(() => import('~/components/filter/Filter'), {
 
 const defaultDocTitle = 'DFDS NEWS'
 
-let pageMode = ''
-
 const Index = ({
   items: itemsProp = [],
   article = null,
@@ -48,19 +46,20 @@ const Index = ({
   detailsSSR,
   overviewSSR
 }) => {
-  let cache = React.useRef({}).current
 
-  if (overviewSSR) pageMode = 'overview'
-  if (detailsSSR) pageMode = 'details'
+  console.log('render index', Date.now())
+
+  let cache = React.useRef({}).current
 
   // Update cache from SSR
   if (id && article) {
     cache[id] = article
   }
 
-  //let { windowHeight, windowWidth } = useStore(store);
+  // let { windowHeight, windowWidth, temptemp } = useStore(store)
 
   const router = useRouter()
+  const pageMode = router.query.id ? pageType.details : pageType.overview
 
   const detailsRef = React.createRef()
   let [items, setItems] = React.useState(itemsProp)
@@ -90,16 +89,24 @@ const Index = ({
     setIsBackgroundImageEnabled(s => !s)
   }
 
+  // Update page mode state by routing
+  React.useEffect(() => {
+    switch (pageMode) {
+      case pageType.overview:
+        setIsDetailsOpen(false)
+        break
+      case pageType.details:
+        setIsDetailsOpen(true)
+        break
+      default:
+        break
+    }
+  }, [pageMode])
+
   let onDetailsClose = event => {
     event?.preventDefault && event.preventDefault()
 
-    // Quick coding: the state should be updated by url changes. Here I do both.
-    // I could use router-change-events.js to update the global state.
-    setIsDetailsOpen(false) // Update State
-    const href = `/`
-    const as = `/`
-    Router.push(href, as, { shallow: true }) // Update url
-    pageMode = 'overview'
+    goToOverviewPage()
   }
 
   React.useEffect(() => {
@@ -153,8 +160,6 @@ const Index = ({
       } else {
         getSelectedArticleAndUpdate()
       }
-
-      setIsDetailsOpen(true)
     }
   }, [router.query.id])
 
@@ -200,12 +205,7 @@ const Index = ({
   let selectArticleById = async ({ event, id }) => {
     event && event.preventDefault && event.preventDefault()
 
-    // Quick coding: the state should be updated by url changes. Here I do both.
-    // I could use router-change-events.js to update the global state.
-    const href = `/?id=${id}`
-    const as = `/id/${id}`
-    Router.push(href, as, { shallow: true }) // Update Url
-    pageMode = 'details'
+    goToDetailsPage(id)
   }
 
   return (
@@ -288,3 +288,25 @@ Index.getInitialProps = async ({ req, query }) => {
 }
 
 export default Index
+
+
+
+
+
+let goToOverviewPage = () => {
+  const href = `/`
+  const as = `/`
+  Router.push(href, as, { shallow: true })
+}
+
+let goToDetailsPage = id => {
+  const href = `/?id=${id}`
+  const as = `/id/${id}`
+  Router.push(href, as, { shallow: true })
+}
+
+const pageType = {
+  details: 'details',
+  overview: 'overview'
+}
+Object.freeze(pageType)
