@@ -1,20 +1,24 @@
 import cx from 'clsx'
+import Link from 'next/link'
 
 import { formatShortDate } from '~/utils/date'
-import Link from 'next/link'
 
 const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 }
 
-const Overview = ({ items, selectArticleById, getAllNews }) => {
+const Overview = ({ items, selectArticleById, getAllNews, detailsSSR }) => {
   let years = {}
   let toBeAdded = null
 
   return (
     <>
-      <div className={cx('overview')}>
-        {items?.length === 0 && (
+      <div
+        className={cx('overview', {
+          'overview--detail-full-focus': detailsSSR,
+        })}
+      >
+        {false && items?.length === 0 && (
           <button className='btn-get-all-news' onClick={getAllNews}>
             Load
             <br />
@@ -81,6 +85,7 @@ const Overview = ({ items, selectArticleById, getAllNews }) => {
 
       <style jsx>{`
         .overview {
+          z-index: 1;
           padding: $spaceTopOverview 10px 40px;
           position: absolute;
           position: relative;
@@ -89,6 +94,11 @@ const Overview = ({ items, selectArticleById, getAllNews }) => {
           width: 100%;
           height: 100%;
           overflow-y: auto;
+        }
+
+        .overview--detail-full-focus{
+          z-index: 0;
+          padding-bottom: 0;
         }
 
         :global(.overview-item) {
@@ -149,7 +159,7 @@ const Overview = ({ items, selectArticleById, getAllNews }) => {
         .btn-get-all-news {
           padding: 10px;
           font-size: 16px;
-          background: none;
+          background: rgba(white, 0.5);
           border: none;
           @include elevation-1;
         }

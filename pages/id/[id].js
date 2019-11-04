@@ -15,6 +15,7 @@ import NextHead from 'next/head'
 import Router from 'next/router'
 
 //import store from '~/store.js'
+import pageType from '~/utils/pageType'
 import getArticle from '~/api-layer/getArticle'
 import getNewsList from '~/api-layer/getNewsList'
 //import getQueryParams from '~/utils/getQueryParams';
@@ -57,7 +58,7 @@ const Index = ({
   // let { windowHeight, windowWidth, pageMode } = useStore(store)
 
   const router = useRouter()
-  const pageMode = router.query.id ? pageType.details : pageType.overview
+  const pageMode = router.query.id ? pageType.detail : pageType.overview
 
   const detailsRef = createRef()
   let [items, setItems] = useState(itemsProp)
@@ -65,7 +66,7 @@ const Index = ({
   let [isDetailsExpanded, setIsDetailsExpanded] = useState(true)
   let [selectedArticle, setSelectedArticle] = useState(article)
   let [isDetailsOpen, setIsDetailsOpen] = useState(!!article)
-  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(false)
+  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(true)
   let [isFilterOpen, setIsFilterOpen] = useState(false)
 
   let [isFilter1Active, setIsFilter1Active] = useState(false)
@@ -91,7 +92,7 @@ const Index = ({
       case pageType.overview:
         setIsDetailsOpen(false)
         break
-      case pageType.details:
+      case pageType.detail:
         setIsDetailsOpen(true)
         break
       default:
@@ -101,6 +102,10 @@ const Index = ({
 
   let onDetailsClose = event => {
     event?.preventDefault && event.preventDefault()
+
+    if (detailsSSR) {
+      getAllNews()
+    }
 
     goToOverviewPage()
   }
@@ -217,12 +222,14 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
+          detailsSSR,
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
           setIsFilterOpen,
+          detailsSSR,
         }}
       />
 
@@ -234,6 +241,7 @@ const Index = ({
           onDetailsClose,
           selectedArticle,
           isDetailsExpanded,
+          detailsSSR,
           toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
@@ -255,6 +263,7 @@ const Index = ({
 
       <Footer
         {...{
+          detailsSSR,
           renderScrollbar: !!renderedItems.length,
         }}
       />
@@ -285,9 +294,3 @@ let goToDetailsPage = id => {
   const as = `/id/${id}`
   Router.push(href, as, { shallow: true })
 }
-
-const pageType = {
-  details: 'details',
-  overview: 'overview',
-}
-Object.freeze(pageType)

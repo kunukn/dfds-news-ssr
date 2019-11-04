@@ -3,12 +3,15 @@ import CloseIcon from '~/public/static/icons/Close.svg'
 import NextIcon from '~/public/static/icons/Next.svg'
 import PreviousIcon from '~/public/static/icons/Previous.svg'
 
-const Footer = ({ renderScrollbar }) => {
+const Footer = ({ detailsSSR }) => {
+
+  if(detailsSSR) return null;
+
   return (
     <>
       <div className='footer'>
         <div className='footer__content'>
-          {renderScrollbar && (
+          {!detailsSSR && (
             <div className='year-group'>
               <a href='#first-news-item'>First</a>
               <a href='#2019'>19´</a>
@@ -27,6 +30,7 @@ const Footer = ({ renderScrollbar }) => {
 
       <style jsx>{`
         .footer {
+          z-index: 1;
           position: fixed;
           bottom: 0;
           left: 0;

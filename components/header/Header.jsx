@@ -1,34 +1,44 @@
-import DFDSLogo from "~/public/static/icons/DFDSLogo.svg";
-import CloseIcon from "~/public/static/icons/Close.svg";
-import NextIcon from "~/public/static/icons/Next.svg";
-import PreviousIcon from "~/public/static/icons/Previous.svg";
-import BurgerMenu from "~/public/static/icons/BurgerMenu.svg";
+import cx from 'clsx'
+import { useStore } from 'laco-react'
 
-const Header = ({ count, setIsFilterOpen }) => {
+import store from '~/store.js'
+import DFDSLogo from '~/public/static/icons/DFDSLogo.svg'
+import CloseIcon from '~/public/static/icons/Close.svg'
+import NextIcon from '~/public/static/icons/Next.svg'
+import PreviousIcon from '~/public/static/icons/Previous.svg'
+import BurgerMenu from '~/public/static/icons/BurgerMenu.svg'
+
+const Header = ({ count, setIsFilterOpen, detailsSSR }) => {
+  let { pageMode } = useStore(store)
+
   return (
     <>
-      <div className="header">
-        <div className="header__viewport">
-          <div className="header__content">
-            <h1 className="header__title">
+      <div className={cx('header')}>
+        <div className='header__viewport'>
+          <div className='header__content'>
+            <h1 className='header__title'>
               <button
-                aria-label="filter button"
-                className="button-burger"
+                aria-label='filter button'
+                className='button-burger'
                 onClick={() => setIsFilterOpen(s => !s)}
               >
                 <BurgerMenu />
               </button>
-              <DFDSLogo /> <span className="header__title-news">News </span>
-              <span className="header__title-count">
-                {count > 0 ? `(${count})` : ""}
+              <DFDSLogo /> <span className='header__title-news'>News </span>
+              <span className='header__title-count'>
+                {count > 0 ? `(${count})` : ''}
               </span>
             </h1>
+            {detailsSSR && (
+              <div className='header__detail-focus-mode'>Focus mode</div>
+            )}
           </div>
         </div>
       </div>
 
       <style jsx>{`
         .header {
+          z-index: 1;
           position: fixed;
           top: 0;
           left: 0;
@@ -65,6 +75,10 @@ const Header = ({ count, setIsFilterOpen }) => {
           }
         }
 
+        .header__detail-focus-mode {
+          margin-left: auto;
+        }
+
         .header__viewport {
           @include device-width;
           pointer-events: none;
@@ -72,8 +86,9 @@ const Header = ({ count, setIsFilterOpen }) => {
         }
         .header__content {
           pointer-events: all;
-          display: inline-block;
-          display: block;
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
           padding: 10px;
           background: rgba($color-background, 0.95);
           @supports (backdrop-filter: blur(10px)) {
@@ -91,12 +106,10 @@ const Header = ({ count, setIsFilterOpen }) => {
           pointer-events: all;
           font-size: 20px;
           line-height: 1;
-          :global(svg) {
-          }
         }
       `}</style>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
