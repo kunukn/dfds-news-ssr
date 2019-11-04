@@ -138,7 +138,7 @@ const Overview = ({ items, selectArticleById, getAllNews, detailsSSR }) => {
           box-shadown: none;
           padding: 0;
           _border-radius: 2px;
-          background: rgba(white, 0.9);
+          background: rgba(white, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             _background: rgba($color-background, 0.7);
             _backdrop-filter: saturate(180%) blur(4px);

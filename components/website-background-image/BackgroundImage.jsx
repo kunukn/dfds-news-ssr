@@ -32,6 +32,7 @@ const BackgroundImage = props => {
           height: 100%;
           width: 100%;
           overflow: hidden;
+          background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9))
         }
         .image-background {
           position: absolute;
@@ -39,11 +40,12 @@ const BackgroundImage = props => {
           left: 0;
           /* https://stackoverflow.com/questions/23208200/how-to-darken-a-background-using-css */
           background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
-            url($backgroundImageUrl) no-repeat 50% 50% / cover;
+            url($backgroundImageUrl) no-repeat 50% 50% / contain;
 
-          width: 2000px;
+          width: 1024px;
           width: 100%;
-          height: 1317px;
+          height: 683px;
+          height: 100%;
           _opacity: 0.5;
         }
       `}</style>
