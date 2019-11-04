@@ -4,55 +4,56 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 //import Link from 'next/link';
-import { useRouter } from 'next/router';
-import NextHead from 'next/head';
+import { useRouter } from "next/router";
+import NextHead from "next/head";
 //import cx from "clsx";
 //import { useStore } from 'laco-react';
 //import debounce from "lodash.debounce";
-import Router from 'next/router';
+import Router from "next/router";
 
 //import store from '~/store.js';
-import getArticle from '~/api-layer/getArticle';
-import getNewsList from '~/api-layer/getNewsList';
+import getArticle from "~/api-layer/getArticle";
+import getNewsList from "~/api-layer/getNewsList";
 //import getQueryParams from '~/utils/getQueryParams';
-import { filterItemsByCriteria } from '~/utils/filter';
+import { filterItemsByCriteria } from "~/utils/filter";
 
-import Header from '~/components/header/Header';
-import Overview from '~/components/overview/Overview';
-import BackgroundImage from '~/components/website-background-image/BackgroundImage';
+import Header from "~/components/header/Header";
+import Overview from "~/components/overview/Overview";
+import BackgroundImage from "~/components/website-background-image/BackgroundImage";
 
-const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true,
+const Details = dynamic(() => import("~/components/details/Details"), {
+  ssr: true
 });
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ));
 
-const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false,
+const Footer = dynamic(() => import("~/components/footer/Footer"), {
+  ssr: false
 });
-const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false,
+const Filter = dynamic(() => import("~/components/filter/Filter"), {
+  ssr: false
 });
 
-const defaultDocTitle = 'DFDS NEWS';
+const defaultDocTitle = "DFDS NEWS";
 
-let pageMode = '';
+let pageMode = "";
 
 const Index = ({
   items: itemsProp = [],
   article = null,
   id,
   detailsSSR,
-  overviewSSR,
+  overviewSSR
 }) => {
   let cache = React.useRef({}).current;
 
-  if (overviewSSR) pageMode = 'overview';
-  if (detailsSSR) pageMode = 'details';
+  if (overviewSSR) pageMode = "overview";
+  if (detailsSSR) pageMode = "details";
 
+  // Update cache from SSR
   if (id && article) {
     cache[id] = article;
   }
@@ -98,7 +99,7 @@ const Index = ({
     const href = `/`;
     const as = `/`;
     Router.push(href, as, { shallow: true }); // Update url
-    pageMode = 'overview';
+    pageMode = "overview";
   };
 
   React.useEffect(() => {
@@ -135,11 +136,33 @@ const Index = ({
     }
   }, []);
 
+  // Updatey selected article by routing
+  React.useEffect(() => {
+    let id = router.query.id;
+
+    let getSelectedArticleAndUpdate = async () => {
+      let result = await getArticle(id);
+      cache[id] = result;
+      setSelectedArticle(result);
+    };
+
+    if (id) {
+      // Update State
+      if (cache[id]) {
+        setSelectedArticle(cache[id]);
+      } else {
+        getSelectedArticleAndUpdate();
+      }
+
+      setIsDetailsOpen(true);
+    }
+  }, [router.query.id]);
+
   React.useEffect(() => {
     if (isFilter3Active) {
-      document.body.style.fontFamily = 'Roboto, sans-serif';
+      document.body.style.fontFamily = "Roboto, sans-serif";
     } else {
-      document.body.style.fontFamily = '';
+      document.body.style.fontFamily = "";
     }
   }, [isFilter3Active]);
 
@@ -148,7 +171,7 @@ const Index = ({
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active,
+      is2019: isFilter2Active
     });
     setRenderedItems(result);
   }, [items, isFilter1Active, isFilter2Active]);
@@ -161,6 +184,7 @@ const Index = ({
     }
   }, [isDetailsOpen]);
 
+  // Update document title
   React.useEffect(() => {
     if (isDetailsOpen) {
       if (selectedArticle?.fields?.title) {
@@ -181,18 +205,7 @@ const Index = ({
     const href = `/?id=${id}`;
     const as = `/id/${id}`;
     Router.push(href, as, { shallow: true }); // Update Url
-    pageMode = 'details';
-
-    // Update State
-    if (cache[id]) {
-      setSelectedArticle(cache[id]);
-    } else {
-      let result = await getArticle(id);
-      cache[id] = result;
-      setSelectedArticle(result);
-    }
-
-    setIsDetailsOpen(true);
+    pageMode = "details";
   };
 
   return (
@@ -205,19 +218,19 @@ const Index = ({
         {...{
           items: renderedItems,
           selectArticleById,
-          isDetailsOpen,
+          isDetailsOpen
         }}
       >
         {renderedItems.length === 0 && (
           <button className="btn-get-all-news" onClick={getAllNews}>
-            Load news
+            Load<br/>news
           </button>
         )}
       </Overview>
       <Header
         {...{
           count: renderedItems.length,
-          setIsFilterOpen,
+          setIsFilterOpen
         }}
       />
 
@@ -229,7 +242,7 @@ const Index = ({
           onDetailsClose,
           selectedArticle,
           isDetailsExpanded,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s),
+          toggleExpanded: () => setIsDetailsExpanded(s => !s)
         }}
       />
 
@@ -244,7 +257,7 @@ const Index = ({
           onFilterClick3,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false),
+          onClose: () => setIsFilterOpen(false)
         }}
       />
 
@@ -253,6 +266,9 @@ const Index = ({
         .btn-get-all-news {
           padding: 10px;
           font-size: 16px;
+          background: none;
+          border: none;
+          @include elevation-1;
         }
       `}</style>
     </>

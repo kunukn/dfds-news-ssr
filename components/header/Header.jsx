@@ -19,7 +19,9 @@ const Header = ({ count, setIsFilterOpen }) => {
                 <BurgerMenu />
               </button>
               <DFDSLogo /> <span className="header__title-news">News </span>
-              <span className="header__title-count">({count})</span>
+              <span className="header__title-count">
+                {count > 0 ? `(${count})` : ""}
+              </span>
             </h1>
           </div>
         </div>
