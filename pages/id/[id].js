@@ -8,12 +8,12 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import NextHead from 'next/head'
 //import cx from "clsx";
-import { useStore } from 'laco-react'
+//import { useStore } from 'laco-react'
 //import debounce from "lodash.debounce";
 //import throttle from "lodash.throttle";
 import Router from 'next/router'
 
-import store from '~/store.js'
+//import store from '~/store.js'
 import getArticle from '~/api-layer/getArticle'
 import getNewsList from '~/api-layer/getNewsList'
 //import getQueryParams from '~/utils/getQueryParams';
@@ -47,8 +47,6 @@ const Index = ({
   overviewSSR
 }) => {
 
-  console.log('render index', Date.now())
-
   let cache = React.useRef({}).current
 
   // Update cache from SSR
@@ -56,7 +54,7 @@ const Index = ({
     cache[id] = article
   }
 
-  // let { windowHeight, windowWidth, temptemp } = useStore(store)
+  // let { windowHeight, windowWidth, pageMode } = useStore(store)
 
   const router = useRouter()
   const pageMode = router.query.id ? pageType.details : pageType.overview
