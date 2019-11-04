@@ -1,6 +1,7 @@
 import cx from 'clsx'
 import { useStore } from 'laco-react'
 
+import pageType from '~/utils/pageType'
 import store from '~/store.js'
 import DFDSLogo from '~/public/static/icons/DFDSLogo.svg'
 import CloseIcon from '~/public/static/icons/Close.svg'
@@ -9,7 +10,7 @@ import PreviousIcon from '~/public/static/icons/Previous.svg'
 import BurgerMenu from '~/public/static/icons/BurgerMenu.svg'
 
 const Header = ({ count, setIsFilterOpen, detailsSSR }) => {
-  let { pageMode } = useStore(store)
+//  let { pageMode } = useStore(store)
 
   return (
     <>
@@ -29,7 +30,7 @@ const Header = ({ count, setIsFilterOpen, detailsSSR }) => {
                 {count > 0 ? `(${count})` : ''}
               </span>
             </h1>
-            {detailsSSR && (
+            {count === 0 && detailsSSR && (
               <div className='header__detail-focus-mode'>Focus mode</div>
             )}
           </div>
