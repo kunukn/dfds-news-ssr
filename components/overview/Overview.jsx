@@ -1,51 +1,51 @@
-import cx from 'clsx';
+import cx from "clsx"
 
-import { formatShortDate } from '~/utils/date';
-import Link from 'next/link';
+import { formatShortDate } from "~/utils/date"
+import Link from "next/link"
 
 const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
-};
+}
 
 const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
-  let years = {};
-  let toBeAdded = null;
+  let years = {}
+  let toBeAdded = null
 
   return (
     <>
-      <div className={cx('overview', { 'overview--locked': isDetailsOpen })}>
+      <div className={cx("overview", { "overview--locked": isDetailsOpen })}>
         {children}
         {items.map((item, index) => {
-          let StartMarkup = () => null;
-          let YearMarkup = () => null;
+          let StartMarkup = () => null
+          let YearMarkup = () => null
 
           if (index === 0) {
             StartMarkup = () => (
-              <div className="year-mark-first" id="first-news-item"></div>
-            );
+              <div className='year-mark-first' id='first-news-item'></div>
+            )
           }
 
           if (items.length - 1 === index) {
             if (toBeAdded) {
-              let year = toBeAdded + '';
-              YearMarkup = () => <div className="year-mark" id={year}></div>;
-              toBeAdded = null;
+              let year = toBeAdded + ""
+              YearMarkup = () => <div className='year-mark' id={year}></div>
+              toBeAdded = null
             }
           }
 
-          let year = getYearFromDate(item.fields.publicationDate);
+          let year = getYearFromDate(item.fields.publicationDate)
 
           if (!years[year]) {
-            years[year] = true;
+            years[year] = true
             if (toBeAdded) {
               YearMarkup = () => (
-                <div className="year-mark" id={`${+year + 1}`}></div>
-              );
+                <div className='year-mark' id={`${+year + 1}`}></div>
+              )
             }
-            toBeAdded = year;
+            toBeAdded = year
           }
 
-          let id = item.sys.id;
+          let id = item.sys.id
 
           return (
             <React.Fragment key={id}>
@@ -54,21 +54,22 @@ const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
               <Link href={`/id/${id}`} prefetch={false}>
                 <a
                   id={id}
-                  className="button-overview-item"
+                  onTouchStart={noop}
+                  className='button-overview-item'
                   onClick={event => selectArticleById({ event, id })}
                 >
-                  <div className="overview-item">
-                    <div className="overview-item__date">
+                  <div className='overview-item'>
+                    <div className='overview-item__date'>
                       {formatShortDate(item.fields.publicationDate)}
                     </div>
-                    <div className="overview-item__title">
+                    <div className='overview-item__title'>
                       {item.fields.entryTitle}
                     </div>
                   </div>
                 </a>
               </Link>
             </React.Fragment>
-          );
+          )
         })}
       </div>
 
@@ -144,9 +145,9 @@ const Overview = ({ items, selectArticleById, isDetailsOpen, children }) => {
         }
       `}</style>
     </>
-  );
-};
+  )
+}
 
-export default Overview;
+export default Overview
 
-let getYearFromDate = date => date.substring(0, 4);
+let getYearFromDate = date => date.substring(0, 4)
