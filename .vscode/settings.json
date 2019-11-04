@@ -8,5 +8,6 @@
   "eslint.alwaysShowStatus": true,
   "typescript.validate.enable": false,
   "prettier.jsxSingleQuote": true,
-  "prettier.semi": false
+  "prettier.semi": false,
+  "prettier.singleQuote": true
 }

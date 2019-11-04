@@ -4,42 +4,42 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import dynamic from "next/dynamic"
+import dynamic from 'next/dynamic'
 //import Link from 'next/link';
-import { useRouter } from "next/router"
-import NextHead from "next/head"
+import { useRouter } from 'next/router'
+import NextHead from 'next/head'
 //import cx from "clsx";
 //import { useStore } from 'laco-react';
 //import debounce from "lodash.debounce";
-import Router from "next/router"
+import Router from 'next/router'
 
 //import store from '~/store.js';
-import getArticle from "~/api-layer/getArticle"
-import getNewsList from "~/api-layer/getNewsList"
+import getArticle from '~/api-layer/getArticle'
+import getNewsList from '~/api-layer/getNewsList'
 //import getQueryParams from '~/utils/getQueryParams';
-import { filterItemsByCriteria } from "~/utils/filter"
+import { filterItemsByCriteria } from '~/utils/filter'
 
-import Header from "~/components/header/Header"
-import Overview from "~/components/overview/Overview"
-import BackgroundImage from "~/components/website-background-image/BackgroundImage"
+import Header from '~/components/header/Header'
+import Overview from '~/components/overview/Overview'
+import BackgroundImage from '~/components/website-background-image/BackgroundImage'
 
-const Details = dynamic(() => import("~/components/details/Details"), {
+const Details = dynamic(() => import('~/components/details/Details'), {
   ssr: true
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
-const Footer = dynamic(() => import("~/components/footer/Footer"), {
+const Footer = dynamic(() => import('~/components/footer/Footer'), {
   ssr: false
 })
-const Filter = dynamic(() => import("~/components/filter/Filter"), {
+const Filter = dynamic(() => import('~/components/filter/Filter'), {
   ssr: false
 })
 
-const defaultDocTitle = "DFDS NEWS"
+const defaultDocTitle = 'DFDS NEWS'
 
-let pageMode = ""
+let pageMode = ''
 
 const Index = ({
   items: itemsProp = [],
@@ -50,8 +50,8 @@ const Index = ({
 }) => {
   let cache = React.useRef({}).current
 
-  if (overviewSSR) pageMode = "overview"
-  if (detailsSSR) pageMode = "details"
+  if (overviewSSR) pageMode = 'overview'
+  if (detailsSSR) pageMode = 'details'
 
   // Update cache from SSR
   if (id && article) {
@@ -99,7 +99,7 @@ const Index = ({
     const href = `/`
     const as = `/`
     Router.push(href, as, { shallow: true }) // Update url
-    pageMode = "overview"
+    pageMode = 'overview'
   }
 
   React.useEffect(() => {
@@ -160,9 +160,9 @@ const Index = ({
 
   React.useEffect(() => {
     if (isFilter3Active) {
-      document.body.style.fontFamily = "Roboto, sans-serif"
+      document.body.style.fontFamily = 'Roboto, sans-serif'
     } else {
-      document.body.style.fontFamily = ""
+      document.body.style.fontFamily = ''
     }
   }, [isFilter3Active])
 
@@ -205,7 +205,7 @@ const Index = ({
     const href = `/?id=${id}`
     const as = `/id/${id}`
     Router.push(href, as, { shallow: true }) // Update Url
-    pageMode = "details"
+    pageMode = 'details'
   }
 
   return (

@@ -1,12 +1,12 @@
-import React from "react";
-import App from "next/app";
-import throttle from "lodash.throttle";
-import { useStore } from "laco-react";
+import React from 'react'
+import App from 'next/app'
+import throttle from 'lodash.throttle'
+import { useStore } from 'laco-react'
 
-import "~/init/nprogress";
-import "~/init/router-change-events";
-import store from "~/store.js";
-import GlobalStyles from "../components/GlobalStyles";
+import '~/init/nprogress'
+import '~/init/router-change-events'
+import store from '~/store.js'
+import GlobalStyles from '../components/GlobalStyles'
 
 if (process.browser) {
 }
@@ -21,7 +21,7 @@ class MyApp extends App {
   // }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps } = this.props
 
     return (
       <>
@@ -29,7 +29,7 @@ class MyApp extends App {
         <GlobalEffects />
         <Component {...pageProps} />
       </>
-    );
+    )
   }
 }
 
@@ -37,19 +37,19 @@ export const dispatchResize = () => {
   store.set(state => ({
     windowHeight: window.innerHeight,
     windowWidth: window.innerWidth
-  }));
-};
+  }))
+}
 
 const GlobalEffects = () => {
   let onResize = throttle(() => {
-    dispatchResize();
-  }, 1);
+    dispatchResize()
+  }, 1)
 
   React.useEffect(() => {
-    setTimeout(dispatchResize, 30);
-    window.addEventListener("resize", onResize);
+    setTimeout(dispatchResize, 30)
+    window.addEventListener('resize', onResize)
 
-    if ("serviceWorker" in navigator) {
+    if ('serviceWorker' in navigator) {
       // navigator.serviceWorker
       //   .register('/service-worker.js')
       //   .then(registration => {
@@ -61,11 +61,11 @@ const GlobalEffects = () => {
     }
 
     return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
 
-  return null;
-};
+  return null
+}
 
-export default MyApp;
+export default MyApp
