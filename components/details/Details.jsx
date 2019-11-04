@@ -17,17 +17,17 @@ const Details = ({
   selectedArticle,
   isDetailsExpanded,
   toggleExpanded,
-  detailsSSR,
+  isFirstDetailSSR,
   forwardedRef,
 }) => {
-  let fields = selectedArticle && selectedArticle.fields
+  let fields = selectedArticle?.fields
 
   return (
     <>
       <div
         className={cx(
           'detail',
-          { 'detail--full-focus': detailsSSR },
+          { 'detail--full-focus': isFirstDetailSSR },
           { 'detail--is-open': isDetailsOpen }
         )}
         ref={forwardedRef}

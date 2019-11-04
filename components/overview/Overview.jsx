@@ -7,7 +7,7 @@ const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 }
 
-const Overview = ({ items, selectArticleById, getAllNews, detailsSSR }) => {
+const Overview = ({ items, selectArticleById, getAllNews, isFirstDetailSSR }) => {
   let years = {}
   let toBeAdded = null
 
@@ -15,7 +15,7 @@ const Overview = ({ items, selectArticleById, getAllNews, detailsSSR }) => {
     <>
       <div
         className={cx('overview', {
-          'overview--detail-full-focus': detailsSSR,
+          'overview--detail-full-focus': isFirstDetailSSR,
         })}
       >
         {false && items?.length === 0 && (

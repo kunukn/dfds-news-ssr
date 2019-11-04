@@ -7,6 +7,8 @@ import pageType from '~/utils/pageType'
 RouterEvents.on('routeChangeStart', url => {})
 
 RouterEvents.on('routeChangeComplete', url => {
+  store.set(state => ({ routeChanged: true }))
+
   if (Router.query.id) {
     store.set(state => ({ pageMode: pageType.detail }))
   } else {

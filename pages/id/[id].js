@@ -9,12 +9,12 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import NextHead from 'next/head'
 //import cx from "clsx";
-//import { useStore } from 'laco-react'
+import { useStore } from 'laco-react'
 //import debounce from "lodash.debounce";
 //import throttle from "lodash.throttle";
 import Router from 'next/router'
 
-//import store from '~/store.js'
+import store from '~/store.js'
 import pageType from '~/utils/pageType'
 import getArticle from '~/api-layer/getArticle'
 import getNewsList from '~/api-layer/getNewsList'
@@ -55,7 +55,9 @@ const Index = ({
     cache[id] = article
   }
 
-  // let { windowHeight, windowWidth, pageMode } = useStore(store)
+  let { routeChanged } = useStore(store)
+
+  let isFirstDetailSSR = !routeChanged && detailsSSR
 
   const router = useRouter()
   const pageMode = router.query.id ? pageType.detail : pageType.overview
@@ -98,7 +100,7 @@ const Index = ({
       default:
         break
     }
-  }, [pageMode])
+  }, [pageMode, router.query.id])
 
   let onDetailsClose = event => {
     event?.preventDefault && event.preventDefault()
@@ -205,7 +207,7 @@ const Index = ({
   if (!items) return <div className='news'>Failed loading data, sorry.</div>
 
   let selectArticleById = async ({ event, id }) => {
-    event && event.preventDefault && event.preventDefault()
+    event?.preventDefault && event.preventDefault()
 
     goToDetailsPage(id)
   }
@@ -222,14 +224,14 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
-          detailsSSR,
+          isFirstDetailSSR,
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
           setIsFilterOpen,
-          detailsSSR,
+          isFirstDetailSSR,
         }}
       />
 
@@ -241,7 +243,7 @@ const Index = ({
           onDetailsClose,
           selectedArticle,
           isDetailsExpanded,
-          detailsSSR,
+          isFirstDetailSSR,
           toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
@@ -263,7 +265,7 @@ const Index = ({
 
       <Footer
         {...{
-          detailsSSR,
+          isFirstDetailSSR,
           renderScrollbar: !!renderedItems.length,
         }}
       />

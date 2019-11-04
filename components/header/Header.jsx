@@ -9,8 +9,7 @@ import NextIcon from '~/public/static/icons/Next.svg'
 import PreviousIcon from '~/public/static/icons/Previous.svg'
 import BurgerMenu from '~/public/static/icons/BurgerMenu.svg'
 
-const Header = ({ count, setIsFilterOpen, detailsSSR }) => {
-//  let { pageMode } = useStore(store)
+const Header = ({ count, setIsFilterOpen, isFirstDetailSSR }) => {
 
   return (
     <>
@@ -30,7 +29,7 @@ const Header = ({ count, setIsFilterOpen, detailsSSR }) => {
                 {count > 0 ? `(${count})` : ''}
               </span>
             </h1>
-            {count === 0 && detailsSSR && (
+            {count === 0 && isFirstDetailSSR && (
               <div className='header__detail-focus-mode'>Focus mode</div>
             )}
           </div>

@@ -3,15 +3,15 @@ import CloseIcon from '~/public/static/icons/Close.svg'
 import NextIcon from '~/public/static/icons/Next.svg'
 import PreviousIcon from '~/public/static/icons/Previous.svg'
 
-const Footer = ({ detailsSSR }) => {
+const Footer = ({ isFirstDetailSSR }) => {
 
-  if(detailsSSR) return null;
+  if(isFirstDetailSSR) return null;
 
   return (
     <>
       <div className='footer'>
         <div className='footer__content'>
-          {!detailsSSR && (
+          {!isFirstDetailSSR && (
             <div className='year-group'>
               <a href='#first-news-item'>First</a>
               <a href='#2019'>19´</a>
