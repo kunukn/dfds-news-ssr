@@ -7,14 +7,20 @@ const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 }
 
-const Overview = ({ items, selectArticleById, children }) => {
+const Overview = ({ items, selectArticleById, getAllNews }) => {
   let years = {}
   let toBeAdded = null
 
   return (
     <>
       <div className={cx('overview')}>
-        {children}
+        {items?.length === 0 && (
+          <button className='btn-get-all-news' onClick={getAllNews}>
+            Load
+            <br />
+            news
+          </button>
+        )}
         {items.map((item, index) => {
           let StartMarkup = () => null
           let YearMarkup = () => null
@@ -139,6 +145,13 @@ const Overview = ({ items, selectArticleById, children }) => {
         }
         :global(.button-overview-item) {
           margin-bottom: 10px;
+        }
+        .btn-get-all-news {
+          padding: 10px;
+          font-size: 16px;
+          background: none;
+          border: none;
+          @include elevation-1;
         }
       `}</style>
     </>

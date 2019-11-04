@@ -1,25 +1,27 @@
-import DFDSLogo from "~/public/static/icons/DFDSLogo.svg";
-import CloseIcon from "~/public/static/icons/Close.svg";
-import NextIcon from "~/public/static/icons/Next.svg";
-import PreviousIcon from "~/public/static/icons/Previous.svg";
+import DFDSLogo from '~/public/static/icons/DFDSLogo.svg'
+import CloseIcon from '~/public/static/icons/Close.svg'
+import NextIcon from '~/public/static/icons/Next.svg'
+import PreviousIcon from '~/public/static/icons/Previous.svg'
 
-const Footer = ({ children }) => {
+const Footer = ({ renderScrollbar }) => {
   return (
     <>
-      <div className="footer">
-        <div className="footer__content">
-          <div className="year-group">
-            <a href="#first-news-item">First</a>
-            <a href="#2019">19´</a>
-            <a href="#2018">18´</a>
-            <a href="#2017">17´</a>
-            <a href="#2016">16´</a>
-            <a href="#2015">15´</a>
-            <a href="#2014">14´</a>
-            <a href="#2013">13´</a>
-            <a href="#2012">12´</a>
-            <a href="#2011">11´</a>
-          </div>
+      <div className='footer'>
+        <div className='footer__content'>
+          {renderScrollbar && (
+            <div className='year-group'>
+              <a href='#first-news-item'>First</a>
+              <a href='#2019'>19´</a>
+              <a href='#2018'>18´</a>
+              <a href='#2017'>17´</a>
+              <a href='#2016'>16´</a>
+              <a href='#2015'>15´</a>
+              <a href='#2014'>14´</a>
+              <a href='#2013'>13´</a>
+              <a href='#2012'>12´</a>
+              <a href='#2011'>11´</a>
+            </div>
+          )}
         </div>
       </div>
 
@@ -75,7 +77,7 @@ const Footer = ({ children }) => {
         }
       `}</style>
     </>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

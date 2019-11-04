@@ -4,6 +4,7 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
+import { useState, useEffect, useRef, createRef } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import NextHead from 'next/head'
@@ -24,17 +25,17 @@ import Overview from '~/components/overview/Overview'
 import BackgroundImage from '~/components/website-background-image/BackgroundImage'
 
 const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true
+  ssr: true,
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false
+  ssr: false,
 })
 const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false
+  ssr: false,
 })
 
 const defaultDocTitle = 'DFDS NEWS'
@@ -44,10 +45,9 @@ const Index = ({
   article = null,
   id,
   detailsSSR,
-  overviewSSR
+  overviewSSR,
 }) => {
-
-  let cache = React.useRef({}).current
+  let cache = useRef({}).current
 
   // Update cache from SSR
   if (id && article) {
@@ -59,20 +59,18 @@ const Index = ({
   const router = useRouter()
   const pageMode = router.query.id ? pageType.details : pageType.overview
 
-  const detailsRef = React.createRef()
-  let [items, setItems] = React.useState(itemsProp)
-  let [renderedItems, setRenderedItems] = React.useState(itemsProp)
-  let [isDetailsExpanded, setIsDetailsExpanded] = React.useState(true)
-  let [selectedArticle, setSelectedArticle] = React.useState(article)
-  let [isDetailsOpen, setIsDetailsOpen] = React.useState(!!article)
-  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = React.useState(
-    false
-  )
-  let [isFilterOpen, setIsFilterOpen] = React.useState(false)
+  const detailsRef = createRef()
+  let [items, setItems] = useState(itemsProp)
+  let [renderedItems, setRenderedItems] = useState(itemsProp)
+  let [isDetailsExpanded, setIsDetailsExpanded] = useState(true)
+  let [selectedArticle, setSelectedArticle] = useState(article)
+  let [isDetailsOpen, setIsDetailsOpen] = useState(!!article)
+  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(false)
+  let [isFilterOpen, setIsFilterOpen] = useState(false)
 
-  let [isFilter1Active, setIsFilter1Active] = React.useState(false)
-  let [isFilter2Active, setIsFilter2Active] = React.useState(false)
-  let [isFilter3Active, setIsFilter3Active] = React.useState(false)
+  let [isFilter1Active, setIsFilter1Active] = useState(false)
+  let [isFilter2Active, setIsFilter2Active] = useState(false)
+  let [isFilter3Active, setIsFilter3Active] = useState(false)
 
   let onFilterClick1 = () => {
     setIsFilter1Active(s => !s)
@@ -88,7 +86,7 @@ const Index = ({
   }
 
   // Update page mode state by routing
-  React.useEffect(() => {
+  useEffect(() => {
     switch (pageMode) {
       case pageType.overview:
         setIsDetailsOpen(false)
@@ -107,8 +105,9 @@ const Index = ({
     goToOverviewPage()
   }
 
+  // Scroll to top in details component
   React.useEffect(() => {
-    if (selectedArticle && isDetailsOpen && detailsRef && detailsRef.current) {
+    if (selectedArticle && isDetailsOpen && detailsRef?.current) {
       detailsRef.current.scrollTop = 0
     }
   }, [isDetailsOpen, detailsRef, selectedArticle])
@@ -118,7 +117,7 @@ const Index = ({
     setItems((news && news.items) || [])
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (overviewSSR) {
       document.title = defaultDocTitle
       getAllNews()
@@ -126,7 +125,7 @@ const Index = ({
   }, [])
 
   // Updatey by query strings
-  React.useEffect(() => {
+  useEffect(() => {
     let query = router.query
 
     if (query.filter) setIsFilterOpen(true)
@@ -142,7 +141,7 @@ const Index = ({
   }, [])
 
   // Updatey selected article by routing
-  React.useEffect(() => {
+  useEffect(() => {
     let id = router.query.id
 
     let getSelectedArticleAndUpdate = async () => {
@@ -174,12 +173,12 @@ const Index = ({
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active
+      is2019: isFilter2Active,
     })
     setRenderedItems(result)
   }, [items, isFilter1Active, isFilter2Active])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDetailsOpen) {
       //document.body.style.overflow = 'hidden';
     } else {
@@ -188,7 +187,7 @@ const Index = ({
   }, [isDetailsOpen])
 
   // Update document title
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDetailsOpen) {
       if (selectedArticle?.fields?.title) {
         document.title = selectedArticle.fields.title
@@ -216,21 +215,14 @@ const Index = ({
         {...{
           items: renderedItems,
           selectArticleById,
-          isDetailsOpen
+          isDetailsOpen,
+          getAllNews,
         }}
-      >
-        {renderedItems.length === 0 && (
-          <button className='btn-get-all-news' onClick={getAllNews}>
-            Load
-            <br />
-            news
-          </button>
-        )}
-      </Overview>
+      />
       <Header
         {...{
           count: renderedItems.length,
-          setIsFilterOpen
+          setIsFilterOpen,
         }}
       />
 
@@ -242,7 +234,7 @@ const Index = ({
           onDetailsClose,
           selectedArticle,
           isDetailsExpanded,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s)
+          toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
 
@@ -257,20 +249,15 @@ const Index = ({
           onFilterClick3,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false)
+          onClose: () => setIsFilterOpen(false),
         }}
       />
 
-      <Footer {...{}} />
-      <style jsx>{`
-        .btn-get-all-news {
-          padding: 10px;
-          font-size: 16px;
-          background: none;
-          border: none;
-          @include elevation-1;
-        }
-      `}</style>
+      <Footer
+        {...{
+          renderScrollbar: !!renderedItems.length,
+        }}
+      />
     </>
   )
 }
@@ -287,10 +274,6 @@ Index.getInitialProps = async ({ req, query }) => {
 
 export default Index
 
-
-
-
-
 let goToOverviewPage = () => {
   const href = `/`
   const as = `/`
@@ -305,6 +288,6 @@ let goToDetailsPage = id => {
 
 const pageType = {
   details: 'details',
-  overview: 'overview'
+  overview: 'overview',
 }
 Object.freeze(pageType)
