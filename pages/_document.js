@@ -91,15 +91,14 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
 
-          {/* <link
+          <link
             rel='stylesheet'
             href='https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css'
           />
-
           <link
             href='https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700&display=swap'
             rel='stylesheet'
-          /> */}
+          />
         </body>
       </html>
     )

@@ -2,19 +2,24 @@ import React from 'react'
 import showdown from 'showdown'
 import Collapse from '@kunukn/react-collapse'
 import cx from 'clsx'
-import { Transition } from 'react-transition-group'
-import Router from 'next/router'
+//import { Transition } from 'react-transition-group'
+//import Router from 'next/router'
 import { useStore } from 'laco-react'
 
 import store from '~/store.js'
 import { formatLongDate } from '~/utils/date'
 import CloseIcon from '~/public/static/icons/Close.svg'
-import NextIcon from '~/public/static/icons/Next.svg'
-import PreviousIcon from '~/public/static/icons/Previous.svg'
-import UpIcon from '~/public/static/icons/Up.svg'
+// import NextIcon from '~/public/static/icons/Next.svg'
+// import PreviousIcon from '~/public/static/icons/Previous.svg'
+// import UpIcon from '~/public/static/icons/Up.svg'
 
 let converter = new showdown.Converter()
 let sidebarTransitionDuration = 300
+
+// Dummy react-transition-group implementation
+const Transition = ({ children }) => {
+  return children('dummy-state-value')
+}
 
 const Details = ({
   isDetailsOpen,
@@ -23,7 +28,7 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
-  forwardedRef
+  forwardedRef,
 }) => {
   let { history } = useStore(store)
 
@@ -36,11 +41,16 @@ const Details = ({
       <Transition in={isDetailsOpen} timeout={sidebarTransitionDuration}>
         {state => (
           <div
-            className={cx('detail', state, {
-              'detail--full-focus': isFirstDetailSSR
-            })}
+            className={cx(
+              'detail',
+              state,
+              {
+                'detail--full-focus': isFirstDetailSSR,
+              },
+              { 'detail--is-open': isDetailsOpen }
+            )}
             style={{
-              transitionDuration: transitionDisabled ? '0s' : ''
+              transitionDuration: transitionDisabled ? '0s' : '',
             }}
             ref={forwardedRef}
           >
@@ -60,7 +70,7 @@ const Details = ({
                     <div
                       className='detail__content'
                       dangerouslySetInnerHTML={{
-                        __html: converter.makeHtml(fields.content)
+                        __html: converter.makeHtml(fields.content),
                       }}
                     ></div>
                   </Collapse>
@@ -116,7 +126,7 @@ const Details = ({
           transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
           transition-property: transform, opacity;
           transition-duration: $sidebarTransitionDuration;
-          visibility: hidden;
+          _visibility: hidden;
           transform: translateX(100%) scale(0.5);
 
           &.entering,
@@ -137,6 +147,11 @@ const Details = ({
           &.exited {
             visibility: hidden;
           }
+        }
+        .detail--is-open {
+          transform: translateX(0) scale(1);
+          visibility: visible;
+          opacity: 1;
         }
         .detail--full-focus {
           z-index: 0;
