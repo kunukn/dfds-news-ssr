@@ -124,7 +124,7 @@ const Details = ({
 
           transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
           transition-property: transform, opacity;
-          transition-duration: $sidebarTransitionDuration;
+          transition-duration: ${sidebarTransitionDuration}ms;
           visibility: hidden;
           transform: translateX(100%) scale(0.5);
 
