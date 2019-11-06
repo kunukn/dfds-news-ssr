@@ -99,7 +99,7 @@ const Index = ({
     }
   }, [pageMode, router.query.id])
 
-  let onDetailsClose = event => {
+  let onDetailsClose = event => {[]
     event?.preventDefault && event.preventDefault()
 
     if (isFirstDetailSSR) {
@@ -241,7 +241,6 @@ const Index = ({
           selectedArticle,
           isDetailsExpanded,
           isFirstDetailSSR,
-          transitionDisabledForDetail,
           toggleExpanded: () => setIsDetailsExpanded(s => !s)
         }}
       />
