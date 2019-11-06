@@ -28,6 +28,7 @@ class MyApp extends App {
       <>
         <GlobalStyles />
         <GlobalEffects />
+        <Preload />
         <Component {...pageProps} />
       </>
     )
@@ -39,6 +40,24 @@ export const dispatchResize = () => {
     windowHeight: window.innerHeight,
     windowWidth: window.innerWidth,
   }))
+}
+
+const Preload = () => {
+  return (
+    <>
+      <img src='/static/images/ship.jpg' alt='' className='preload' />
+      <style jsx>{`
+        .preload {
+          position: absolute;
+          visibility: hidden;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 0;
+        }
+      `}</style>
+    </>
+  )
 }
 
 const GlobalEffects = () => {

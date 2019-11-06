@@ -23,17 +23,17 @@ import { filterItemsByCriteria } from '~/utils/filter'
 import pageType from '~/utils/pageType'
 
 const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true
+  ssr: true,
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false
+  ssr: false,
 })
 const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false
+  ssr: false,
 })
 
 const defaultDocTitle = 'DFDS NEWS'
@@ -43,7 +43,7 @@ const Index = ({
   article = null,
   id,
   detailsSSR,
-  overviewSSR
+  overviewSSR,
 }) => {
   let cache = useRef({}).current
 
@@ -99,7 +99,8 @@ const Index = ({
     }
   }, [pageMode, router.query.id])
 
-  let onDetailsClose = event => {[]
+  let onDetailsClose = event => {
+    ;[]
     event?.preventDefault && event.preventDefault()
 
     if (isFirstDetailSSR) {
@@ -117,6 +118,9 @@ const Index = ({
   }, [isDetailsOpen, detailsRef, selectedArticle])
 
   let getAllNews = async () => {
+
+    if(items.length > 100) return;
+
     let news = await getNewsList(200)
     setItems((news && news.items) || [])
   }
@@ -124,6 +128,8 @@ const Index = ({
   useEffect(() => {
     if (overviewSSR) {
       document.title = defaultDocTitle
+      console.log('overviewSSR');
+
       getAllNews()
     }
   }, [])
@@ -178,7 +184,7 @@ const Index = ({
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active
+      is2019: isFilter2Active,
     })
     setRenderedItems(result)
   }, [items, isFilter1Active, isFilter2Active])
@@ -222,14 +228,14 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
-          isFirstDetailSSR
+          isFirstDetailSSR,
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
           setIsFilterOpen,
-          isFirstDetailSSR
+          isFirstDetailSSR,
         }}
       />
 
@@ -242,7 +248,7 @@ const Index = ({
           selectedArticle,
           isDetailsExpanded,
           isFirstDetailSSR,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s)
+          toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
 
@@ -257,14 +263,14 @@ const Index = ({
           onFilterClick3,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false)
+          onClose: () => setIsFilterOpen(false),
         }}
       />
 
       <Footer
         {...{
           isFirstDetailSSR,
-          renderScrollbar: !!renderedItems.length
+          renderScrollbar: !!renderedItems.length,
         }}
       />
     </>
@@ -272,6 +278,13 @@ const Index = ({
 }
 
 Index.getInitialProps = async ({ req, query }) => {
+  if (query['no-content']) {
+    return {}
+  }
+  if (query['client-content']) {
+    return { overviewSSR: true }
+  }
+
   if (query.id) {
     let article = await getArticle(query.id)
     return { id: query.id, article, detailsSSR: true }
