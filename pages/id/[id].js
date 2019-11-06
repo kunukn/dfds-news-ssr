@@ -125,10 +125,9 @@ const Index = ({
   }
 
   useEffect(() => {
+
     if (overviewSSR) {
       document.title = defaultDocTitle
-      console.log('overviewSSR');
-
       getAllNews()
     }
   }, [])
