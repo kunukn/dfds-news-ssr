@@ -18,7 +18,7 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
-  forwardedRef,
+  forwardedRef
 }) => {
   let fields = selectedArticle?.fields
 
@@ -48,7 +48,7 @@ const Details = ({
                 <div
                   className='detail__content'
                   dangerouslySetInnerHTML={{
-                    __html: converter.makeHtml(fields.content),
+                    __html: converter.makeHtml(fields.content)
                   }}
                 ></div>
               </Collapse>
@@ -76,7 +76,6 @@ const Details = ({
       <style jsx>{`
         .detail {
           z-index: 1;
-          display: none;
           position: fixed;
           top: 5px;
           right: 5px;
@@ -88,6 +87,9 @@ const Details = ({
           background: rgba(white, 1);
           padding: 10px;
           width: 700px;
+          transition: 280ms cubic-bezier(0.17, 0.67, 1, 1.35);
+          visibility: hidden;
+          transform: translateX(100%) scale(0.5);
           max-width: 80vw;
           @media (min-width: 700px) {
             max-width: 85vw;
@@ -111,7 +113,9 @@ const Details = ({
           margin-bottom: 10px;
         }
         .detail--is-open {
-          display: block;
+          visibility: visible;
+          transform: translateX(0) scale(1);
+          transition-timing-function: ease-in;
         }
         .detail__content {
           :global(p) {

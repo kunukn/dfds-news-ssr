@@ -105,7 +105,7 @@ const Index = ({
   let onDetailsClose = event => {
     event?.preventDefault && event.preventDefault()
 
-    if (detailsSSR) {
+    if (isFirstDetailSSR) {
       getAllNews()
     }
 
