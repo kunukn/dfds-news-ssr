@@ -7,7 +7,12 @@ const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
 }
 
-const Overview = ({ items, selectArticleById, getAllNews, isFirstDetailSSR }) => {
+const Overview = ({
+  items,
+  selectArticleById,
+  getAllNews,
+  isFirstDetailSSR,
+}) => {
   let years = {}
   let toBeAdded = null
 
@@ -96,7 +101,7 @@ const Overview = ({ items, selectArticleById, getAllNews, isFirstDetailSSR }) =>
           overflow-y: auto;
         }
 
-        .overview--detail-full-focus{
+        .overview--detail-full-focus {
           z-index: 0;
           padding-bottom: 0;
         }
@@ -104,12 +109,16 @@ const Overview = ({ items, selectArticleById, getAllNews, isFirstDetailSSR }) =>
         :global(.overview-item) {
           padding: 10px;
           font-size: 14px;
-          _border-radius: 2px;
+          transition: background-color 300ms;
 
           @media (min-width: 700px) {
             _display: flex;
             flex-wrap: wrap;
             font-size: 16px;
+          }
+
+          &:hover {
+            background-color: rgba($color-groupBlue, 0.08);
           }
         }
         :global(.overview-item__date) {
@@ -128,6 +137,7 @@ const Overview = ({ items, selectArticleById, getAllNews, isFirstDetailSSR }) =>
           _color: $color-groupBlue;
         }
         :global(.button-overview-item) {
+          position: relative;
           font-size: 16px;
           text-align: left;
           display: block;
@@ -137,11 +147,30 @@ const Overview = ({ items, selectArticleById, getAllNews, isFirstDetailSSR }) =>
           border: none;
           box-shadown: none;
           padding: 0;
-          _border-radius: 2px;
+          border-radius: 2px;
           background: rgba(white, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             _background: rgba($color-background, 0.7);
             _backdrop-filter: saturate(180%) blur(4px);
+          }
+
+          &::after {
+            display: none;
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: calc(100% + 8px);
+            height: calc(100% + 8px);
+            border: 2px solid $color-actionBlue;
+            border-radius: 3px;
+          }
+
+          &:focus {
+            outline: none;
+            &::after {
+              display: block;
+            }
           }
         }
 

@@ -26,7 +26,9 @@ let GlobalStyles = () => (
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       font-family: inherit;
       cursor: pointer;
+      border-radius: 2px;
     }
+
     #__next {
       @include device-width;
       min-height: 100vh;
@@ -35,6 +37,7 @@ let GlobalStyles = () => (
     a {
       text-decoration: none;
       color: #1b5786;
+      border-radius: 2px;
     }
 
     img {

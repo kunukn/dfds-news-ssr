@@ -100,7 +100,6 @@ const Index = ({
   }, [pageMode, router.query.id])
 
   let onDetailsClose = event => {
-    ;[]
     event?.preventDefault && event.preventDefault()
 
     if (isFirstDetailSSR) {
@@ -153,7 +152,7 @@ const Index = ({
   // Updatey selected article by routing
   useEffect(() => {
     let id = router.query.id
-    setSelectedArticle(null)
+    //setSelectedArticle(null)
 
     let getSelectedArticleAndUpdate = async () => {
       let result = await getArticle(id)
