@@ -23,7 +23,6 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
-  transitionDisabledForDetail,
   forwardedRef
 }) => {
   let { history } = useStore(store)

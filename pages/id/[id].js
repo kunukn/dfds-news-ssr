@@ -22,8 +22,6 @@ import store from '~/store.js'
 import { filterItemsByCriteria } from '~/utils/filter'
 import pageType from '~/utils/pageType'
 
-
-
 const Details = dynamic(() => import('~/components/details/Details'), {
   ssr: true
 })
@@ -74,10 +72,6 @@ const Index = ({
   let [isFilter2Active, setIsFilter2Active] = useState(false)
   let [isFilter3Active, setIsFilter3Active] = useState(false)
 
-  let [transitionDisabledForDetail, setTransitionDisabledForDetail] = useState(
-    false
-  )
-
   let onFilterClick1 = () => {
     setIsFilter1Active(s => !s)
   }
@@ -110,8 +104,6 @@ const Index = ({
 
     if (isFirstDetailSSR) {
       getAllNews()
-      setTransitionDisabledForDetail(true) // hack
-      setTimeout(() => setTransitionDisabledForDetail(false), 1000)
     }
 
     goToOverviewPage()

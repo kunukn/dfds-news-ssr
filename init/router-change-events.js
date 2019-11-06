@@ -4,8 +4,7 @@ import RouterEvents from '~/lib/router-events'
 import store from '~/store.js'
 import pageType from '~/utils/pageType'
 
-RouterEvents.on('routeChangeStart', url => {
-})
+RouterEvents.on('routeChangeStart', url => {})
 
 RouterEvents.on('routeChangeComplete', url => {
   store.set(state => {
@@ -19,11 +18,8 @@ RouterEvents.on('routeChangeComplete', url => {
     return { routeChanged: true, history: [...state.history] }
   })
 
-  if (Router.query.id) {
-    store.set(state => ({ pageMode: pageType.detail }))
-  } else {
-    store.set(state => ({ pageMode: pageType.overview }))
-  }
+  if (Router.query.id) store.set(state => ({ pageMode: pageType.detail }))
+  else store.set(state => ({ pageMode: pageType.overview }))
 })
 
 RouterEvents.on('routeChangeError', url => {})
