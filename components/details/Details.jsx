@@ -2,7 +2,7 @@ import React from 'react'
 import showdown from 'showdown'
 import Collapse from '@kunukn/react-collapse'
 import cx from 'clsx'
-//import { Transition } from 'react-transition-group'
+import { Transition } from 'react-transition-group'
 //import Router from 'next/router'
 import { useStore } from 'laco-react'
 
@@ -17,9 +17,8 @@ let converter = new showdown.Converter()
 let sidebarTransitionDuration = 300
 
 // Dummy react-transition-group implementation
-const Transition = ({ children }) => {
-  return children('dummy-state-value')
-}
+//const Transition = ({ children }) => children('dummy-state-value')
+
 
 const Details = ({
   isDetailsOpen,
@@ -126,7 +125,7 @@ const Details = ({
           transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
           transition-property: transform, opacity;
           transition-duration: $sidebarTransitionDuration;
-          _visibility: hidden; /* TODO should be used, but transition-group is needed. */
+          visibility: hidden;
           transform: translateX(100%) scale(0.5);
 
           &.entering,
@@ -145,7 +144,7 @@ const Details = ({
           &.exiting,
           &.exited {
             transform: translateX(100%) scale(0.5);
-            opacity: 0.5;
+            opacity: 0.4;
           }
         }
         .detail--is-open {

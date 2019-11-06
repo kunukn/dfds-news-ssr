@@ -141,6 +141,7 @@ const Filter = ({
 
         .button-close {
           background: transparent;
+          color: gray;
           border: none;
           position: absolute;
           top: 0;
