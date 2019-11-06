@@ -165,6 +165,7 @@ const Details = ({
           margin-bottom: 10px;
         }
         .detail__content {
+          min-height: 200px;
           :global(p) {
             line-height: 1.5;
           }

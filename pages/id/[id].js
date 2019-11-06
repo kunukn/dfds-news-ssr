@@ -147,6 +147,7 @@ const Index = ({
   // Updatey selected article by routing
   useEffect(() => {
     let id = router.query.id
+    setSelectedArticle(null)
 
     let getSelectedArticleAndUpdate = async () => {
       let result = await getArticle(id)
