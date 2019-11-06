@@ -1,4 +1,4 @@
-import { sortByDateDescending, sortByDateAscending } from '~/utils/sort';
+import { sortByDateDescending } from '~/utils/sort';
 
 export default async function getNewsList(count = 10) {
   try {
