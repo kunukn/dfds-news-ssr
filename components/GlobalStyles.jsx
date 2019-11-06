@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 let GlobalStyles = () => (
   <style jsx global>{`
@@ -20,6 +20,7 @@ let GlobalStyles = () => (
       position: relative;
       min-height: 100vh;
       min-height: -webkit-fill-available;
+      overscroll-behavior: contain;
     }
     button {
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -49,6 +50,6 @@ let GlobalStyles = () => (
       transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);
     }
   `}</style>
-);
+)
 
-export default GlobalStyles;
+export default GlobalStyles

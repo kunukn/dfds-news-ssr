@@ -4,8 +4,7 @@ import NextIcon from '~/public/static/icons/Next.svg'
 import PreviousIcon from '~/public/static/icons/Previous.svg'
 
 const Footer = ({ isFirstDetailSSR }) => {
-
-  if(isFirstDetailSSR) return null;
+  if (isFirstDetailSSR) return null
 
   return (
     <>
@@ -62,6 +61,7 @@ const Footer = ({ isFirstDetailSSR }) => {
           align-items: center;
           pointer-events: all;
           overflow-x: auto;
+          overscroll-behavior: contain;
           height: inherit;
           padding: 5px 0;
 
