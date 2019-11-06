@@ -4,10 +4,20 @@ import RouterEvents from '~/lib/router-events'
 import store from '~/store.js'
 import pageType from '~/utils/pageType'
 
-RouterEvents.on('routeChangeStart', url => {})
+RouterEvents.on('routeChangeStart', url => {
+})
 
 RouterEvents.on('routeChangeComplete', url => {
-  store.set(state => ({ routeChanged: true }))
+  store.set(state => {
+    state.history.push(url)
+
+    if (state.history.length > 20) {
+      // avoid mem leak
+      state.history.shift()
+    }
+
+    return { routeChanged: true, history: [...state.history] }
+  })
 
   if (Router.query.id) {
     store.set(state => ({ pageMode: pageType.detail }))

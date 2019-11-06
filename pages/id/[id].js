@@ -4,39 +4,38 @@
 // Details page
 // https://cdn.contentful.com/spaces/mivicpf5zews/environments/master/entries/6IMNKTmUUkPRq7SphXcY0U?access_token=102b6ce0b5beb8e64d0139b604153c92f7476229ee4d2ed5fa3608f2b72640e4
 
-import { useState, useEffect, useRef, createRef } from 'react'
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import NextHead from 'next/head'
 //import cx from "clsx";
 import { useStore } from 'laco-react'
+import dynamic from 'next/dynamic'
+import NextHead from 'next/head'
 //import debounce from "lodash.debounce";
 //import throttle from "lodash.throttle";
-import Router from 'next/router'
-
-import store from '~/store.js'
-import pageType from '~/utils/pageType'
+import Router, { useRouter } from 'next/router'
+import { createRef, useEffect, useRef, useState } from 'react'
 import getArticle from '~/api-layer/getArticle'
 import getNewsList from '~/api-layer/getNewsList'
-//import getQueryParams from '~/utils/getQueryParams';
-import { filterItemsByCriteria } from '~/utils/filter'
-
 import Header from '~/components/header/Header'
 import Overview from '~/components/overview/Overview'
 import BackgroundImage from '~/components/website-background-image/BackgroundImage'
+import store from '~/store.js'
+//import getQueryParams from '~/utils/getQueryParams';
+import { filterItemsByCriteria } from '~/utils/filter'
+import pageType from '~/utils/pageType'
+
+
 
 const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true,
+  ssr: true
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false,
+  ssr: false
 })
 const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false,
+  ssr: false
 })
 
 const defaultDocTitle = 'DFDS NEWS'
@@ -46,7 +45,7 @@ const Index = ({
   article = null,
   id,
   detailsSSR,
-  overviewSSR,
+  overviewSSR
 }) => {
   let cache = useRef({}).current
 
@@ -55,9 +54,9 @@ const Index = ({
     cache[id] = article
   }
 
-  let { routeChanged } = useStore(store)
+  let { history } = useStore(store)
 
-  let isFirstDetailSSR = !routeChanged && detailsSSR
+  let isFirstDetailSSR = history.length === 0 && detailsSSR
 
   const router = useRouter()
   const pageMode = router.query.id ? pageType.detail : pageType.overview
@@ -74,6 +73,10 @@ const Index = ({
   let [isFilter1Active, setIsFilter1Active] = useState(false)
   let [isFilter2Active, setIsFilter2Active] = useState(false)
   let [isFilter3Active, setIsFilter3Active] = useState(false)
+
+  let [transitionDisabledForDetail, setTransitionDisabledForDetail] = useState(
+    false
+  )
 
   let onFilterClick1 = () => {
     setIsFilter1Active(s => !s)
@@ -107,6 +110,8 @@ const Index = ({
 
     if (isFirstDetailSSR) {
       getAllNews()
+      setTransitionDisabledForDetail(true) // hack
+      setTimeout(() => setTransitionDisabledForDetail(false), 1000)
     }
 
     goToOverviewPage()
@@ -180,7 +185,7 @@ const Index = ({
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active,
+      is2019: isFilter2Active
     })
     setRenderedItems(result)
   }, [items, isFilter1Active, isFilter2Active])
@@ -224,14 +229,14 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
-          isFirstDetailSSR,
+          isFirstDetailSSR
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
           setIsFilterOpen,
-          isFirstDetailSSR,
+          isFirstDetailSSR
         }}
       />
 
@@ -244,7 +249,8 @@ const Index = ({
           selectedArticle,
           isDetailsExpanded,
           isFirstDetailSSR,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s),
+          transitionDisabledForDetail,
+          toggleExpanded: () => setIsDetailsExpanded(s => !s)
         }}
       />
 
@@ -259,14 +265,14 @@ const Index = ({
           onFilterClick3,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false),
+          onClose: () => setIsFilterOpen(false)
         }}
       />
 
       <Footer
         {...{
           isFirstDetailSSR,
-          renderScrollbar: !!renderedItems.length,
+          renderScrollbar: !!renderedItems.length
         }}
       />
     </>

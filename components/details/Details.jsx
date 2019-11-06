@@ -2,14 +2,19 @@ import React from 'react'
 import showdown from 'showdown'
 import Collapse from '@kunukn/react-collapse'
 import cx from 'clsx'
+import { Transition } from 'react-transition-group'
+import Router from 'next/router'
+import { useStore } from 'laco-react'
 
-import { formatShortDate, formatLongDate } from '~/utils/date'
+import store from '~/store.js'
+import { formatLongDate } from '~/utils/date'
 import CloseIcon from '~/public/static/icons/Close.svg'
 import NextIcon from '~/public/static/icons/Next.svg'
 import PreviousIcon from '~/public/static/icons/Previous.svg'
 import UpIcon from '~/public/static/icons/Up.svg'
 
 let converter = new showdown.Converter()
+let sidebarTransitionDuration = 300
 
 const Details = ({
   isDetailsOpen,
@@ -18,61 +23,72 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
+  transitionDisabledForDetail,
   forwardedRef
 }) => {
+  let { history } = useStore(store)
+
+  let transitionDisabled = history.length === 1 && history[0] === '/'
+
   let fields = selectedArticle?.fields
 
   return (
     <>
-      <div
-        className={cx(
-          'detail',
-          { 'detail--full-focus': isFirstDetailSSR },
-          { 'detail--is-open': isDetailsOpen }
+      <Transition in={isDetailsOpen} timeout={sidebarTransitionDuration}>
+        {state => (
+          <div
+            className={cx('detail', state, {
+              'detail--full-focus': isFirstDetailSSR
+            })}
+            style={{
+              transitionDuration: transitionDisabled ? '0s' : ''
+            }}
+            ref={forwardedRef}
+          >
+            <div className='detail__content'>
+              {fields && (
+                <>
+                  <time>
+                    {fields.location}, {formatLongDate(fields.publicationDate)}
+                  </time>
+                  <h2 className='detail__title'>{fields.title}</h2>
+
+                  <h3 className='detail__teaser'>{fields.subtitle}</h3>
+                  <button className='toggle' onClick={toggleExpanded}>
+                    {isDetailsExpanded ? 'Read less' : 'Read more'}
+                  </button>
+                  <Collapse isOpen={isDetailsExpanded}>
+                    <div
+                      className='detail__content'
+                      dangerouslySetInnerHTML={{
+                        __html: converter.makeHtml(fields.content)
+                      }}
+                    ></div>
+                  </Collapse>
+                  <button
+                    aria-label='close'
+                    className='detail__button-close-top'
+                    onClick={onDetailsClose}
+                  >
+                    <CloseIcon />
+                  </button>
+
+                  <div className='detail__button-close-bottom-wrapper'>
+                    <button
+                      aria-label='close'
+                      className='detail__button-close-bottom'
+                      onClick={onDetailsClose}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         )}
-        ref={forwardedRef}
-      >
-        <div className='detail__content'>
-          {fields && (
-            <>
-              <time>
-                {fields.location}, {formatLongDate(fields.publicationDate)}
-              </time>
-              <h2 className='detail__title'>{fields.title}</h2>
+      </Transition>
 
-              <h3 className='detail__teaser'>{fields.subtitle}</h3>
-              <button className='toggle' onClick={toggleExpanded}>
-                {isDetailsExpanded ? 'Read less' : 'Read more'}
-              </button>
-              <Collapse isOpen={isDetailsExpanded}>
-                <div
-                  className='detail__content'
-                  dangerouslySetInnerHTML={{
-                    __html: converter.makeHtml(fields.content)
-                  }}
-                ></div>
-              </Collapse>
-              <button
-                aria-label='close'
-                className='detail__button-close-top'
-                onClick={onDetailsClose}
-              >
-                <CloseIcon />
-              </button>
-
-              <div className='detail__button-close-bottom-wrapper'>
-                <button
-                  aria-label='close'
-                  className='detail__button-close-bottom'
-                  onClick={onDetailsClose}
-                >
-                  <CloseIcon />
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
       <style jsx>{`
         .detail {
           z-index: 1;
@@ -87,9 +103,6 @@ const Details = ({
           background: rgba(white, 1);
           padding: 10px;
           width: 700px;
-          transition: 280ms cubic-bezier(0.17, 0.67, 1, 1.35);
-          visibility: hidden;
-          transform: translateX(100%) scale(0.5);
           max-width: 80vw;
           @media (min-width: 700px) {
             max-width: 85vw;
@@ -99,6 +112,31 @@ const Details = ({
           }
           @media (min-width: 2100px) {
             right: 5%;
+          }
+
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-property: transform, opacity;
+          transition-duration: $sidebarTransitionDuration;
+          visibility: hidden;
+          transform: translateX(100%) scale(0.5);
+
+          &.entering,
+          &.exiting {
+            visibility: visible;
+          }
+          &.entering,
+          &.entered {
+            transform: translateX(0) scale(1);
+            visibility: visible;
+            opacity: 1;
+          }
+          &.exiting,
+          &.exited {
+            transform: translateX(100%) scale(0.5);
+            opacity: 0.5;
+          }
+          &.exited {
+            visibility: hidden;
           }
         }
         .detail--full-focus {
@@ -111,11 +149,6 @@ const Details = ({
           @include device-width;
           box-shadow: none;
           margin-bottom: 10px;
-        }
-        .detail--is-open {
-          visibility: visible;
-          transform: translateX(0) scale(1);
-          transition-timing-function: ease-in;
         }
         .detail__content {
           :global(p) {
