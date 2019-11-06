@@ -126,26 +126,26 @@ const Details = ({
           transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
           transition-property: transform, opacity;
           transition-duration: $sidebarTransitionDuration;
-          _visibility: hidden;
+          _visibility: hidden; /* TODO should be used, but transition-group is needed. */
           transform: translateX(100%) scale(0.5);
 
           &.entering,
+          &.entered,
           &.exiting {
             visibility: visible;
+          }
+          &.exited {
+            visibility: hidden;
           }
           &.entering,
           &.entered {
             transform: translateX(0) scale(1);
-            visibility: visible;
             opacity: 1;
           }
           &.exiting,
           &.exited {
             transform: translateX(100%) scale(0.5);
             opacity: 0.5;
-          }
-          &.exited {
-            visibility: hidden;
           }
         }
         .detail--is-open {
