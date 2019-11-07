@@ -3,14 +3,13 @@ import { useStore } from 'laco-react'
 
 import pageType from '~/utils/pageType'
 import store from '~/store.js'
-import DFDSLogo from '~/public/static/icons/DFDSLogo.svg'
-import CloseIcon from '~/public/static/icons/Close.svg'
-import NextIcon from '~/public/static/icons/Next.svg'
-import PreviousIcon from '~/public/static/icons/Previous.svg'
-import BurgerMenu from '~/public/static/icons/BurgerMenu.svg'
+import DFDSLogo from '~/public/icons/DFDSLogo.svg'
+import CloseIcon from '~/public/icons/Close.svg'
+import NextIcon from '~/public/icons/Next.svg'
+import PreviousIcon from '~/public/icons/Previous.svg'
+import BurgerMenu from '~/public/icons/BurgerMenu.svg'
 
 const Header = ({ count, setIsFilterOpen, isFirstDetailSSR }) => {
-
   return (
     <>
       <div className={cx('header')}>

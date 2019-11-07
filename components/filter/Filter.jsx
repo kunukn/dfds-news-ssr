@@ -1,11 +1,11 @@
-import React from "react";
-import Collapse from "@kunukn/react-collapse";
-import cx from "clsx";
+import React from 'react'
+import Collapse from '@kunukn/react-collapse'
+import cx from 'clsx'
 
-import CloseIcon from "~/public/static/icons/Close.svg";
-import NextIcon from "~/public/static/icons/Next.svg";
-import PreviousIcon from "~/public/static/icons/Previous.svg";
-import useClickOutside from "~/hooks/useClickOutside";
+import CloseIcon from '~/public/icons/Close.svg'
+import NextIcon from '~/public/icons/Next.svg'
+import PreviousIcon from '~/public/icons/Previous.svg'
+import useClickOutside from '~/hooks/useClickOutside'
 
 const Filter = ({
   isFilterOpen,
@@ -20,35 +20,35 @@ const Filter = ({
   onClose
 }) => {
   let onOutsideClick = () => {
-    isFilterOpen && onClose && onClose();
-  };
+    isFilterOpen && onClose && onClose()
+  }
 
-  const clickRef = React.useRef();
-  useClickOutside(clickRef, onOutsideClick);
+  const clickRef = React.useRef()
+  useClickOutside(clickRef, onOutsideClick)
 
   return (
     <React.Fragment>
       <div
         ref={clickRef}
-        className="filter"
-        style={{ display: isFilterOpen ? "" : "none" }}
+        className='filter'
+        style={{ display: isFilterOpen ? '' : 'none' }}
       >
-        <div className="filter__viewport">
-          <div className="filter__content">
+        <div className='filter__viewport'>
+          <div className='filter__content'>
             <div>Filter</div>
 
-            <div className="button-group">
+            <div className='button-group'>
               <button
-                className={cx("button-filter", {
-                  "button-filter--active": isFilter1Active
+                className={cx('button-filter', {
+                  'button-filter--active': isFilter1Active
                 })}
                 onClick={onFilterClick1}
               >
                 DFDS
               </button>
               <button
-                className={cx("button-filter", {
-                  "button-filter--active": isFilter2Active
+                className={cx('button-filter', {
+                  'button-filter--active': isFilter2Active
                 })}
                 onClick={onFilterClick2}
               >
@@ -56,16 +56,16 @@ const Filter = ({
               </button>
               <div>Settings</div>
               <button
-                className={cx("button-filter", {
-                  "button-filter--active": isFilter3Active
+                className={cx('button-filter', {
+                  'button-filter--active': isFilter3Active
                 })}
                 onClick={onFilterClick3}
               >
                 Roboto Font
               </button>
               <button
-                className={cx("button-filter", {
-                  "button-filter--active": isBackgroundImageEnabled
+                className={cx('button-filter', {
+                  'button-filter--active': isBackgroundImageEnabled
                 })}
                 onClick={onBackgroundImageToggle}
               >
@@ -74,9 +74,9 @@ const Filter = ({
             </div>
 
             <button
-              aria-label="close filter"
+              aria-label='close filter'
               onClick={onClose}
-              className="button-close"
+              className='button-close'
             >
               <CloseIcon />
             </button>
@@ -160,7 +160,7 @@ const Filter = ({
         }
       `}</style>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Filter;
+export default Filter

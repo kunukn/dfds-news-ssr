@@ -216,6 +216,7 @@ const Index = ({
     <>
       <NextHead>
         <title>{defaultDocTitle}</title>
+        <link rel='icon' href='/favicon.ico' />
       </NextHead>
       <BackgroundImage isEnabled={isBackgroundImageEnabled} />
       <Overview

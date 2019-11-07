@@ -45,7 +45,7 @@ export const dispatchResize = () => {
 const Preload = () => {
   return (
     <>
-      <img src='/static/images/ship.jpg' alt='' className='preload' />
+      <img src='/images/ship.jpg' alt='' className='preload' />
       <style jsx>{`
         .preload {
           position: absolute;

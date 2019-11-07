@@ -1,7 +1,7 @@
-import DFDSLogo from '~/public/static/icons/DFDSLogo.svg'
-import CloseIcon from '~/public/static/icons/Close.svg'
-import NextIcon from '~/public/static/icons/Next.svg'
-import PreviousIcon from '~/public/static/icons/Previous.svg'
+import DFDSLogo from '~/public/icons/DFDSLogo.svg'
+import CloseIcon from '~/public/icons/Close.svg'
+import NextIcon from '~/public/icons/Next.svg'
+import PreviousIcon from '~/public/icons/Previous.svg'
 
 const Footer = ({ isFirstDetailSSR }) => {
   if (isFirstDetailSSR) return null

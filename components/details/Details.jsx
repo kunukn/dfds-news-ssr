@@ -8,10 +8,10 @@ import { useStore } from 'laco-react'
 
 import store from '~/store.js'
 import { formatLongDate } from '~/utils/date'
-import CloseIcon from '~/public/static/icons/Close.svg'
-// import NextIcon from '~/public/static/icons/Next.svg'
-// import PreviousIcon from '~/public/static/icons/Previous.svg'
-// import UpIcon from '~/public/static/icons/Up.svg'
+import CloseIcon from '~/public/icons/Close.svg'
+// import NextIcon from '~/public/icons/Next.svg'
+// import PreviousIcon from '~/public/icons/Previous.svg'
+// import UpIcon from '~/public/icons/Up.svg'
 
 let converter = new showdown.Converter()
 let sidebarTransitionDuration = 300
