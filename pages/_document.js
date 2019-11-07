@@ -48,7 +48,9 @@ export default class MyDocument extends Document {
             type='font/woff2'
             crossOrigin='anonymous'
           />
-          <style jsx global>{`
+           <link rel="stylesheet" href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/font.css" />
+
+          {/* <style jsx global>{`
             @font-face {
               font-display: swap;
               font-family: DFDS;
@@ -85,7 +87,7 @@ export default class MyDocument extends Document {
                   format('woff');
               font-style: italic;
             }
-          `}</style>
+          `}</style> */}
         </Head>
         <body>
           <Main />
