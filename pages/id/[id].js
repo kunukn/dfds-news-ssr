@@ -85,6 +85,18 @@ const Index = ({
     setIsBackgroundImageEnabled(s => !s)
   }
 
+  let getNextFromRenderedItems = id => {
+    for (let index = 0; index < renderedItems.length; index++) {
+      const item = renderedItems[index]
+
+      if (item.sys.id === id) {
+        if (renderedItems.length - 1 > index) return renderedItems[index + 1]
+        else return null
+      }
+    }
+    return null
+  }
+
   // Update page mode state by routing
   useEffect(() => {
     switch (pageMode) {
@@ -159,6 +171,8 @@ const Index = ({
     }
 
     if (id) {
+      console.log(getNextFromRenderedItems(id))
+
       // Update State
       if (cache[id]) {
         setSelectedArticle(cache[id])
@@ -213,6 +227,13 @@ const Index = ({
     goToDetailsPage(id)
   }
 
+  let onNextSelect = () => {
+    if (selectedArticle?.sys?.id) {
+      let next = getNextFromRenderedItems(selectedArticle.sys.id)
+      if (next?.sys?.id) goToDetailsPage(next.sys.id)
+    }
+  }
+
   return (
     <>
       <NextHead>
@@ -244,6 +265,7 @@ const Index = ({
           ref: detailsRef,
           isDetailsOpen,
           onDetailsClose,
+          onNextSelect,
           selectedArticle,
           isDetailsExpanded,
           isFirstDetailSSR,

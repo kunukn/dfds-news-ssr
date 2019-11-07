@@ -9,7 +9,7 @@ import { useStore } from 'laco-react'
 import store from '~/store.js'
 import { formatLongDate } from '~/utils/date'
 import ButtonClose from '~/components/button-close/ButtonClose'
-// import NextIcon from '~/public/icons/Next.svg'
+import NextIcon from '~/public/icons/Next.svg'
 // import PreviousIcon from '~/public/icons/Previous.svg'
 // import UpIcon from '~/public/icons/Up.svg'
 
@@ -22,6 +22,7 @@ let sidebarTransitionDuration = 300
 const Details = ({
   isDetailsOpen,
   onDetailsClose,
+  onNextSelect,
   selectedArticle,
   isDetailsExpanded,
   toggleExpanded,
@@ -45,7 +46,8 @@ const Details = ({
               {
                 'detail--full-focus': isFirstDetailSSR,
               },
-              { 'detail--is-open': isDetailsOpen }
+              { 'detail--is-open': isDetailsOpen },
+              { 'detail--is-expanded': isDetailsExpanded }
             )}
             style={{
               transitionDuration: transitionDisabled ? '0s' : '',
@@ -61,9 +63,18 @@ const Details = ({
                   <h2 className='detail__title'>{fields.title}</h2>
 
                   <h3 className='detail__teaser'>{fields.subtitle}</h3>
-                  <button className='toggle' onClick={toggleExpanded}>
-                    {isDetailsExpanded ? 'Read less' : 'Read more'}
-                  </button>
+                  <div className='u-flex-center'>
+                    <button className='toggle' onClick={toggleExpanded}>
+                      {isDetailsExpanded ? 'Read less' : 'Read more'}
+                    </button>
+                    <button
+                      aria-label='select next'
+                      onClick={onNextSelect}
+                      className='button-next'
+                    >
+                      <NextIcon />
+                    </button>
+                  </div>
                   <Collapse isOpen={isDetailsExpanded}>
                     <div
                       className='detail__content'
@@ -158,19 +169,40 @@ const Details = ({
           box-shadow: none;
           margin-bottom: 10px;
         }
+        .detail--is-expanded {
+          > .detail__content {
+            min-height: 600px;
+          }
+        }
         .detail__content {
-          min-height: 500px;
+          min-height: 200px;
           :global(p) {
             line-height: 1.5;
           }
         }
+
+        .button-next {
+          position: relative;
+          display: block;
+          padding: 10px;
+          background: none;
+          border: none;
+          box-shadow: none;
+          font-size: 16px;
+          color: gray;
+          > :global(svg) {
+            display: block;
+          }
+        }
+
         .detail__title {
           padding-right: 10px;
           color: $color-groupBlue;
+          margin-top: 10px;
         }
         :global(.detail__button-close-top) {
           position: absolute;
-          top: 0;
+          top: 2px;
           right: 0;
         }
         .detail__button-close-bottom-wrapper {
@@ -186,7 +218,7 @@ const Details = ({
           padding: 10px 0;
           background: none;
           border: none;
-          min-width: 6em;
+          min-width: 5em;
           text-decoration: underline;
           color: gray;
           text-align: left;
