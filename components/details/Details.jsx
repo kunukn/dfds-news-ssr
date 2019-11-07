@@ -19,7 +19,6 @@ let sidebarTransitionDuration = 300
 // Dummy react-transition-group implementation
 //const Transition = ({ children }) => children('dummy-state-value')
 
-
 const Details = ({
   isDetailsOpen,
   onDetailsClose,
@@ -27,7 +26,7 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
-  forwardedRef,
+  forwardedRef
 }) => {
   let { history } = useStore(store)
 
@@ -44,12 +43,12 @@ const Details = ({
               'detail',
               state,
               {
-                'detail--full-focus': isFirstDetailSSR,
+                'detail--full-focus': isFirstDetailSSR
               },
               { 'detail--is-open': isDetailsOpen }
             )}
             style={{
-              transitionDuration: transitionDisabled ? '0s' : '',
+              transitionDuration: transitionDisabled ? '0s' : ''
             }}
             ref={forwardedRef}
           >
@@ -69,7 +68,7 @@ const Details = ({
                     <div
                       className='detail__content'
                       dangerouslySetInnerHTML={{
-                        __html: converter.makeHtml(fields.content),
+                        __html: converter.makeHtml(fields.content)
                       }}
                     ></div>
                   </Collapse>
@@ -164,7 +163,7 @@ const Details = ({
           margin-bottom: 10px;
         }
         .detail__content {
-          min-height: 200px;
+          min-height: 500px;
           :global(p) {
             line-height: 1.5;
           }
