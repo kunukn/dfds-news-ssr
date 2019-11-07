@@ -8,7 +8,7 @@ import { useStore } from 'laco-react'
 
 import store from '~/store.js'
 import { formatLongDate } from '~/utils/date'
-import CloseIcon from '~/public/icons/Close.svg'
+import ButtonClose from '~/components/button-close/ButtonClose'
 // import NextIcon from '~/public/icons/Next.svg'
 // import PreviousIcon from '~/public/icons/Previous.svg'
 // import UpIcon from '~/public/icons/Up.svg'
@@ -26,7 +26,7 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
-  forwardedRef
+  forwardedRef,
 }) => {
   let { history } = useStore(store)
 
@@ -43,12 +43,12 @@ const Details = ({
               'detail',
               state,
               {
-                'detail--full-focus': isFirstDetailSSR
+                'detail--full-focus': isFirstDetailSSR,
               },
               { 'detail--is-open': isDetailsOpen }
             )}
             style={{
-              transitionDuration: transitionDisabled ? '0s' : ''
+              transitionDuration: transitionDisabled ? '0s' : '',
             }}
             ref={forwardedRef}
           >
@@ -68,26 +68,22 @@ const Details = ({
                     <div
                       className='detail__content'
                       dangerouslySetInnerHTML={{
-                        __html: converter.makeHtml(fields.content)
+                        __html: converter.makeHtml(fields.content),
                       }}
                     ></div>
                   </Collapse>
-                  <button
-                    aria-label='close'
-                    className='detail__button-close-top'
-                    onClick={onDetailsClose}
-                  >
-                    <CloseIcon />
-                  </button>
+                  {!isFirstDetailSSR && (
+                    <ButtonClose
+                      className='detail__button-close-top'
+                      onClick={onDetailsClose}
+                    />
+                  )}
 
                   <div className='detail__button-close-bottom-wrapper'>
-                    <button
-                      aria-label='close'
+                    <ButtonClose
                       className='detail__button-close-bottom'
                       onClick={onDetailsClose}
-                    >
-                      <CloseIcon />
-                    </button>
+                    />
                   </div>
                 </>
               )}
@@ -172,38 +168,18 @@ const Details = ({
           padding-right: 10px;
           color: $color-groupBlue;
         }
-        .detail__button-close-top {
+        :global(.detail__button-close-top) {
           position: absolute;
           top: 0;
           right: 0;
-          font-size: 100%;
-          padding: 10px;
-          box-shadow: none;
-          background: none;
-          color: gray;
-          border: none;
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
         }
         .detail__button-close-bottom-wrapper {
           position: relative;
           text-align: right;
         }
-        .detail__button-close-bottom {
-          font-size: 100%;
-          padding: 10px;
+        :global(.detail__button-close-bottom) {
           margin: -10px;
-          box-shadow: none;
-          border: none;
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
           margin-left: auto;
-          color: gray;
-          background: none;
         }
         .toggle {
           font-size: 100%;

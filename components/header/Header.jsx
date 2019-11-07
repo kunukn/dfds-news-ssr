@@ -1,6 +1,7 @@
 import cx from 'clsx'
 import { useStore } from 'laco-react'
 
+import ButtonClose from '~/components/button-close/ButtonClose'
 import pageType from '~/utils/pageType'
 import store from '~/store.js'
 import DFDSLogo from '~/public/icons/DFDSLogo.svg'
@@ -9,7 +10,12 @@ import NextIcon from '~/public/icons/Next.svg'
 import PreviousIcon from '~/public/icons/Previous.svg'
 import BurgerMenu from '~/public/icons/BurgerMenu.svg'
 
-const Header = ({ count, setIsFilterOpen, isFirstDetailSSR }) => {
+const Header = ({
+  count,
+  setIsFilterOpen,
+  isFirstDetailSSR,
+  onDetailsClose,
+}) => {
   return (
     <>
       <div className={cx('header')}>
@@ -29,7 +35,10 @@ const Header = ({ count, setIsFilterOpen, isFirstDetailSSR }) => {
               </span>
             </h1>
             {count === 0 && isFirstDetailSSR && (
-              <div className='header__detail-focus-mode'>Focus mode</div>
+              <div className='header__detail-focus-mode'>
+                <span>Focus mode </span>
+                <ButtonClose onClick={onDetailsClose} />
+              </div>
             )}
           </div>
         </div>
@@ -75,6 +84,9 @@ const Header = ({ count, setIsFilterOpen, isFirstDetailSSR }) => {
         }
 
         .header__detail-focus-mode {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           margin-left: auto;
         }
 

@@ -23,17 +23,17 @@ import { filterItemsByCriteria } from '~/utils/filter'
 import pageType from '~/utils/pageType'
 
 const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true
+  ssr: true,
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false
+  ssr: false,
 })
 const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false
+  ssr: false,
 })
 
 const defaultDocTitle = 'DFDS NEWS'
@@ -43,7 +43,7 @@ const Index = ({
   article = null,
   id,
   detailsSSR,
-  overviewSSR
+  overviewSSR,
 }) => {
   let cache = useRef({}).current
 
@@ -102,6 +102,8 @@ const Index = ({
   let onDetailsClose = event => {
     event?.preventDefault && event.preventDefault()
 
+    setTimeout(() => setSelectedArticle({}), 100)
+
     if (isFirstDetailSSR) {
       getAllNews()
     }
@@ -149,7 +151,6 @@ const Index = ({
   // Updatey selected article by routing
   useEffect(() => {
     let id = router.query.id
-    //setSelectedArticle(null)
 
     let getSelectedArticleAndUpdate = async () => {
       let result = await getArticle(id)
@@ -180,7 +181,7 @@ const Index = ({
     let result = filterItemsByCriteria({
       items,
       isDfds: isFilter1Active,
-      is2019: isFilter2Active
+      is2019: isFilter2Active,
     })
     setRenderedItems(result)
   }, [items, isFilter1Active, isFilter2Active])
@@ -225,14 +226,15 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
-          isFirstDetailSSR
+          isFirstDetailSSR,
         }}
       />
       <Header
         {...{
           count: renderedItems.length,
           setIsFilterOpen,
-          isFirstDetailSSR
+          isFirstDetailSSR,
+          onDetailsClose,
         }}
       />
 
@@ -245,7 +247,7 @@ const Index = ({
           selectedArticle,
           isDetailsExpanded,
           isFirstDetailSSR,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s)
+          toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
 
@@ -260,14 +262,14 @@ const Index = ({
           onFilterClick3,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false)
+          onClose: () => setIsFilterOpen(false),
         }}
       />
 
       <Footer
         {...{
           isFirstDetailSSR,
-          renderScrollbar: !!renderedItems.length
+          renderScrollbar: !!renderedItems.length,
         }}
       />
     </>
