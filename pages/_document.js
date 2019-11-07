@@ -48,10 +48,30 @@ export default class MyDocument extends Document {
             type='font/woff2'
             crossOrigin='anonymous'
           />
-           {/* <link rel="stylesheet" href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/font.css" /> */}
+          {/* <link rel="stylesheet" href="https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/font.css" /> */}
         </Head>
         <body>
           <Main />
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+          try {
+            // https://youtu.be/JjRV-l9jSYE?t=668
+            window.onload = function() {
+              setTimeout(function() {
+                var t = window.performance.timing;
+                var tti = t.domInteractive - t.domLoading;
+                var dcl = t.domContentLoadedEventStart - t.domLoading;
+                var loadComplete = t.domComplete - t.domLoading;
+                console.log('tti',tti,'DOMContentLoaded',dcl,'loadComplete',loadComplete);
+              }, 0)
+            }
+          } catch(ex){console.warn(ex+'')}
+          `
+            }}
+          />
+
           <NextScript />
 
           <link
