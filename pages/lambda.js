@@ -1,6 +1,6 @@
 import NextHead from 'next/head'
 
-const Lambda = () => {
+const Lambda = ({ random }) => {
   return (
     <>
       <NextHead>
@@ -8,6 +8,7 @@ const Lambda = () => {
       </NextHead>
       <div className='lambda'>
         <h1>DFSD News app</h1>
+        <div>{random}</div>
       </div>
       <style jsx>{`
         h1 {
@@ -23,7 +24,9 @@ const Lambda = () => {
 }
 
 Lambda.getInitialProps = async ({ req, query }) => {
-  return {}
+  return {
+    random: Math.random()
+  }
 }
 
 export default Lambda
