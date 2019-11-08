@@ -7,6 +7,8 @@ import store from '~/store.js'
 import DFDSLogo from '~/public/icons/DFDSLogo.svg'
 import BurgerMenu from '~/public/icons/BurgerMenu.svg'
 
+const noop = () => {}
+
 const Header = ({
   count,
   setIsFilterOpen,
@@ -17,13 +19,20 @@ const Header = ({
   isFilter2Active,
   isFilter3Active
 }) => {
+  let hasActiveFilter = isFilter1Active || isFilter2Active || isFilter3Active
+
   return (
     <>
       <div className={cx('header')}>
         <div className='header__viewport'>
           <div className='header__content'>
             <h1 className='header__title'>
-              <div className='filter-info'>
+              <button
+                tabIndex={-1}
+                aria-label='filter-toggle'
+                className='filter-info'
+                onClick={hasActiveFilter ? onMenuToggle : noop}
+              >
                 {isFilter1Active && (
                   <div className='filter-item filter-item--1'></div>
                 )}
@@ -33,7 +42,7 @@ const Header = ({
                 {isFilter3Active && (
                   <div className='filter-item filter-item--3'></div>
                 )}
-              </div>
+              </button>
               <button
                 aria-label='filter button'
                 className='button-burger'
@@ -97,11 +106,20 @@ const Header = ({
         }
 
         .filter-info {
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
+
+          margin: 0;
+          padding: 0 10px;
+
+          box-shadow: none;
+          border: none;
+          background: transparent;
           position: absolute;
-          bottom: 4px;
-          left: 90px;
-          width: 110px;
-          height: 16px;
+          bottom: 0;
+          left: 80px;
+          min-width: 24px;
+          height: 24px;
           _background: rgba(red, 0.1);
           display: flex;
           align-items: flex-end;
@@ -110,7 +128,7 @@ const Header = ({
           border-radius: 0;
           width: 10px;
           height: 10px;
-          margin-right: 5px;
+          margin-right: 4px;
           &--1 {
             background: rgba(#1b5786, 0.3);
           }
