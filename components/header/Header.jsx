@@ -104,18 +104,18 @@ const Header = ({
           height: 16px;
           _background: rgba(red, 0.1);
           display: flex;
-          align-items: center;
+          align-items: flex-end;
         }
         .filter-item {
-          border-radius: 50%;
+          border-radius: 0;
           width: 10px;
           height: 10px;
           margin-right: 5px;
           &--1 {
-            background: rgba(#cc6600, 0.3);
+            background: rgba(#1b5786, 0.3);
           }
           &--2 {
-            background: rgba(#1b5786, 0.3);
+            background: rgba(#cc6600, 0.3);
           }
           &--3 {
             background: rgba(#5aa63b, 0.3);

@@ -53,6 +53,14 @@ const Filter = ({
               >
                 2019
               </button>
+              <button
+                className={cx('button-filter', {
+                  'button-filter--active-3': isFilter3Active
+                })}
+                onClick={onFilterClick3}
+              >
+                Brexit
+              </button>
               <div>Settings</div>
               <button
                 className={cx('button-filter', {
@@ -158,12 +166,13 @@ const Filter = ({
           background: #333;
         }
         .button-filter--active-1 {
-          _color: white;
-          background: rgba(#cc6600, 0.3);
+          background: rgba(#1b5786, 0.3);
         }
         .button-filter--active-2 {
-          _color: white;
-          background: rgba(#1b5786, 0.3);
+          background: rgba(#cc6600, 0.3);
+        }
+        .button-filter--active-3 {
+          background: rgba(#8c0, 0.3);
         }
       `}</style>
     </React.Fragment>
