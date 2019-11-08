@@ -171,7 +171,7 @@ const Index = ({
     }
 
     if (id) {
-      console.log(getNextFromRenderedItems(id))
+      // console.log(getNextFromRenderedItems(id)?.sys?.id)
 
       // Update State
       if (cache[id]) {

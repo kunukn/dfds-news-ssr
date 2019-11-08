@@ -13,7 +13,7 @@ const Header = ({
   count,
   setIsFilterOpen,
   isFirstDetailSSR,
-  onDetailsClose,
+  onDetailsClose
 }) => {
   return (
     <>
@@ -35,7 +35,8 @@ const Header = ({
             </h1>
             {count === 0 && isFirstDetailSSR && (
               <div className='header__detail-focus-mode'>
-                <span>Focus mode </span>
+                <div>Focus </div>
+                <div className='header__detail-focus-mode-word'>Mode </div>
                 <ButtonClose onClick={onDetailsClose} />
               </div>
             )}
@@ -86,7 +87,18 @@ const Header = ({
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-left: auto;
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .header__detail-focus-mode-word {
+          display: none;
+          @media (min-width: 500px) {
+            display: block;
+            margin-left: 5px;
+          }
         }
 
         .header__viewport {
