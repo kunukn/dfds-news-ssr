@@ -200,11 +200,12 @@ const Index = ({
   useEffect(() => {
     let result = filterItemsByCriteria({
       items,
-      isDfds: isFilter1Active,
-      is2019: isFilter2Active,
+      isFilter1Active,
+      isFilter2Active,
+      isFilter3Active,
     })
     setRenderedItems(result)
-  }, [items, isFilter1Active, isFilter2Active])
+  }, [items, isFilter1Active, isFilter2Active, isFilter3Active])
 
   useEffect(() => {
     if (isDetailsOpen) {

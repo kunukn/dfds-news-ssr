@@ -1,15 +1,17 @@
-export let filterItemsByCriteria = ({ items, isDfds, is2019, is2018 }) => {
-  let result = [...items];
+export let filterItemsByCriteria = ({ items, isFilter1Active, isFilter2Active, isFilter3Active }) => {
+  if (!(isFilter1Active || isFilter2Active || isFilter3Active)) return items
 
-  if (isDfds) {
-    result = result.filter(item => /dfds/i.test(item.fields.entryTitle));
+  let result = [...items]
+
+  if (isFilter1Active) {
+    result = result.filter(item => /dfds/i.test(item.fields.entryTitle))
   }
-  if (is2019) {
-    result = result.filter(item => /2019-/i.test(item.fields.publicationDate));
+  if (isFilter2Active) {
+    result = result.filter(item => /2019-/i.test(item.fields.publicationDate))
   }
-  if (is2018) {
-    result = result.filter(item => /2018-/i.test(item.fields.publicationDate));
+  if (isFilter3Active) {
+    result = result.filter(item => /new /i.test(item.fields.entryTitle))
   }
 
-  return result;
-};
+  return result
+}

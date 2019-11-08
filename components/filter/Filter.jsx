@@ -59,7 +59,7 @@ const Filter = ({
                 })}
                 onClick={onFilterClick3}
               >
-                Brexit
+                New
               </button>
               <div>Settings</div>
               <button
