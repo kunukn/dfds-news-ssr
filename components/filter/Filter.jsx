@@ -1,26 +1,25 @@
 import React from 'react'
-import Collapse from '@kunukn/react-collapse'
 import cx from 'clsx'
 
 import CloseIcon from '~/public/icons/Close.svg'
-import NextIcon from '~/public/icons/Next.svg'
-import PreviousIcon from '~/public/icons/Previous.svg'
 import useClickOutside from '~/hooks/useClickOutside'
 
 const Filter = ({
-  isFilterOpen,
+  isMenuOpen,
   isFilter1Active,
   isFilter2Active,
   isFilter3Active,
+  isCustomFontActive,
   onFilterClick1,
   onFilterClick2,
   onFilterClick3,
+  onCustomFontClick,
   isBackgroundImageEnabled,
   onBackgroundImageToggle,
   onClose
 }) => {
   let onOutsideClick = () => {
-    isFilterOpen && onClose && onClose()
+    isMenuOpen && onClose && onClose()
   }
 
   const clickRef = React.useRef()
@@ -31,7 +30,7 @@ const Filter = ({
       <div
         ref={clickRef}
         className='filter'
-        style={{ display: isFilterOpen ? '' : 'none' }}
+        style={{ display: isMenuOpen ? '' : 'none' }}
       >
         <div className='filter__viewport'>
           <div className='filter__content'>
@@ -40,7 +39,7 @@ const Filter = ({
             <div className='button-group'>
               <button
                 className={cx('button-filter', {
-                  'button-filter--active': isFilter1Active
+                  'button-filter--active-1': isFilter1Active
                 })}
                 onClick={onFilterClick1}
               >
@@ -48,7 +47,7 @@ const Filter = ({
               </button>
               <button
                 className={cx('button-filter', {
-                  'button-filter--active': isFilter2Active
+                  'button-filter--active-2': isFilter2Active
                 })}
                 onClick={onFilterClick2}
               >
@@ -57,9 +56,9 @@ const Filter = ({
               <div>Settings</div>
               <button
                 className={cx('button-filter', {
-                  'button-filter--active': isFilter3Active
+                  'button-filter--active': isCustomFontActive
                 })}
-                onClick={onFilterClick3}
+                onClick={onCustomFontClick}
               >
                 Roboto Font
               </button>
@@ -157,6 +156,14 @@ const Filter = ({
         .button-filter--active {
           color: white;
           background: #333;
+        }
+        .button-filter--active-1 {
+          _color: white;
+          background: rgba(#cc6600, 0.3);
+        }
+        .button-filter--active-2 {
+          _color: white;
+          background: rgba(#1b5786, 0.3);
         }
       `}</style>
     </React.Fragment>

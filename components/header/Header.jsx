@@ -2,18 +2,20 @@ import cx from 'clsx'
 import { useStore } from 'laco-react'
 
 import ButtonClose from '~/components/button-close/ButtonClose'
-import pageType from '~/utils/pageType'
+
 import store from '~/store.js'
 import DFDSLogo from '~/public/icons/DFDSLogo.svg'
-import NextIcon from '~/public/icons/Next.svg'
-import PreviousIcon from '~/public/icons/Previous.svg'
 import BurgerMenu from '~/public/icons/BurgerMenu.svg'
 
 const Header = ({
   count,
   setIsFilterOpen,
   isFirstDetailSSR,
-  onDetailsClose
+  onDetailsClose,
+  onMenuToggle,
+  isFilter1Active,
+  isFilter2Active,
+  isFilter3Active
 }) => {
   return (
     <>
@@ -21,10 +23,21 @@ const Header = ({
         <div className='header__viewport'>
           <div className='header__content'>
             <h1 className='header__title'>
+              <div className='filter-info'>
+                {isFilter1Active && (
+                  <div className='filter-item filter-item--1'></div>
+                )}
+                {isFilter2Active && (
+                  <div className='filter-item filter-item--2'></div>
+                )}
+                {isFilter3Active && (
+                  <div className='filter-item filter-item--3'></div>
+                )}
+              </div>
               <button
                 aria-label='filter button'
                 className='button-burger'
-                onClick={() => setIsFilterOpen(s => !s)}
+                onClick={onMenuToggle}
               >
                 <BurgerMenu />
               </button>
@@ -80,6 +93,32 @@ const Header = ({
               margin-right: 10px;
               display: inline-block;
             }
+          }
+        }
+
+        .filter-info {
+          position: absolute;
+          bottom: 4px;
+          left: 90px;
+          width: 110px;
+          height: 16px;
+          _background: rgba(red, 0.1);
+          display: flex;
+          align-items: center;
+        }
+        .filter-item {
+          border-radius: 50%;
+          width: 10px;
+          height: 10px;
+          margin-right: 5px;
+          &--1 {
+            background: rgba(#cc6600, 0.3);
+          }
+          &--2 {
+            background: rgba(#1b5786, 0.3);
+          }
+          &--3 {
+            background: rgba(#5aa63b, 0.3);
           }
         }
 

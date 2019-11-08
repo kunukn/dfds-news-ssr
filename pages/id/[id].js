@@ -66,11 +66,13 @@ const Index = ({
   let [selectedArticle, setSelectedArticle] = useState(article)
   let [isDetailsOpen, setIsDetailsOpen] = useState(!!article)
   let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(true)
-  let [isFilterOpen, setIsFilterOpen] = useState(false)
+  let [isMenuOpen, setIsMenuOpen] = useState(false)
 
   let [isFilter1Active, setIsFilter1Active] = useState(false)
   let [isFilter2Active, setIsFilter2Active] = useState(false)
   let [isFilter3Active, setIsFilter3Active] = useState(false)
+
+  let [isCustomFontActive, setIsCustomFontActive] = useState(false)
 
   let onFilterClick1 = () => {
     setIsFilter1Active(s => !s)
@@ -81,9 +83,13 @@ const Index = ({
   let onFilterClick3 = () => {
     setIsFilter3Active(s => !s)
   }
+  let onCustomFontClick = () => {
+    setIsCustomFontActive(s => !s)
+  }
   let onBackgroundImageToggle = () => {
     setIsBackgroundImageEnabled(s => !s)
   }
+  let onMenuToggle =() => setIsMenuOpen(s => !s)
 
   let getNextFromRenderedItems = id => {
     for (let index = 0; index < renderedItems.length; index++) {
@@ -150,7 +156,7 @@ const Index = ({
 
     if (query.filter) setIsFilterOpen(true)
 
-    if (query.roboto) setIsFilter3Active(true)
+    if (query.roboto) setIsCustomFontActive(true)
 
     if (query.background) setIsBackgroundImageEnabled(true)
 
@@ -183,12 +189,12 @@ const Index = ({
   }, [router.query.id])
 
   useEffect(() => {
-    if (isFilter3Active) {
+    if (isCustomFontActive) {
       document.body.style.fontFamily = 'Roboto, sans-serif'
     } else {
       document.body.style.fontFamily = ''
     }
-  }, [isFilter3Active])
+  }, [isCustomFontActive])
 
   // Rendered items
   useEffect(() => {
@@ -253,9 +259,12 @@ const Index = ({
       <Header
         {...{
           count: renderedItems.length,
-          setIsFilterOpen,
           isFirstDetailSSR,
           onDetailsClose,
+          onMenuToggle,
+          isFilter1Active,
+          isFilter2Active,
+          isFilter3Active,
         }}
       />
 
@@ -275,16 +284,18 @@ const Index = ({
 
       <Filter
         {...{
-          isFilterOpen,
+          isMenuOpen,
           isFilter1Active,
           isFilter2Active,
           isFilter3Active,
+          isCustomFontActive,
           onFilterClick1,
           onFilterClick2,
           onFilterClick3,
+          onCustomFontClick,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsFilterOpen(false),
+          onClose: () => setIsMenuOpen(false),
         }}
       />
 
