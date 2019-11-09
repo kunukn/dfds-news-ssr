@@ -5,37 +5,29 @@ let GlobalStyles = () => (
     @font-face {
       font-display: swap;
       font-family: DFDS;
-      src: url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Regular.woff2')
-          format('woff2'),
-        url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Regular.woff')
-          format('woff');
+      src: url('/fonts/DFDS-Regular.woff2') format('woff2'),
+        url('/fonts/DFDS-Regular.woff') format('woff');
       font-weight: normal;
     }
     @font-face {
       font-display: swap;
       font-family: DFDS;
-      src: url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Bold.woff2')
-          format('woff2'),
-        url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Bold.woff')
-          format('woff');
+      src: url('/fonts/DFDS-Bold.woff2') format('woff2'),
+        url('/fonts/DFDS-Bold.woff') format('woff');
       font-weight: bold;
     }
     @font-face {
       font-display: swap;
       font-family: DFDS;
-      src: url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Light.woff2')
-          format('woff2'),
-        url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Light.woff')
-          format('woff');
+      src: url('/fonts/DFDS-Light.woff2') format('woff2'),
+        url('/fonts/DFDS-Light.woff') format('woff');
       font-weight: 300;
     }
     @font-face {
       font-display: swap;
       font-family: DFDS;
-      src: url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Italic.woff2')
-          format('woff2'),
-        url('https://unpkg.com/@dfds-frontend/fonts@0.0.4/main/DFDS-Italic.woff')
-          format('woff');
+      src: url('/fonts/DFDS-Italic.woff2') format('woff2'),
+        url('/fonts/DFDS-Italic.woff') format('woff');
       font-style: italic;
     }
 
