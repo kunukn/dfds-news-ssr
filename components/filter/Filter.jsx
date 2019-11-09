@@ -34,7 +34,7 @@ const Filter = ({
         {state => (
           <div
             ref={clickRef}
-            className={cx('filter', state, { 'filter--is-open': isMenuOpen })}
+            className={cx('filter', { 'filter--is-open': isMenuOpen })}
           >
             <div className='filter__viewport'>
               <div className={cx('filter__content', state)}>
