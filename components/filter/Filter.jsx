@@ -1,8 +1,11 @@
 import React from 'react'
 import cx from 'clsx'
+import { Transition } from 'react-transition-group'
 
 import CloseIcon from '~/public/icons/Close.svg'
 import useClickOutside from '~/hooks/useClickOutside'
+
+const filterTransitionDuration = 260
 
 const Filter = ({
   isMenuOpen,
@@ -16,7 +19,7 @@ const Filter = ({
   onCustomFontClick,
   isBackgroundImageEnabled,
   onBackgroundImageToggle,
-  onClose
+  onClose,
 }) => {
   let onOutsideClick = () => {
     isMenuOpen && onClose && onClose()
@@ -27,70 +30,72 @@ const Filter = ({
 
   return (
     <React.Fragment>
-      <div
-        ref={clickRef}
-        className='filter'
-        style={{ display: isMenuOpen ? '' : 'none' }}
-      >
-        <div className='filter__viewport'>
-          <div className='filter__content'>
-            <div>Filter</div>
+      <Transition in={isMenuOpen} timeout={filterTransitionDuration}>
+        {state => (
+          <div
+            ref={clickRef}
+            className={cx('filter', state, { 'filter--is-open': isMenuOpen })}
+          >
+            <div className='filter__viewport'>
+              <div className={cx('filter__content', state)}>
+                <div>Filter</div>
 
-            <div className='button-group'>
-              <button
-                className={cx('button-filter', {
-                  'button-filter--active-1': isFilter1Active
-                })}
-                onClick={onFilterClick1}
-              >
-                DFDS
-              </button>
-              <button
-                className={cx('button-filter', {
-                  'button-filter--active-2': isFilter2Active
-                })}
-                onClick={onFilterClick2}
-              >
-                2019
-              </button>
-              <button
-                className={cx('button-filter', {
-                  'button-filter--active-3': isFilter3Active
-                })}
-                onClick={onFilterClick3}
-              >
-                New
-              </button>
-              <div>Settings</div>
-              <button
-                className={cx('button-filter', {
-                  'button-filter--active': isCustomFontActive
-                })}
-                onClick={onCustomFontClick}
-              >
-                Roboto Font
-              </button>
-              <button
-                className={cx('button-filter', {
-                  'button-filter--active': isBackgroundImageEnabled
-                })}
-                onClick={onBackgroundImageToggle}
-              >
-                Background image
-              </button>
+                <div className='button-group'>
+                  <button
+                    className={cx('button-filter', {
+                      'button-filter--active-1': isFilter1Active,
+                    })}
+                    onClick={onFilterClick1}
+                  >
+                    DFDS
+                  </button>
+                  <button
+                    className={cx('button-filter', {
+                      'button-filter--active-2': isFilter2Active,
+                    })}
+                    onClick={onFilterClick2}
+                  >
+                    2019
+                  </button>
+                  <button
+                    className={cx('button-filter', {
+                      'button-filter--active-3': isFilter3Active,
+                    })}
+                    onClick={onFilterClick3}
+                  >
+                    New
+                  </button>
+                  <div>Settings</div>
+                  <button
+                    className={cx('button-filter', {
+                      'button-filter--active': isCustomFontActive,
+                    })}
+                    onClick={onCustomFontClick}
+                  >
+                    Roboto Font
+                  </button>
+                  <button
+                    className={cx('button-filter', {
+                      'button-filter--active': isBackgroundImageEnabled,
+                    })}
+                    onClick={onBackgroundImageToggle}
+                  >
+                    Background image
+                  </button>
+                </div>
+
+                <button
+                  aria-label='close filter'
+                  onClick={onClose}
+                  className='button-close'
+                >
+                  <CloseIcon />
+                </button>
+              </div>
             </div>
-
-            <button
-              aria-label='close filter'
-              onClick={onClose}
-              className='button-close'
-            >
-              <CloseIcon />
-            </button>
           </div>
-        </div>
-      </div>
-
+        )}
+      </Transition>
       <style jsx>{`
         .filter {
           z-index: 1;
@@ -98,7 +103,7 @@ const Filter = ({
           top: 0;
           left: 0;
           width: 100%;
-          height: 300px;
+          height: 400px;
           pointer-events: none;
         }
 
@@ -114,13 +119,39 @@ const Filter = ({
           left: 5px;
           overflow-y: auto;
           width: 700px;
-          height: 300px;
+          _height: 400px;
           max-width: 200px;
           max-height: calc(100% - 40px);
           padding-bottom: 20px;
           @include elevation-8;
           background: rgba(white, 0.98);
           padding: 10px;
+
+          transform-origin: 0% 0%;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-property: transform, opacity;
+          transition-duration: ${filterTransitionDuration}ms;
+          visibility: hidden;
+          transform: scale(0);
+
+          &.entering,
+          &.entered,
+          &.exiting {
+            visibility: visible;
+          }
+          &.exited {
+            visibility: hidden;
+          }
+          &.entering,
+          &.entered {
+            transform: scale(1);
+            opacity: 1;
+          }
+          &.exiting,
+          &.exited {
+            transform: scale(0);
+            opacity: 0.4;
+          }
         }
 
         .button-group {
