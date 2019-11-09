@@ -1,6 +1,8 @@
 // https://nextjs.org/docs/#custom-document
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+import ClientSideDataLoader from '~/components/client-side-data-loader/ClientSideDataLoader'
+
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
@@ -49,10 +51,18 @@ export default class MyDocument extends Document {
             crossOrigin='anonymous'
           />
           {/* <link rel="stylesheet" href="/fonts/font.css" /> */}
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.newsItems = [];
+              `,
+            }}
+          />
         </Head>
         <body>
+          <ClientSideDataLoader />
           <Main />
-
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -68,7 +78,7 @@ export default class MyDocument extends Document {
               }, 0)
             }
           } catch(ex){console.warn(ex+'')}
-          `
+          `,
             }}
           />
 

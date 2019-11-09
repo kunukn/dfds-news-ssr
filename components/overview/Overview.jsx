@@ -137,6 +137,7 @@ const Overview = ({
           _color: $color-groupBlue;
         }
         :global(.button-overview-item) {
+          -webkit-tap-highlight-color: transparent;
           position: relative;
           font-size: 16px;
           text-align: left;

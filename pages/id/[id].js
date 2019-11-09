@@ -89,7 +89,7 @@ const Index = ({
   let onBackgroundImageToggle = () => {
     setIsBackgroundImageEnabled(s => !s)
   }
-  let onMenuToggle =() => setIsMenuOpen(s => !s)
+  let onMenuToggle = () => setIsMenuOpen(s => !s)
 
   let getNextFromRenderedItems = id => {
     for (let index = 0; index < renderedItems.length; index++) {
@@ -139,14 +139,19 @@ const Index = ({
   let getAllNews = async () => {
     if (items.length > 100) return
 
+    // console.log('get all news')
     let news = await getNewsList(200)
     setItems((news && news.items) || [])
   }
 
   useEffect(() => {
+
+    console.log('useEffect')
+
     if (overviewSSR) {
       document.title = defaultDocTitle
-      getAllNews()
+
+      if (!router.query['client-content']) getAllNews()
     }
   }, [])
 
@@ -154,7 +159,7 @@ const Index = ({
   useEffect(() => {
     let query = router.query
 
-    if (query.filter) setIsFilterOpen(true)
+    if (query.filter) setIsMenuOpen(true)
 
     if (query.roboto) setIsCustomFontActive(true)
 
