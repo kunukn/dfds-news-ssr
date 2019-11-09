@@ -40,7 +40,7 @@ const defaultDocTitle = 'DFDS NEWS'
 
 let clientFastContentNews = []
 if (process.browser) {
-  clientFastContentNews = window.news?.items || []
+  clientFastContentNews = window.news?.ajax?.items || []
 }
 
 const Index = ({
@@ -148,7 +148,6 @@ const Index = ({
   let getAllNews = async () => {
     if (items.length > 100) return
 
-    // console.log('get all news')
     let news = await getNewsList(200)
     setItems((news && news.items) || [])
   }
@@ -177,15 +176,14 @@ const Index = ({
     }
 
     if (+query['client-fast-content']) {
-      //console.log(window.news)
       if (!items.length && window.news?.ajax?.items?.length) {
         setItems(window.news.ajax.items)
       } else {
         let handler = {
           set: function(obj, prop, value) {
-            console.log('handler')
-            if (prop === 'ajax' && Array.isArray(value?.items)) {
-              setItems(value.items)
+            if (prop === 'ajax') {
+              console.log('event: proxy listener for news items')
+              if (Array.isArray(value?.items)) setItems(value.items)
               // Todo: delete proxy listener
             }
             obj[prop] = value
@@ -194,8 +192,6 @@ const Index = ({
         }
 
         window.news = new Proxy({}, handler)
-        console.log('proxy setup')
-        //window.news.ajax = {items: []};
       }
     }
   }, [])
