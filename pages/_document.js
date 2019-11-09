@@ -1,7 +1,11 @@
 // https://nextjs.org/docs/#custom-document
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-import ClientSideDataLoader from '~/components/client-side-data-loader/ClientSideDataLoader'
+let count = 200
+let url =
+  process.env.NODE_ENV === 'development'
+    ? '/api/mock-news'
+    : `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -55,13 +59,31 @@ export default class MyDocument extends Document {
           <script
             dangerouslySetInnerHTML={{
               __html: `
-              window.newsItems = [];
+              window.news = {};
               `,
             }}
           />
         </Head>
         <body>
-          <ClientSideDataLoader />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              try{
+                if(location.href.indexOf('client-fast-content=1') >= 0 ) {
+                  var xmlhttp = new XMLHttpRequest();
+                  var url = '${url}';
+                  xmlhttp.onreadystatechange = function(){
+                      if (this.readyState == 4 && this.status == 200) {
+                          window.news.ajax = JSON.parse(this.responseText);
+                      }
+                  };
+                  xmlhttp.open("GET", url, true);
+                  xmlhttp.send();
+                }
+              }catch(ex){console.error(ex+'')}
+              `,
+            }}
+          />
           <Main />
           <script
             dangerouslySetInnerHTML={{

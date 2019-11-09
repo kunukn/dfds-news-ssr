@@ -38,6 +38,11 @@ const Filter = dynamic(() => import('~/components/filter/Filter'), {
 
 const defaultDocTitle = 'DFDS NEWS'
 
+let clientFastContentNews = []
+if (process.browser) {
+  clientFastContentNews = window.news?.items || []
+}
+
 const Index = ({
   items: itemsProp = [],
   article = null,
@@ -56,12 +61,16 @@ const Index = ({
 
   let isFirstDetailSSR = history.length === 0 && detailsSSR
 
+  let initialItems = clientFastContentNews?.length
+    ? clientFastContentNews
+    : itemsProp
+
   const router = useRouter()
   const pageMode = router.query.id ? pageType.detail : pageType.overview
 
   const detailsRef = createRef()
-  let [items, setItems] = useState(itemsProp)
-  let [renderedItems, setRenderedItems] = useState(itemsProp)
+  let [items, setItems] = useState(initialItems)
+  let [renderedItems, setRenderedItems] = useState(initialItems)
   let [isDetailsExpanded, setIsDetailsExpanded] = useState(true)
   let [selectedArticle, setSelectedArticle] = useState(article)
   let [isDetailsOpen, setIsDetailsOpen] = useState(!!article)
@@ -145,13 +154,10 @@ const Index = ({
   }
 
   useEffect(() => {
-
-    console.log('useEffect')
-
     if (overviewSSR) {
       document.title = defaultDocTitle
 
-      if (!router.query['client-content']) getAllNews()
+      getAllNews()
     }
   }, [])
 
@@ -168,6 +174,29 @@ const Index = ({
     if (+query.item) {
       let index = +query.item
       index && selectArticleById(items[index - 1].sys.id)
+    }
+
+    if (+query['client-fast-content']) {
+      //console.log(window.news)
+      if (!items.length && window.news?.ajax?.items?.length) {
+        setItems(window.news.ajax.items)
+      } else {
+        let handler = {
+          set: function(obj, prop, value) {
+            console.log('handler')
+            if (prop === 'ajax' && Array.isArray(value?.items)) {
+              setItems(value.items)
+              // Todo: delete proxy listener
+            }
+            obj[prop] = value
+            return true
+          },
+        }
+
+        window.news = new Proxy({}, handler)
+        console.log('proxy setup')
+        //window.news.ajax = {items: []};
+      }
     }
   }, [])
 
@@ -316,9 +345,10 @@ const Index = ({
 }
 
 Index.getInitialProps = async ({ req, query }) => {
-  if (query['no-content']) {
+  if (query['no-content'] || query['client-fast-content']) {
     return {}
   }
+
   if (query['client-content']) {
     return { overviewSSR: true }
   }
@@ -328,7 +358,7 @@ Index.getInitialProps = async ({ req, query }) => {
     return { id: query.id, article, detailsSSR: true }
   }
 
-  let { items } = await getNewsList()
+  let { items } = await getNewsList(10)
   return { items, overviewSSR: true }
 }
 
