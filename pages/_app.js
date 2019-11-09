@@ -1,5 +1,6 @@
 import React from 'react'
 import App from 'next/app'
+import Router, { withRouter } from 'next/router'
 import throttle from 'lodash.throttle'
 //import { useStore } from 'laco-react'
 
@@ -7,7 +8,6 @@ import '~/init/nprogress'
 import '~/init/router-change-events'
 import store from '~/store.js'
 import GlobalStyles from '../components/GlobalStyles'
-//import addCSS from '~/utils/addCSS'
 
 if (process.browser) {
 }
@@ -21,6 +21,18 @@ class MyApp extends App {
   //     return { pageProps }
   // }
 
+  state = {
+    render: +this.props.router?.query?.['slow-simulation'] ? false : true,
+  }
+
+  componentDidMount() {
+    // Simulate slow component
+    console.log('slow simulation enabled')
+    setTimeout(() => {
+      this.setState({ render: true })
+    }, 500)
+  }
+
   render() {
     const { Component, pageProps } = this.props
 
@@ -29,7 +41,7 @@ class MyApp extends App {
         <GlobalStyles />
         <GlobalEffects />
         <Preload />
-        <Component {...pageProps} />
+        {this.state.render && <Component {...pageProps} />}
       </>
     )
   }
@@ -102,4 +114,4 @@ const GlobalEffects = () => {
   return null
 }
 
-export default MyApp
+export default withRouter(MyApp)
