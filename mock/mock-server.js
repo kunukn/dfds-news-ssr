@@ -20,7 +20,7 @@ const router = jsonServer.router({
 const middlewares = jsonServer.defaults()
 
 server.use(middlewares)
-server.use(pause(1000));
+server.use(pause(2000));
 server.use('/api', router)
 server.use(router)
 server.listen(8008, () => {

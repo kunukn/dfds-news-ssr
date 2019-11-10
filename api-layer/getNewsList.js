@@ -10,25 +10,20 @@ export default async function getNewsList(count = 10) {
 
       let data
       if (count === 10) {
-        url = `${mockServer}/mock-news-10`
+        url = `${mockServer}/api/mock-news-10`
         //data = require('~/data-layer/news-10');
       } else {
-        url = `${mockServer}/mock-news`
+        url = `${mockServer}/api/mock-news`
         //data = require('~/data-layer/news');
       }
 
       // let json = data.default || data;
-
       // let items = json && json.total && json.items;
-
       // if (Array.isArray(items)) {
       //   items = items.sort(sortByDateDescending);
       // }
-
       //return Promise.resolve({ items });
     }
-
-    console.log(url)
 
     const options = {
       method: 'GET',
@@ -46,7 +41,7 @@ export default async function getNewsList(count = 10) {
 
     let json = await response.json()
     let items = json && json.total && json.items
-    console.log(items)
+    //console.log(items)
 
     return Promise.resolve({ items })
   } catch (ex) {
