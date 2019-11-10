@@ -4,7 +4,8 @@
     "dev": "next -p 5588",
     "build": "next build",
     "start": "next start -p 5588",
-    "mock-server": "node ./mock/mock-server.js"
+    "mock-server": "node ./mock/mock-server.js",
+    "mock-server2": "node ./mock/mock-server2.js"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
@@ -29,6 +30,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^3.2.0",
     "clsx": "^1.0.4",
+    "connect-pause": "^0.1.0",
     "core-js": "^3.3.6",
     "eslint": "6.6.0",
     "eslint-config-react-app": "^5.0.2",
@@ -44,6 +46,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "ignore-loader": "^0.1.2",
     "jest-config": "^24.9.0",
+    "json-server": "^0.15.1",
     "laco": "^1.2.1",
     "laco-react": "^1.1.0",
     "lodash.debounce": "^4.0.8",

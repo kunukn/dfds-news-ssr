@@ -5,7 +5,7 @@ let count = 200
 let url =
   process.env.NODE_ENV === 'development'
     ? //? 'https://shipping-news.tech/api/mock-news'
-      'http://localhost:8000/mock-news'
+      'http://localhost:8008/api/mock-news'
     : `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`
 
 export default class MyDocument extends Document {
