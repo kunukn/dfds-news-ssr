@@ -4,8 +4,13 @@ import { mockServer } from '~/constants/urls'
 
 export default async function getArticle(id) {
   try {
-    const headers = {
-      'Content-Type': 'application/json',
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        //Authorization: `Bearer ${process.env.tokenContentful}`,
+      },
     }
 
     let url = `${process.env.apiEntriesUrl}/${id}?access_token=${process.env.tokenContentful}`
@@ -25,10 +30,7 @@ export default async function getArticle(id) {
       //return Promise.resolve(data.default || data)
     }
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers,
-    })
+    const response = await fetch(url, options)
 
     let json = await response.json()
 

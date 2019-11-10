@@ -30,9 +30,6 @@ export default async function getNewsList(count = 10) {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers':
-          'Origin, X-Requested-With, Content-Type, Accept',
         //Authorization: `Bearer ${process.env.tokenContentful}`,
       },
     }
