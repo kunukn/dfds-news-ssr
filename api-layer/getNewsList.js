@@ -11,10 +11,10 @@ export default async function getNewsList(count = 10) {
 
       let data;
       if (count === 10) {
-          url = '/api/mock-news-10'
+          url = 'http://localhost:5588/api/mock-news-10'
         //data = require('~/data-layer/news-10');
       } else {
-        url = '/api/mock-news'
+        url = 'http://localhost:5588/api/mock-news'
         //data = require('~/data-layer/news');
       }
 
