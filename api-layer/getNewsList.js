@@ -1,20 +1,19 @@
-import { sortByDateDescending } from '~/utils/sort';
+import { sortByDateDescending } from '~/utils/sort'
+import { mockServer } from '~/constants/urls'
 
 export default async function getNewsList(count = 10) {
   try {
-    let url = `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`;
-
-
+    let url = `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`
 
     if (process.env.NODE_ENV === 'development') {
       //console.log(url);
 
-      let data;
+      let data
       if (count === 10) {
-          url = 'http://localhost:5588/api/mock-news-10'
+        url = `${mockServer}/mock-news-10`
         //data = require('~/data-layer/news-10');
       } else {
-        url = 'http://localhost:5588/api/mock-news'
+        url = `${mockServer}/mock-news`
         //data = require('~/data-layer/news');
       }
 
@@ -31,23 +30,27 @@ export default async function getNewsList(count = 10) {
 
     console.log(url)
 
-    const headers = {
-      'Content-Type': 'application/json',
-      //Authorization: `Bearer ${process.env.tokenContentful}`,
-    };
-
-    const response = await fetch(url, {
+    const options = {
       method: 'GET',
-      headers,
-    });
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers':
+          'Origin, X-Requested-With, Content-Type, Accept',
+        //Authorization: `Bearer ${process.env.tokenContentful}`,
+      },
+    }
 
-    let json = await response.json();
-    let items = json && json.total && json.items;
+    const response = await fetch(url, options)
+
+    let json = await response.json()
+    let items = json && json.total && json.items
     console.log(items)
 
-    return Promise.resolve({ items });
+    return Promise.resolve({ items })
   } catch (ex) {
-    console.error(ex.toString());
-    return Promise.resolve({ items: null });
+    console.error(ex.toString())
+    return Promise.resolve({ items: null })
   }
 }

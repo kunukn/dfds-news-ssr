@@ -1,0 +1,7 @@
+{
+  "/mock-news": {
+    "get": {
+      "data": [{ "id": 1, "name": "Steve" }]
+    }
+  }
+}

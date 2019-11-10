@@ -176,12 +176,17 @@ const Index = ({
     }
 
     if (+query['client-fast-content']) {
+      if (items.length) {
+        console.log('client-fast-content: ajax done before render')
+      }
       if (!items.length && window.news?.ajax?.items?.length) {
+        console.log('client-fast-content: ajax done before 2nd render')
         setItems(window.news.ajax.items)
       } else {
         let handler = {
           set: function(obj, prop, value) {
             if (prop === 'ajax') {
+              console.log('client-fast-content: render done before ajax')
               console.log('event: proxy listener for news items')
               if (Array.isArray(value?.items)) setItems(value.items)
               // Todo: delete proxy listener
