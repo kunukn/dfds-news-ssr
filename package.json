@@ -4,8 +4,7 @@
     "dev": "next -p 5588",
     "build": "next build",
     "start": "next start -p 5588",
-    "mock-server": "node ./mock/mock-server.js",
-    "mock-server2": "node ./mock/mock-server2.js"
+    "mock-server": "node ./mock/mock-server.js"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
