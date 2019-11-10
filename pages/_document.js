@@ -4,8 +4,8 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 let count = 200
 let url =
   process.env.NODE_ENV === 'development'
-    //? 'https://shipping-news.tech/api/mock-news'
-    ? 'http://localhost:8000/mock-news'
+    ? //? 'https://shipping-news.tech/api/mock-news'
+      'http://localhost:8000/mock-news'
     : `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`
 
 export default class MyDocument extends Document {
@@ -71,24 +71,13 @@ export default class MyDocument extends Document {
               __html: `
               try{
                 if(location.href.indexOf('client-fast-content=1') >= 0 ) {
-
                   console.log('${url}')
-
                   fetch('${url}')
                   .then(r => r.json())
                   .then(d => window.news.ajax = d)
                   .catch(ex => {
                     console.error('fetch err',ex+'')
                   })
-
-                  var xmlhttp = new XMLHttpRequest();
-                  xmlhttp.onreadystatechange = function(){
-                      if (this.readyState == 4 && this.status == 200) {
-                          window.news.ajax = JSON.parse(this.responseText);
-                      }
-                  };
-                  //xmlhttp.open("GET", '${url}', true);
-                  //xmlhttp.send();
                 }
               }catch(ex){console.error(ex+'')}
               `,
