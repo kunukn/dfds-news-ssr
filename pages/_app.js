@@ -26,11 +26,12 @@ class MyApp extends App {
   }
 
   componentDidMount() {
-    // Simulate slow component
-    console.log('slow simulation enabled')
-    setTimeout(() => {
-      this.setState({ render: true })
-    }, 500)
+    if (!this.state.render) {
+      console.log('slow simulation enabled')
+      setTimeout(() => {
+        this.setState({ render: true })
+      }, 500)
+    }
   }
 
   render() {
