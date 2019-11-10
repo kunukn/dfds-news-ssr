@@ -1,8 +1,7 @@
 import React from 'react'
 import App from 'next/app'
-import Router, { withRouter } from 'next/router'
+import { withRouter } from 'next/router'
 import throttle from 'lodash.throttle'
-//import { useStore } from 'laco-react'
 
 import '~/init/nprogress'
 import '~/init/router-change-events'
@@ -13,14 +12,6 @@ if (process.browser) {
 }
 
 class MyApp extends App {
-  // static async getInitialProps({ Component, ctx }) {
-  //     let pageProps = {}
-  //     if (Component.getInitialProps) {
-  //         pageProps = await Component.getInitialProps(ctx)
-  //     }
-  //     return { pageProps }
-  // }
-
   state = {
     render: +this.props.router?.query?.['slow-simulation'] ? false : true,
   }
@@ -79,20 +70,6 @@ const GlobalEffects = () => {
   }, 1)
 
   React.useEffect(() => {
-    // let nprogressCSS = 'nprogressCSS'
-    // if (!document.getElementById(nprogressCSS))
-    //   addCSS(
-    //     'https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css',
-    //     nprogressCSS
-    //   )
-
-    // let robotoFontCSS = 'robotoFontCSS'
-    // if (!document.getElementById(robotoFontCSS))
-    //   addCSS(
-    //     'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700&display=swap',
-    //     robotoFontCSS
-    //   )
-
     setTimeout(dispatchResize, 30)
     window.addEventListener('resize', onResize)
 

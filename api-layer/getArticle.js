@@ -16,10 +16,10 @@ export default async function getArticle(id) {
       //let data
       if (id === '18rghKiRarsmtklwZ8JbQn') {
         //data = require('~/data-layer/article-1')
-        url = `${mockServer}/api/article-1`
+        url = `${mockServer}/api/mock-article-1`
       } else {
         //data = require('~/data-layer/article-2')
-        url = `${mockServer}/api/article-2`
+        url = `${mockServer}/api/mock-article-2`
       }
 
       //return Promise.resolve(data.default || data)
