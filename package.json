@@ -4,24 +4,25 @@
     "dev": "next -p 5588",
     "build": "next build",
     "start": "next start -p 5588",
-    "mock-server": "node ./mock/mock-server.js"
+    "mock-server": "node ./mock/mock-server.js",
+    "start-dev": "npm-run-all -p -r mock-server dev"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^9.1.2",
+    "next": "^9.1.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "showdown": "^1.9.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.0",
+    "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-proposal-decorators": "^7.7.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@kunukn/react-collapse": "^2.2.7",
-    "@next/bundle-analyzer": "^9.1.2",
+    "@next/bundle-analyzer": "^9.1.3",
     "@svgr/webpack": "^4.3.3",
     "@typescript-eslint/eslint-plugin": "2.6.1",
     "@typescript-eslint/parser": "2.6.1",
@@ -30,7 +31,7 @@
     "babel-plugin-module-resolver": "^3.2.0",
     "clsx": "^1.0.4",
     "connect-pause": "^0.1.0",
-    "core-js": "^3.3.6",
+    "core-js": "^3.4.0",
     "eslint": "6.6.0",
     "eslint-config-react-app": "^5.0.2",
     "eslint-config-standard": "^14.1.0",
