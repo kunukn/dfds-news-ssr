@@ -146,7 +146,7 @@ const Index = ({
   }, [isDetailsOpen, detailsRef, selectedArticle])
 
   let getAllNews = async () => {
-    if (items.length > 100) return
+    if (items?.length > 100) return
 
     let news = await getNewsList(200)
     setItems((news && news.items) || [])
