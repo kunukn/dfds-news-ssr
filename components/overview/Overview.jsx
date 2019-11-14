@@ -70,7 +70,7 @@ const Overview = ({
                 <a
                   id={id}
                   onTouchStart={noop}
-                  className='button-overview-item'
+                  className='clickable-overview-item'
                   onClick={event => selectArticleById({ event, id })}
                 >
                   <div className='overview-item'>
@@ -136,7 +136,7 @@ const Overview = ({
           text-transform: uppercase;
           _color: $color-groupBlue;
         }
-        :global(.button-overview-item) {
+        :global(.clickable-overview-item) {
           -webkit-tap-highlight-color: transparent;
           position: relative;
           font-size: 16px;
@@ -183,7 +183,7 @@ const Overview = ({
           position: relative;
           top: -$spaceTopOverview * 2;
         }
-        :global(.button-overview-item) {
+        :global(.clickable-overview-item) {
           margin-bottom: 10px;
         }
         .btn-get-all-news {

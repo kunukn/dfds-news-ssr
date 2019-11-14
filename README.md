@@ -5,3 +5,5 @@
 ```bash
 yarn start-dev
 ```
+
+`mock-server.js` has delay set in development mode.

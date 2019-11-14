@@ -67,6 +67,7 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
+          <Main />
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -84,7 +85,6 @@ export default class MyDocument extends Document {
               `,
             }}
           />
-          <Main />
           <script
             dangerouslySetInnerHTML={{
               __html: `

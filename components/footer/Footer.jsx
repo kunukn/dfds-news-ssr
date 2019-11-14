@@ -45,7 +45,7 @@ const Footer = ({ isFirstDetailSSR }) => {
           background: rgba($color-background, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             background: rgba($color-background, 0.9);
-            backdrop-filter: saturate(180%) blur(4px);
+            backdrop-filter: saturate(180%) blur(6px);
           }
           box-shadow: 0 0 10px darkgray;
           @include elevation-1;

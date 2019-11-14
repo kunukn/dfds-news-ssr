@@ -8,8 +8,6 @@
 import { useStore } from 'laco-react'
 import dynamic from 'next/dynamic'
 import NextHead from 'next/head'
-//import debounce from "lodash.debounce";
-//import throttle from "lodash.throttle";
 import Router, { useRouter } from 'next/router'
 import { createRef, useEffect, useRef, useState } from 'react'
 import getArticle from '~/api-layer/getArticle'
