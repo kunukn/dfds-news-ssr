@@ -136,6 +136,19 @@ const Index = ({
     goToOverviewPage()
   }
 
+  let selectArticleById = async ({ event, id }) => {
+    event?.preventDefault && event.preventDefault()
+
+    goToDetailsPage(id)
+  }
+
+  let onNextSelect = () => {
+    if (selectedArticle?.article?.sys?.id) {
+      let next = getNextFromRenderedItems(selectedArticle.article.sys.id)
+      if (next?.sys?.id) goToDetailsPage(next.sys.id)
+    }
+  }
+
   // Scroll to top in details component
   useEffect(() => {
     if (selectedArticle?.article && isDetailsOpen && detailsRef?.current) {
@@ -206,7 +219,7 @@ const Index = ({
     let getSelectedArticleAndUpdate = async () => {
       let result = await getArticle(id)
       cache[id] = result
-      setSelectedArticle({id, article: result})
+      setSelectedArticle({ id, article: result })
     }
 
     if (id) {
@@ -214,7 +227,7 @@ const Index = ({
 
       // Update State
       if (cache[id]) {
-        setSelectedArticle({id, article: cache[id]})
+        setSelectedArticle({ id, article: cache[id] })
       } else {
         getSelectedArticleAndUpdate()
       }
@@ -260,19 +273,6 @@ const Index = ({
   }, [isDetailsOpen, selectedArticle])
 
   if (!items) return <div className='news'>Failed loading data, sorry.</div>
-
-  let selectArticleById = async ({ event, id }) => {
-    event?.preventDefault && event.preventDefault()
-
-    goToDetailsPage(id)
-  }
-
-  let onNextSelect = () => {
-    if (selectedArticle?.article?.sys?.id) {
-      let next = getNextFromRenderedItems(selectedArticle.article.sys.id)
-      if (next?.sys?.id) goToDetailsPage(next.sys.id)
-    }
-  }
 
   return (
     <>
