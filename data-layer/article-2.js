@@ -7,10 +7,10 @@ module.exports = {
         id: 'mivicpf5zews',
       },
     },
-    id: '6IMNKTmUUkPRq7SphXcY0U',
+    id: '18rghKiRarsmtklwZ8JbQn',
     type: 'Entry',
-    createdAt: '2019-09-02T10:35:57.712Z',
-    updatedAt: '2019-09-02T10:35:57.712Z',
+    createdAt: '2019-09-06T16:08:32.747Z',
+    updatedAt: '2019-09-09T12:23:51.458Z',
     environment: {
       sys: {
         id: 'master',
@@ -18,7 +18,7 @@ module.exports = {
         linkType: 'Environment',
       },
     },
-    revision: 1,
+    revision: 2,
     contentType: {
       sys: {
         type: 'Link',
@@ -30,23 +30,22 @@ module.exports = {
   },
   fields: {
     entryTitle:
-      'DFDS supports campaign to attract more women into the maritime industry',
+      'New Amsterdam-Newcastle ferries to create more value for passengers',
     title:
-      'DFDS supports campaign to attract more women into the maritime industry',
+      'New Amsterdam-Newcastle ferries to create more value for passengers',
     subtitle:
-      'The Blue Denmark – a term applied to shipowners, shipping companies and many other businesses in the maritime industry – have dedicated September to women who work in shipping.',
+      'DFDS has entered into an agreement with the Italian ferry company Moby to acquire two combined freight and passenger ferries.',
     content:
-      '![det-blaa-danmark](//images.ctfassets.net/mivicpf5zews/4rc4pvepRnMUd4ww5LbP44/1d11e15693181876cffe1e15cb1f9398/Girlpower-hero.png)\n\nThe campaign, called ‘GirlPower’, aims to attract more women into the maritime industry. It is a male-dominated world, where only 3% of Danish seafarers are women, for example.\n\nSofie Hebeltoft, Head of CSR, says: “We’re really getting behind this initiative. We have loads of exciting career options at DFDS and we’d like to see a more uniform gender balance. It’s something we’re already actively working on and which has an important place in our CSR strategy.”\n\n“In a few years’ time, the entire maritime sector will experience a labour shortage, so it’s even more important that we get more women to consider the many opportunities we can offer at sea and ashore.”\n\nDuring the campaign, the Blue Denmark will highlight a number of talented and focused young women who have all chosen a maritime career, including DFDS’ own Saira Haider, Product Owner in Logistics.\n\nSee the [GirlPower campaign page here](https://worldcareers.dk/girlpower) – read the portraits and get information about maritime education and career opportunities (in Danish).\n',
+      '![DFDS-New-ferry-Amsterdam-Newcastle](//images.ctfassets.net/mivicpf5zews/y7DfJKerAOoV3oz4Haaxi/fd264ce1414cef7ac5f4d42f841d0624/New-ferries-Amsterdam-Newcastle.jpg)\n*Once refurbished, this is what DFDS new ferries on the Amsterdam – Newcastle route will look like when they take up service at the beginning of 2020.*\n\nDFDS has entered into an agreement with the Italian ferry company Moby to acquire\nthe two combined freight and passenger ferries (ro-pax) Moby Wonder and Moby Aki,\nfor the purpose of raising the customer experience and the capacity for both passengers and freight customers on the Amsterdam-Newcastle route. The ferries are built in 2001 and 2005, respectively.\n\nMoby will in turn acquire the two passenger ferries currently operating on Amsterdam-Newcastle — King Seaways and Princess Seaways, built in 1987 and 1986, respectively.\n\n“The new ferries are ideally suited for our Amsterdam-Newcastle route. Their modern onboard facilities and higher car-deck capacity will allow us to grow revenue by fulfilling the growing demand from high-yield car passengers. To freight customers, we will be able to offer increased capacity that can remain constant throughout the year”, says Peder Gellert Pedersen, EVP and Head of DFDS’ Ferry Division.\n\nThe agreement is expected to be completed in the second half of October 2019.\nDFDS will subsequently bareboat-charter King Seaways and Princess Seaways from\nMoby until January and February 2020, respectively.\nMeanwhile, the acquired ferries from Moby will be refurbished to suit the Amsterdam-Newcastle route. This includes commercial and technical investments on board as well as port investments. The refurbished ferries are expected to be deployed on Amsterdam-Newcastle during the first quarter of 2020.\n\nThe freight capacity will increase around 40% on a full-year basis. The car capacity will increase around 5% on a full-year basis supported by a cabin configuration that is well suited to the requirements of holiday-makers travelling by car.\n\nIn 2018, Amsterdam-Newcastle carried more than 600,000 passengers, 122,000\npassenger vehicles and 350,000 lane metres of freight.\nThe capacity increase will provide an opportunity to accommodate further growth in\ntrade and travel, including a large tourism flow, between UK and Continental Europe.\n\n__Renewal supports WIN23 strategy and ambitions__\nIn June 2019, DFDS launched the WIN23 strategy driven by four strategic pillars. The renewal of Amsterdam-Newcastle is a key part of the fourth pillar: Creating more value for passengers.\n“I’m very pleased to already be able to tick off an important milestone of our WIN23 strategy. We now have a strong set-up to continue to grow the route”, says Torben Carlsen, CEO of DFDS.\n\n__Revised outlook 2019__\nThe expected completion in October 2019 of the sale of the two ferries is estimated to entail an accounting profit of around DKK 100m to be recognised under Special items in Q4 2019. The full-year outlook for Special items is thus increased to DKK 70m from previously DKK -30m.\n\nThe investment in the renewal, including proceeds from the sale of Princess Seaways and King Seaways, is expected to amount to around DKK 1.0bn of which DKK 650m is expected to be paid in 2019. The remaining DKK 350m is expected to be paid in 2020. The investment includes a substantial investment in refurbishment.\nThe investment outlook for 2019 is therefore changed to around DKK 3.4bn from\npreviously DKK 2.8bn.\n\nShips details:\n\nMoby Aki\nGross Tonnage: 36284\nDeadweight: 5628 t\nLength Overall x Breadth Extreme: 174.99m × 27.6m\nYear Built: 2005\n\nMoby Wonder\nGross Tonnage: 36093\nDeadweight: 5500 t\nLength Overall x Breadth Extreme: 174.99m × 27.6m\nYear Built: 2001',
     image: {
       sys: {
         type: 'Link',
         linkType: 'Asset',
-        id: '4rc4pvepRnMUd4ww5LbP44',
+        id: 'y7DfJKerAOoV3oz4Haaxi',
       },
     },
     location: 'Copenhagen',
-    slug:
-      'dfds-supports-campaign-to-attract-more-women-into-the-maritime-industry',
+    slug: 'new-amsterdam-newcastle-ferries-to-create-more-value-for-passengers',
     pressContact: {
       sys: {
         type: 'Link',
@@ -54,11 +53,11 @@ module.exports = {
         id: '1rMZ0t3XSAUIIK4YcCwOWk',
       },
     },
-    publicationDate: '2019-09-02',
+    publicationDate: '2019-09-06',
     pageTitle:
-      'DFDS supports campaign to attract more women into the maritime industry',
+      'New Amsterdam-Newcastle ferries to create more value for passengers',
     seoMetaDescription:
-      'The Blue Denmark have dedicated September to women who work in shipping. DFDS supports the campaign.',
+      'DFDS has entered into an agreement with the Italian ferry company Moby to acquire two combined freight and passenger ferries.',
     xmlSitemapPrioritySetting: '0.5',
     returnLink: {
       sys: {

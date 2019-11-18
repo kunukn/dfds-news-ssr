@@ -1,4 +1,4 @@
-import data from '~/data-layer/news'
+import data from '~/data-layer/article-3'
 
 export default (req, res) => {
   // res.header('Access-Control-Allow-Origin', '*')
