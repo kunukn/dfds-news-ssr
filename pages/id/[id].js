@@ -139,6 +139,14 @@ const Index = ({
   let selectArticleById = async ({ event, id }) => {
     event?.preventDefault && event.preventDefault()
 
+    if (isDetailsOpen) {
+      let currentId = selectedArticle?.id
+      if (currentId === id) {
+        // goToOverviewPage()
+        // return
+      }
+    }
+
     goToDetailsPage(id)
   }
 
