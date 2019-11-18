@@ -27,13 +27,13 @@ const Details = ({
   isDetailsExpanded,
   toggleExpanded,
   isFirstDetailSSR,
-  forwardedRef,
+  forwardedRef
 }) => {
   let { history } = useStore(store)
 
   let transitionDisabled = history.length === 1 && history[0] === '/'
 
-  let fields = selectedArticle?.fields
+  let fields = selectedArticle?.article?.fields
 
   return (
     <>
@@ -44,13 +44,13 @@ const Details = ({
               'detail',
               state,
               {
-                'detail--full-focus': isFirstDetailSSR,
+                'detail--full-focus': isFirstDetailSSR
               },
               { 'detail--is-open': isDetailsOpen },
               { 'detail--is-expanded': isDetailsExpanded }
             )}
             style={{
-              transitionDuration: transitionDisabled ? '0s' : '',
+              transitionDuration: transitionDisabled ? '0s' : ''
             }}
             ref={forwardedRef}
           >
@@ -79,7 +79,7 @@ const Details = ({
                     <div
                       className='detail__content'
                       dangerouslySetInnerHTML={{
-                        __html: converter.makeHtml(fields.content),
+                        __html: converter.makeHtml(fields.content)
                       }}
                     ></div>
                   </Collapse>

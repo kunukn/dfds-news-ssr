@@ -21,17 +21,17 @@ import { filterItemsByCriteria } from '~/utils/filter'
 import pageType from '~/utils/pageType'
 
 const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true,
+  ssr: true
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false,
+  ssr: false
 })
 const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false,
+  ssr: false
 })
 
 const defaultDocTitle = 'DFDS NEWS'
@@ -46,7 +46,7 @@ const Index = ({
   article = null,
   id,
   detailsSSR,
-  overviewSSR,
+  overviewSSR
 }) => {
   let cache = useRef({}).current
 
@@ -70,7 +70,7 @@ const Index = ({
   let [items, setItems] = useState(initialItems)
   let [renderedItems, setRenderedItems] = useState(initialItems)
   let [isDetailsExpanded, setIsDetailsExpanded] = useState(true)
-  let [selectedArticle, setSelectedArticle] = useState(article)
+  let [selectedArticle, setSelectedArticle] = useState({ id, article })
   let [isDetailsOpen, setIsDetailsOpen] = useState(!!article)
   let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(true)
   let [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -127,7 +127,7 @@ const Index = ({
   let onDetailsClose = event => {
     event?.preventDefault && event.preventDefault()
 
-    setTimeout(() => setSelectedArticle({}), 100)
+    setTimeout(() => setSelectedArticle({ id: null, article: null }), 100)
 
     if (isFirstDetailSSR) {
       getAllNews()
@@ -138,7 +138,7 @@ const Index = ({
 
   // Scroll to top in details component
   useEffect(() => {
-    if (selectedArticle && isDetailsOpen && detailsRef?.current) {
+    if (selectedArticle?.article && isDetailsOpen && detailsRef?.current) {
       detailsRef.current.scrollTop = 0
     }
   }, [isDetailsOpen, detailsRef, selectedArticle])
@@ -191,7 +191,7 @@ const Index = ({
             }
             obj[prop] = value
             return true
-          },
+          }
         }
 
         window.news = new Proxy({}, handler)
@@ -206,7 +206,7 @@ const Index = ({
     let getSelectedArticleAndUpdate = async () => {
       let result = await getArticle(id)
       cache[id] = result
-      setSelectedArticle(result)
+      setSelectedArticle({id, article: result})
     }
 
     if (id) {
@@ -214,7 +214,7 @@ const Index = ({
 
       // Update State
       if (cache[id]) {
-        setSelectedArticle(cache[id])
+        setSelectedArticle({id, article: cache[id]})
       } else {
         getSelectedArticleAndUpdate()
       }
@@ -235,7 +235,7 @@ const Index = ({
       items,
       isFilter1Active,
       isFilter2Active,
-      isFilter3Active,
+      isFilter3Active
     })
     setRenderedItems(result)
   }, [items, isFilter1Active, isFilter2Active, isFilter3Active])
@@ -251,8 +251,8 @@ const Index = ({
   // Update document title
   useEffect(() => {
     if (isDetailsOpen) {
-      if (selectedArticle?.fields?.title) {
-        document.title = selectedArticle.fields.title
+      if (selectedArticle?.article?.fields?.title) {
+        document.title = selectedArticle.article.fields.title
       }
     } else {
       document.title = defaultDocTitle
@@ -268,8 +268,8 @@ const Index = ({
   }
 
   let onNextSelect = () => {
-    if (selectedArticle?.sys?.id) {
-      let next = getNextFromRenderedItems(selectedArticle.sys.id)
+    if (selectedArticle?.article?.sys?.id) {
+      let next = getNextFromRenderedItems(selectedArticle.article.sys.id)
       if (next?.sys?.id) goToDetailsPage(next.sys.id)
     }
   }
@@ -287,7 +287,7 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
-          isFirstDetailSSR,
+          isFirstDetailSSR
         }}
       />
       <Header
@@ -298,7 +298,7 @@ const Index = ({
           onMenuToggle,
           isFilter1Active,
           isFilter2Active,
-          isFilter3Active,
+          isFilter3Active
         }}
       />
 
@@ -312,7 +312,7 @@ const Index = ({
           selectedArticle,
           isDetailsExpanded,
           isFirstDetailSSR,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s),
+          toggleExpanded: () => setIsDetailsExpanded(s => !s)
         }}
       />
 
@@ -329,14 +329,14 @@ const Index = ({
           onCustomFontClick,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsMenuOpen(false),
+          onClose: () => setIsMenuOpen(false)
         }}
       />
 
       <Footer
         {...{
           isFirstDetailSSR,
-          renderScrollbar: !!renderedItems.length,
+          renderScrollbar: !!renderedItems.length
         }}
       />
     </>
