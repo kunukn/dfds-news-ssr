@@ -5,6 +5,7 @@ import cx from 'clsx'
 import { Transition } from 'react-transition-group'
 //import Router from 'next/router'
 import { useStore } from 'laco-react'
+import useMergeRefs from '@kunukn/use-merge-refs'
 
 import store from '~/store.js'
 import { formatLongDate } from '~/utils/date'
@@ -29,11 +30,20 @@ const Details = ({
   isFirstDetailSSR,
   forwardedRef
 }) => {
-  let { history } = useStore(store)
+  let { history, detailsFocusEvent } = useStore(store)
 
   let transitionDisabled = history.length === 1 && history[0] === '/'
 
   let fields = selectedArticle?.article?.fields
+
+  let ref = React.useRef()
+  let mergedRefs = useMergeRefs(forwardedRef, ref)
+
+  React.useEffect(() => {
+    if (detailsFocusEvent) {
+      console.log('detailsFocusEvent', detailsFocusEvent, ref?.current)
+    }
+  }, [detailsFocusEvent])
 
   return (
     <>
@@ -52,7 +62,7 @@ const Details = ({
             style={{
               transitionDuration: transitionDisabled ? '0s' : ''
             }}
-            ref={forwardedRef}
+            ref={mergedRefs}
           >
             <div className='detail__content'>
               {fields && (

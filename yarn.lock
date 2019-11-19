@@ -1190,6 +1190,11 @@
   resolved "https://registry.yarnpkg.com/@kunukn/react-collapse/-/react-collapse-2.2.7.tgz#c5d4918527790712b87aadab356dad96a008c59b"
   integrity sha512-uivLucYMANDbo9Kta1KCb/LLH7o9iybUiUcVt2YLIKLqdFd2slt1FLN267lafeV1QB+W5X0jjRav0rmgPzV1vg==
 
+"@kunukn/use-merge-refs@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@kunukn/use-merge-refs/-/use-merge-refs-0.0.8.tgz#281d7b55b0e041ae69fc256bd82df50cd84283f3"
+  integrity sha512-9+2r1XMp+tkIHzCdXmqK+pD6qAP0s6YC1Jm6JyFYXIoxiYtho/wtQeAOjea9kP3nb9DjRSFrc/1AEo9unFLDlg==
+
 "@next/bundle-analyzer@^9.1.3":
   version "9.1.3"
   resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-9.1.3.tgz#f5891ed1be0cc1bc51cc7e8a0d5759cdc8893b79"

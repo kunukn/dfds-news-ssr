@@ -13,7 +13,7 @@ if (process.browser) {
 
 class MyApp extends App {
   state = {
-    render: +this.props.router?.query?.['slow-simulation'] ? false : true,
+    render: +this.props.router?.query?.['slow-simulation'] ? false : true
   }
 
   componentDidMount() {
@@ -42,7 +42,13 @@ class MyApp extends App {
 export const dispatchResize = () => {
   store.set(state => ({
     windowHeight: window.innerHeight,
-    windowWidth: window.innerWidth,
+    windowWidth: window.innerWidth
+  }))
+}
+
+export const dispatchDetailsFocus = () => {
+  store.set(state => ({
+    detailsFocusEvent: Date.now(),
   }))
 }
 
@@ -69,9 +75,16 @@ const GlobalEffects = () => {
     dispatchResize()
   }, 1)
 
+  let onKeyEvent = event => {
+    if (event.ctrlKey && event.code === 'ArrowRight') {
+      dispatchDetailsFocus()
+    }
+  }
+
   React.useEffect(() => {
     setTimeout(dispatchResize, 30)
     window.addEventListener('resize', onResize)
+    document.addEventListener('keyup', onKeyEvent)
 
     if ('serviceWorker' in navigator) {
       // navigator.serviceWorker
@@ -86,6 +99,7 @@ const GlobalEffects = () => {
 
     return () => {
       window.removeEventListener('resize', onResize)
+      document.removeEventListener('keyup', onKeyEvent)
     }
   }, [])
 

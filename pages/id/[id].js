@@ -142,8 +142,9 @@ const Index = ({
     if (isDetailsOpen) {
       let currentId = selectedArticle?.id
       if (currentId === id) {
-        // goToOverviewPage()
-        // return
+         // console.log('same page click')
+         goToOverviewPage()
+         return
       }
     }
 
