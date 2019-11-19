@@ -320,6 +320,16 @@ const Index = ({
         }}
       />
 
+      <Overview
+        {...{
+          items: renderedItems,
+          selectArticleById,
+          isDetailsOpen,
+          getAllNews,
+          isFirstDetailSSR,
+        }}
+      />
+
       <DetailsForwardedRef
         {...{
           forwardedRef: detailsRef,
@@ -331,16 +341,6 @@ const Index = ({
           isDetailsExpanded,
           isFirstDetailSSR,
           toggleExpanded: () => setIsDetailsExpanded(s => !s),
-        }}
-      />
-
-      <Overview
-        {...{
-          items: renderedItems,
-          selectArticleById,
-          isDetailsOpen,
-          getAllNews,
-          isFirstDetailSSR,
         }}
       />
 

@@ -42,13 +42,6 @@ const Overview = ({
           'overview--detail-full-focus': isFirstDetailSSR,
         })}
       >
-        {false && items?.length === 0 && (
-          <button className='btn-get-all-news' onClick={getAllNews}>
-            Load
-            <br />
-            news
-          </button>
-        )}
         {items.map((item, index) => {
           let StartMarkup = () => null
           let YearMarkup = () => null
@@ -79,7 +72,7 @@ const Overview = ({
             toBeAdded = year
           }
 
-          let id = item.sys.id
+          let id = item.sys?.id
 
           return (
             <React.Fragment key={id}>
@@ -111,7 +104,6 @@ const Overview = ({
         .overview {
           z-index: 1;
           padding: $spaceTopOverview 10px 40px;
-          position: absolute;
           position: relative;
           top: 0;
           left: 0;
