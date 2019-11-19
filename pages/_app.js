@@ -6,7 +6,7 @@ import throttle from 'lodash.throttle'
 import '~/init/nprogress'
 import '~/init/router-change-events'
 import store from '~/store.js'
-import GlobalStyles from '../components/GlobalStyles'
+import GlobalStyles from '~/components/GlobalStyles'
 
 if (process.browser) {
 }
@@ -91,16 +91,16 @@ const GlobalEffects = () => {
   }, 1)
 
   let onKeyEvent = event => {
-    if (event.ctrlKey && event.code === 'ArrowRight') {
+    if (event.shiftKey && event.code === 'ArrowRight') {
       dispatchDetailsFocus()
     }
-    if (event.ctrlKey && event.code === 'ArrowLeft') {
+    if (event.shiftKey && event.code === 'ArrowLeft') {
       dispatchOverviewFocus()
     }
-    if (event.ctrlKey && event.code === 'ArrowDown') {
+    if (event.shiftKey && event.code === 'ArrowDown') {
       dispatchFooterFocus()
     }
-    if (event.ctrlKey && event.code === 'ArrowUp') {
+    if (event.shiftKey && event.code === 'ArrowUp') {
       dispatchHeaderFocus()
     }
   }

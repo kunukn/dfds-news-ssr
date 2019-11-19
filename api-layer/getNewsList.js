@@ -8,21 +8,13 @@ export default async function getNewsList(count = 10) {
     if (process.env.NODE_ENV === 'development') {
       //console.log(url);
 
-      let data
-      if (count === 10) {
-        url = `${mockServer}/api/mock-news-10`
-        //data = require('~/data-layer/news-10');
-      } else {
-        url = `${mockServer}/api/mock-news`
-        //data = require('~/data-layer/news');
-      }
+      let server = mockServer || ''
 
-      // let json = data.default || data;
-      // let items = json && json.total && json.items;
-      // if (Array.isArray(items)) {
-      //   items = items.sort(sortByDateDescending);
-      // }
-      //return Promise.resolve({ items });
+      if (count === 10) {
+        url = `${server}/api/mock-news-10`
+      } else {
+        url = `${server}/api/mock-news`
+      }
     }
 
     const options = {

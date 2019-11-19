@@ -21,17 +21,17 @@ import { filterItemsByCriteria } from '~/utils/filter'
 import pageType from '~/utils/pageType'
 
 const Details = dynamic(() => import('~/components/details/Details'), {
-  ssr: true
+  ssr: true,
 })
 const DetailsForwardedRef = React.forwardRef((props, ref) => (
   <Details {...props} forwardedRef={ref} />
 ))
 
 const Footer = dynamic(() => import('~/components/footer/Footer'), {
-  ssr: false
+  ssr: false,
 })
 const Filter = dynamic(() => import('~/components/filter/Filter'), {
-  ssr: false
+  ssr: false,
 })
 
 const defaultDocTitle = 'DFDS NEWS'
@@ -46,7 +46,7 @@ const Index = ({
   article = null,
   id,
   detailsSSR,
-  overviewSSR
+  overviewSSR,
 }) => {
   let cache = useRef({}).current
 
@@ -142,9 +142,9 @@ const Index = ({
     if (isDetailsOpen) {
       let currentId = selectedArticle?.id
       if (currentId === id) {
-         // console.log('same page click')
-         goToOverviewPage()
-         return
+        // console.log('same page click')
+        goToOverviewPage()
+        return
       }
     }
 
@@ -213,7 +213,7 @@ const Index = ({
             }
             obj[prop] = value
             return true
-          }
+          },
         }
 
         window.news = new Proxy({}, handler)
@@ -257,7 +257,7 @@ const Index = ({
       items,
       isFilter1Active,
       isFilter2Active,
-      isFilter3Active
+      isFilter3Active,
     })
     setRenderedItems(result)
   }, [items, isFilter1Active, isFilter2Active, isFilter3Active])
@@ -296,7 +296,7 @@ const Index = ({
           selectArticleById,
           isDetailsOpen,
           getAllNews,
-          isFirstDetailSSR
+          isFirstDetailSSR,
         }}
       />
       <Header
@@ -307,21 +307,7 @@ const Index = ({
           onMenuToggle,
           isFilter1Active,
           isFilter2Active,
-          isFilter3Active
-        }}
-      />
-
-      <DetailsForwardedRef
-        {...{
-          forwardedRef: detailsRef,
-          ref: detailsRef,
-          isDetailsOpen,
-          onDetailsClose,
-          onNextSelect,
-          selectedArticle,
-          isDetailsExpanded,
-          isFirstDetailSSR,
-          toggleExpanded: () => setIsDetailsExpanded(s => !s)
+          isFilter3Active,
         }}
       />
 
@@ -338,14 +324,28 @@ const Index = ({
           onCustomFontClick,
           isBackgroundImageEnabled,
           onBackgroundImageToggle,
-          onClose: () => setIsMenuOpen(false)
+          onClose: () => setIsMenuOpen(false),
+        }}
+      />
+
+      <DetailsForwardedRef
+        {...{
+          forwardedRef: detailsRef,
+          ref: detailsRef,
+          isDetailsOpen,
+          onDetailsClose,
+          onNextSelect,
+          selectedArticle,
+          isDetailsExpanded,
+          isFirstDetailSSR,
+          toggleExpanded: () => setIsDetailsExpanded(s => !s),
         }}
       />
 
       <Footer
         {...{
           isFirstDetailSSR,
-          renderScrollbar: !!renderedItems.length
+          renderScrollbar: !!renderedItems.length,
         }}
       />
     </>

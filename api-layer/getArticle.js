@@ -18,22 +18,15 @@ export default async function getArticle(id) {
     if (process.env.NODE_ENV === 'development') {
       //console.log(id, url);
 
+      let server = mockServer || ''
 
-
-      //let data
       if (id === '2AmKcLjdC3igMkH1ZRl98j') {
-        //data = require('~/data-layer/article-1')
-        url = `${mockServer}/api/mock-article-1`
-      }
-      else if (id === '18rghKiRarsmtklwZ8JbQn') {
-        //data = require('~/data-layer/article-1')
-        url = `${mockServer}/api/mock-article-2`
+        url = `${server}/api/mock-article-1`
+      } else if (id === '18rghKiRarsmtklwZ8JbQn') {
+        url = `${server}/api/mock-article-2`
       } else {
-        //data = require('~/data-layer/article-2')
-        url = `${mockServer}/api/mock-article-3`
+        url = `${server}/api/mock-article-3`
       }
-
-      //return Promise.resolve(data.default || data)
     }
 
     const response = await fetch(url, options)

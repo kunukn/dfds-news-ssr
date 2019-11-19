@@ -98,7 +98,7 @@ const Filter = ({
       </Transition>
       <style jsx>{`
         .filter {
-          z-index: 1;
+          z-index: 4;
           position: fixed;
           top: 0;
           left: 0;

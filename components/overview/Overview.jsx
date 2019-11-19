@@ -9,7 +9,7 @@ const Overview = ({
   items,
   selectArticleById,
   getAllNews,
-  isFirstDetailSSR
+  isFirstDetailSSR,
 }) => {
   let years = {}
   let toBeAdded = null
@@ -19,8 +19,15 @@ const Overview = ({
   React.useEffect(() => {
     if (overviewFocusEvent) {
       if (ref?.current) {
-        let element = ref.current.querySelector('a')
-        element && element.focus()
+        let elements = [].slice.call(ref.current.querySelectorAll('a'))
+
+        for (let index = 0; index < elements.length; index++) {
+          const element = elements[index]
+          if (isInViewport(element)) {
+            element.focus()
+            break
+          }
+        }
       }
     }
   }, [overviewFocusEvent])
@@ -32,7 +39,7 @@ const Overview = ({
       <div
         ref={ref}
         className={cx('overview', {
-          'overview--detail-full-focus': isFirstDetailSSR
+          'overview--detail-full-focus': isFirstDetailSSR,
         })}
       >
         {false && items?.length === 0 && (
@@ -216,4 +223,11 @@ let getYearFromDate = date => date.substring(0, 4)
 
 const noop = () => {
   // This onTouchStart is a workaround to trigger the active state on IOS
+}
+
+let isInViewport = elem => {
+  if (!elem) return false
+
+  let distance = elem.getBoundingClientRect()
+  return distance.top >= 60
 }
