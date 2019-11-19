@@ -37,6 +37,10 @@ let GlobalStyles = () => (
       box-sizing: border-box;
     }
 
+    :focus{
+      outline: 3px solid $color-actionBlue;
+    }
+
     html {
       scroll-behavior: smooth;
     }
