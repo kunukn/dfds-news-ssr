@@ -45,7 +45,7 @@ const Footer = ({ isFirstDetailSSR }) => {
 
       <style jsx>{`
         .footer {
-          z-index: 1;
+          z-index: 2;
           position: fixed;
           bottom: 0;
           left: 0;

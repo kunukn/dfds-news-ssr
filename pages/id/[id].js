@@ -290,15 +290,7 @@ const Index = ({
         <link rel='icon' href='/favicon.ico' />
       </NextHead>
       <BackgroundImage isEnabled={isBackgroundImageEnabled} />
-      <Overview
-        {...{
-          items: renderedItems,
-          selectArticleById,
-          isDetailsOpen,
-          getAllNews,
-          isFirstDetailSSR,
-        }}
-      />
+
       <Header
         {...{
           count: renderedItems.length,
@@ -339,6 +331,16 @@ const Index = ({
           isDetailsExpanded,
           isFirstDetailSSR,
           toggleExpanded: () => setIsDetailsExpanded(s => !s),
+        }}
+      />
+
+      <Overview
+        {...{
+          items: renderedItems,
+          selectArticleById,
+          isDetailsOpen,
+          getAllNews,
+          isFirstDetailSSR,
         }}
       />
 

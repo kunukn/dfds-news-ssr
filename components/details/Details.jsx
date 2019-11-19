@@ -118,7 +118,7 @@ const Details = ({
 
       <style jsx>{`
         .detail {
-          z-index: 1;
+          z-index: 3;
           position: fixed;
           top: 5px;
           right: 5px;
