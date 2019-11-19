@@ -1,11 +1,11 @@
 import React from 'react'
 import showdown from 'showdown'
 import Collapse from '@kunukn/react-collapse'
+import useMergeRefs from '@kunukn/use-merge-refs'
 import cx from 'clsx'
 import { Transition } from 'react-transition-group'
 //import Router from 'next/router'
 import { useStore } from 'laco-react'
-import useMergeRefs from '@kunukn/use-merge-refs'
 
 import store from '~/store.js'
 import { formatLongDate } from '~/utils/date'
@@ -40,10 +40,13 @@ const Details = ({
   let mergedRefs = useMergeRefs(forwardedRef, ref)
 
   React.useEffect(() => {
-    if (detailsFocusEvent) {
-      console.log('detailsFocusEvent', detailsFocusEvent, ref?.current)
+    if (isDetailsOpen && detailsFocusEvent) {
+      if (ref?.current) {
+        let element = ref.current.querySelector('button')
+        element && element.focus()
+      }
     }
-  }, [detailsFocusEvent])
+  }, [isDetailsOpen, detailsFocusEvent])
 
   return (
     <>
@@ -65,6 +68,12 @@ const Details = ({
             ref={mergedRefs}
           >
             <div className='detail__content'>
+              {!isFirstDetailSSR && (
+                <ButtonClose
+                  className='detail__button-close-top'
+                  onClick={onDetailsClose}
+                />
+              )}
               {fields && (
                 <>
                   <time>
@@ -93,12 +102,6 @@ const Details = ({
                       }}
                     ></div>
                   </Collapse>
-                  {!isFirstDetailSSR && (
-                    <ButtonClose
-                      className='detail__button-close-top'
-                      onClick={onDetailsClose}
-                    />
-                  )}
 
                   <div className='detail__button-close-bottom-wrapper'>
                     <ButtonClose
@@ -161,6 +164,11 @@ const Details = ({
           &.exited {
             transform: translateX(100%) scale(0.5);
             opacity: 0.4;
+          }
+
+          &:focus,
+          &:focus-within {
+            outline: 2px solid $color-actionBlue;
           }
         }
         .detail--is-open {

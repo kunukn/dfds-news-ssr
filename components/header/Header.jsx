@@ -7,11 +7,8 @@ import store from '~/store.js'
 import DFDSLogo from '~/public/icons/DFDSLogo.svg'
 import BurgerMenu from '~/public/icons/BurgerMenu.svg'
 
-const noop = () => {}
-
 const Header = ({
   count,
-  setIsFilterOpen,
   isFirstDetailSSR,
   onDetailsClose,
   onMenuToggle,
@@ -21,9 +18,22 @@ const Header = ({
 }) => {
   let hasActiveFilter = isFilter1Active || isFilter2Active || isFilter3Active
 
+  let ref = React.useRef()
+
+  let { headerFocusEvent } = useStore(store)
+
+  React.useEffect(() => {
+    if (headerFocusEvent) {
+      if (ref?.current) {
+        let element = ref.current.querySelector('.button-burger')
+        element && element.focus()
+      }
+    }
+  }, [headerFocusEvent])
+
   return (
     <>
-      <div className={cx('header')}>
+      <div className={cx('header')} ref={ref}>
         <div className='header__viewport'>
           <div className='header__content'>
             <h1 className='header__title'>
@@ -192,3 +202,5 @@ const Header = ({
 }
 
 export default Header
+
+const noop = () => {}

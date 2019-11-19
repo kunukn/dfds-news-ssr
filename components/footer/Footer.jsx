@@ -1,14 +1,30 @@
+import { useStore } from 'laco-react'
+
+import store from '~/store.js'
 import DFDSLogo from '~/public/icons/DFDSLogo.svg'
 import CloseIcon from '~/public/icons/Close.svg'
 import NextIcon from '~/public/icons/Next.svg'
 import PreviousIcon from '~/public/icons/Previous.svg'
 
 const Footer = ({ isFirstDetailSSR }) => {
+  let { footerFocusEvent } = useStore(store)
+
+  React.useEffect(() => {
+    if (footerFocusEvent) {
+      if (ref?.current) {
+        let element = ref.current.querySelector('a')
+        element && element.focus()
+      }
+    }
+  }, [footerFocusEvent])
+
+  let ref = React.useRef()
+
   if (isFirstDetailSSR) return null
 
   return (
     <>
-      <div className='footer'>
+      <div className='footer' ref={ref}>
         <div className='footer__content'>
           {!isFirstDetailSSR && (
             <div className='year-group'>
@@ -41,7 +57,6 @@ const Footer = ({ isFirstDetailSSR }) => {
         .footer__content {
           height: inherit;
           @include device-width;
-          padding: 0;
           background: rgba($color-background, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             background: rgba($color-background, 0.9);
@@ -54,7 +69,7 @@ const Footer = ({ isFirstDetailSSR }) => {
           display: flex;
           align-items: center;
           pointer-events: none;
-          padding: 0 10px;
+          padding: 0;
         }
         .year-group {
           display: flex;
@@ -63,7 +78,7 @@ const Footer = ({ isFirstDetailSSR }) => {
           overflow-x: auto;
           overscroll-behavior: contain;
           height: inherit;
-          padding: 5px 0;
+          padding: 5px 10px;
 
           a {
             min-width: 42px;
@@ -77,6 +92,25 @@ const Footer = ({ isFirstDetailSSR }) => {
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+
+            &::after {
+              display: none;
+              content: '';
+              position: absolute;
+              top: -4px;
+              left: -4px;
+              width: calc(100% + 8px);
+              height: calc(100% + 8px);
+              border: 2px solid $color-actionBlue;
+              border-radius: 3px;
+            }
+            &:focus {
+              outline: none;
+              &::after {
+                display: block;
+              }
+            }
           }
         }
       `}</style>

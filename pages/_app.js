@@ -48,7 +48,22 @@ export const dispatchResize = () => {
 
 export const dispatchDetailsFocus = () => {
   store.set(state => ({
-    detailsFocusEvent: Date.now(),
+    detailsFocusEvent: Date.now()
+  }))
+}
+export const dispatchOverviewFocus = () => {
+  store.set(state => ({
+    overviewFocusEvent: Date.now()
+  }))
+}
+export const dispatchFooterFocus = () => {
+  store.set(state => ({
+    footerFocusEvent: Date.now()
+  }))
+}
+export const dispatchHeaderFocus = () => {
+  store.set(state => ({
+    headerFocusEvent: Date.now()
   }))
 }
 
@@ -78,6 +93,15 @@ const GlobalEffects = () => {
   let onKeyEvent = event => {
     if (event.ctrlKey && event.code === 'ArrowRight') {
       dispatchDetailsFocus()
+    }
+    if (event.ctrlKey && event.code === 'ArrowLeft') {
+      dispatchOverviewFocus()
+    }
+    if (event.ctrlKey && event.code === 'ArrowDown') {
+      dispatchFooterFocus()
+    }
+    if (event.ctrlKey && event.code === 'ArrowUp') {
+      dispatchHeaderFocus()
     }
   }
 

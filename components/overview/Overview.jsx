@@ -1,26 +1,38 @@
 import cx from 'clsx'
 import Link from 'next/link'
+import { useStore } from 'laco-react'
 
+import store from '~/store.js'
 import { formatShortDate } from '~/utils/date'
-
-const noop = () => {
-  // This onTouchStart is a workaround to trigger the active state on IOS
-}
 
 const Overview = ({
   items,
   selectArticleById,
   getAllNews,
-  isFirstDetailSSR,
+  isFirstDetailSSR
 }) => {
   let years = {}
   let toBeAdded = null
 
+  let { overviewFocusEvent } = useStore(store)
+
+  React.useEffect(() => {
+    if (overviewFocusEvent) {
+      if (ref?.current) {
+        let element = ref.current.querySelector('a')
+        element && element.focus()
+      }
+    }
+  }, [overviewFocusEvent])
+
+  let ref = React.useRef()
+
   return (
     <>
       <div
+        ref={ref}
         className={cx('overview', {
-          'overview--detail-full-focus': isFirstDetailSSR,
+          'overview--detail-full-focus': isFirstDetailSSR
         })}
       >
         {false && items?.length === 0 && (
@@ -201,3 +213,7 @@ const Overview = ({
 export default React.memo(Overview)
 
 let getYearFromDate = date => date.substring(0, 4)
+
+const noop = () => {
+  // This onTouchStart is a workaround to trigger the active state on IOS
+}
