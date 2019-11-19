@@ -129,7 +129,7 @@ const Overview = ({
           }
 
           &:hover {
-            background-color: rgba($color-groupBlue, 0.08);
+            background-color: rgba($color-groupBlue, 0.02);
           }
         }
         :global(.overview-item__date) {

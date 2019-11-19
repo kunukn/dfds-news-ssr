@@ -1,4 +1,5 @@
 import { useStore } from 'laco-react'
+import Link from 'next/link'
 
 import store from '~/store.js'
 import DFDSLogo from '~/public/icons/DFDSLogo.svg'
@@ -26,20 +27,38 @@ const Footer = ({ isFirstDetailSSR }) => {
     <>
       <div className='footer' ref={ref}>
         <div className='footer__content'>
-          {!isFirstDetailSSR && (
-            <div className='year-group'>
-              <a href='#first-news-item'>First</a>
-              <a href='#2019'>’19</a>
-              <a href='#2018'>’18</a>
-              <a href='#2017'>’17</a>
-              <a href='#2016'>’16</a>
-              <a href='#2015'>’15</a>
-              <a href='#2014'>’14</a>
-              <a href='#2013'>’13</a>
-              <a href='#2012'>’12</a>
-              <a href='#2011'>’11</a>
-            </div>
-          )}
+          <div className='year-group'>
+            <Link href='#first-news-item'>
+              <a>First</a>
+            </Link>
+            <Link href='#2019'>
+              <a>’19</a>
+            </Link>
+            <Link href='#2018'>
+              <a>’18</a>
+            </Link>
+            <Link href='#2017'>
+              <a>’17</a>
+            </Link>
+            <Link href='#2016'>
+              <a>’16</a>
+            </Link>
+            <Link href='#2015'>
+              <a>’15</a>
+            </Link>
+            <Link href='#2014'>
+              <a>’14</a>
+            </Link>
+            <Link href='#2013'>
+              <a>’13</a>
+            </Link>
+            <Link href='#2012'>
+              <a>’12</a>
+            </Link>
+            <Link href='#2011'>
+              <a>’11</a>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -80,7 +99,7 @@ const Footer = ({ isFirstDetailSSR }) => {
           height: inherit;
           padding: 5px 10px;
 
-          a {
+          :global(a) {
             min-width: 42px;
             font-size: 14px;
             margin-right: 10px;
