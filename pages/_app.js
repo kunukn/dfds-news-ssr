@@ -21,7 +21,7 @@ class MyApp extends App {
       console.log('slow simulation enabled')
       setTimeout(() => {
         this.setState({ render: true })
-      }, 2000)
+      }, 3000)
     }
   }
 

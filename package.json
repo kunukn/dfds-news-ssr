@@ -4,8 +4,10 @@
     "dev": "next -p 5588",
     "build": "next build",
     "start": "next start -p 5588",
-    "mock-server": "node ./mock/mock-server.js --delay 3000",
-    "start-dev": "npm-run-all -p -r mock-server dev"
+    "mock-server": "node ./mock/mock-server.js",
+    "mock-server-delay": "node ./mock/mock-server.js --delay 2000",
+    "start-dev": "npm-run-all -p -r mock-server dev",
+    "start-dev-delay": "npm-run-all -p -r mock-server-delay dev"
   },
   "dependencies": {
     "@kunukn/use-merge-refs": "^0.0.8",
