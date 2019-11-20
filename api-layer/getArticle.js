@@ -15,7 +15,7 @@ export default async function getArticle(id) {
 
     let url = `${process.env.apiEntriesUrl}/${id}?access_token=${process.env.tokenContentful}`
 
-    if (process.env.NODE_ENV === 'development') {
+    if (0 && process.env.NODE_ENV === 'development') {
       //console.log(id, url);
 
       let server = mockServer || ''

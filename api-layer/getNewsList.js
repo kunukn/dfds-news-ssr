@@ -5,7 +5,7 @@ export default async function getNewsList(count = 10) {
   try {
     let url = `${process.env.apiEntriesUrl}?content_type=newsArticle&locale=en&select=sys.id,fields.entryTitle,fields.publicationDate&order=-fields.publicationDate&limit=${count}&skip=0&access_token=${process.env.tokenContentful}`
 
-    if (process.env.NODE_ENV === 'development') {
+    if (0 && process.env.NODE_ENV === 'development') {
       //console.log(url);
 
       let server = mockServer || ''

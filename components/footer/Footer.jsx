@@ -28,34 +28,34 @@ const Footer = ({ isFirstDetailSSR }) => {
       <div className='footer' ref={ref}>
         <div className='footer__content'>
           <div className='year-group'>
-            <Link href='#first-news-item'>
+            <Link href='#first-news-item' prefetch={false}>
               <a>First</a>
             </Link>
-            <Link href='#2019'>
+            <Link href='#2019' prefetch={false}>
               <a>’19</a>
             </Link>
-            <Link href='#2018'>
+            <Link href='#2018' prefetch={false}>
               <a>’18</a>
             </Link>
-            <Link href='#2017'>
+            <Link href='#2017' prefetch={false}>
               <a>’17</a>
             </Link>
-            <Link href='#2016'>
+            <Link href='#2016' prefetch={false}>
               <a>’16</a>
             </Link>
-            <Link href='#2015'>
+            <Link href='#2015' prefetch={false}>
               <a>’15</a>
             </Link>
-            <Link href='#2014'>
+            <Link href='#2014' prefetch={false}>
               <a>’14</a>
             </Link>
-            <Link href='#2013'>
+            <Link href='#2013' prefetch={false}>
               <a>’13</a>
             </Link>
-            <Link href='#2012'>
+            <Link href='#2012' prefetch={false}>
               <a>’12</a>
             </Link>
-            <Link href='#2011'>
+            <Link href='#2011' prefetch={false}>
               <a>’11</a>
             </Link>
           </div>

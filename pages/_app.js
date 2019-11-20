@@ -13,7 +13,7 @@ if (process.browser) {
 
 class MyApp extends App {
   state = {
-    render: +this.props.router?.query?.['slow-simulation'] ? false : true
+    render: this.props.router?.query?.['slow-simulation'] !== '1'
   }
 
   componentDidMount() {
