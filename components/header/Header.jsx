@@ -179,6 +179,7 @@ const Header = ({
           align-items: center;
           flex-wrap: wrap;
           padding: 10px;
+          position: relative;
           background: rgba($color-background, 0.95);
           @supports (backdrop-filter: blur(10px)) {
             background: rgba($color-background, 0.9);
