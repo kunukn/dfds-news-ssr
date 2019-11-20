@@ -65,6 +65,7 @@ const Index = ({
 
   const router = useRouter()
   const pageMode = router.query.id ? pageType.detail : pageType.overview
+  const initialIsBackgroundImageEnabled = router.query.background !== '0'
 
   const detailsRef = createRef()
   let [items, setItems] = useState(initialItems)
@@ -72,7 +73,7 @@ const Index = ({
   let [isDetailsExpanded, setIsDetailsExpanded] = useState(true)
   let [selectedArticle, setSelectedArticle] = useState({ id, article })
   let [isDetailsOpen, setIsDetailsOpen] = useState(!!article)
-  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(true)
+  let [isBackgroundImageEnabled, setIsBackgroundImageEnabled] = useState(initialIsBackgroundImageEnabled)
   let [isMenuOpen, setIsMenuOpen] = useState(false)
 
   let [isFilter1Active, setIsFilter1Active] = useState(false)
@@ -188,7 +189,8 @@ const Index = ({
 
     if (query.roboto) setIsCustomFontActive(true)
 
-    if (query.background) setIsBackgroundImageEnabled(true)
+    // if (query.background === '0') setIsBackgroundImageEnabled(false)
+    // if (query.background === '1') setIsBackgroundImageEnabled(true)
 
     if (+query.item) {
       let index = +query.item
