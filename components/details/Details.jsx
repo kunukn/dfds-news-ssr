@@ -1,5 +1,6 @@
 import React from 'react'
-import showdown from 'showdown'
+//import showdown from 'showdown'
+import Markdown from 'react-markdown'
 import Collapse from '@kunukn/react-collapse'
 import useMergeRefs from '@kunukn/use-merge-refs'
 import cx from 'clsx'
@@ -14,7 +15,7 @@ import NextIcon from '~/public/icons/Next.svg'
 // import PreviousIcon from '~/public/icons/Previous.svg'
 // import UpIcon from '~/public/icons/Up.svg'
 
-let converter = new showdown.Converter()
+//let converter = new showdown.Converter()
 let sidebarTransitionDuration = 300
 
 // Dummy react-transition-group implementation
@@ -95,12 +96,16 @@ const Details = ({
                     </button>
                   </div>
                   <Collapse isOpen={isDetailsExpanded}>
-                    <div
+                    {/* <div
                       className='detail__content'
                       dangerouslySetInnerHTML={{
                         __html: converter.makeHtml(fields.content)
                       }}
-                    ></div>
+                    ></div> */}
+                    <Markdown
+                      className='detail__content'
+                      source={fields.content}
+                    ></Markdown>
                   </Collapse>
 
                   <div className='detail__button-close-bottom-wrapper'>
