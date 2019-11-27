@@ -19,6 +19,13 @@ export default class MyDocument extends Document {
     return (
       <html lang='en'>
         <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.news = {};
+              `
+            }}
+          />
           <meta charSet='utf-8' />
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
           <meta
@@ -57,14 +64,6 @@ export default class MyDocument extends Document {
             crossOrigin='anonymous'
           />
           {/* <link rel="stylesheet" href="/fonts/font.css" /> */}
-
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.news = {};
-              `,
-            }}
-          />
         </Head>
         <body>
           <Main />
@@ -82,7 +81,7 @@ export default class MyDocument extends Document {
                   })
                 }
               }catch(ex){console.error(ex+'')}
-              `,
+              `
             }}
           />
           <script
@@ -100,7 +99,7 @@ export default class MyDocument extends Document {
               }, 0)
             }
           } catch(ex){console.warn(ex+'')}
-          `,
+          `
             }}
           />
 
