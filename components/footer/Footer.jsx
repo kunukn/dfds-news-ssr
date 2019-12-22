@@ -20,6 +20,10 @@ const Footer = ({ isFirstDetailSSR }) => {
   }, [footerFocusEvent])
 
   let ref = React.useRef()
+  let years = React.useMemo(
+    () => range(2011, new Date().getFullYear()).reverse(),
+    []
+  )
 
   if (isFirstDetailSSR) return null
 
@@ -31,33 +35,13 @@ const Footer = ({ isFirstDetailSSR }) => {
             <Link href='#first-news-item' prefetch={false}>
               <a>First</a>
             </Link>
-            <Link href='#2019' prefetch={false}>
-              <a>’19</a>
-            </Link>
-            <Link href='#2018' prefetch={false}>
-              <a>’18</a>
-            </Link>
-            <Link href='#2017' prefetch={false}>
-              <a>’17</a>
-            </Link>
-            <Link href='#2016' prefetch={false}>
-              <a>’16</a>
-            </Link>
-            <Link href='#2015' prefetch={false}>
-              <a>’15</a>
-            </Link>
-            <Link href='#2014' prefetch={false}>
-              <a>’14</a>
-            </Link>
-            <Link href='#2013' prefetch={false}>
-              <a>’13</a>
-            </Link>
-            <Link href='#2012' prefetch={false}>
-              <a>’12</a>
-            </Link>
-            <Link href='#2011' prefetch={false}>
-              <a>’11</a>
-            </Link>
+            {years.map(year => {
+              return (
+                <Link key={year} href={`#${year}`} prefetch={false}>
+                  <a>’{getDisplayYear(year)}</a>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -138,3 +122,15 @@ const Footer = ({ isFirstDetailSSR }) => {
 }
 
 export default Footer
+
+function range(start, end) {
+  return new Array(end - start + 1).fill(undefined).map((_, i) => i + start)
+}
+
+function getDisplayYear(year) {
+  try {
+    return (year + '').substring(2)
+  } catch (ex) {
+    return '?'
+  }
+}
