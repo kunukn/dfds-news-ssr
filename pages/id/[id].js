@@ -169,7 +169,7 @@ const Index = ({
   let getAllNews = async () => {
     if (items?.length > 100) return
 
-    let news = await getNewsList(200)
+    let news = await getNewsList(250)
     setItems((news && news.items) || [])
   }
 

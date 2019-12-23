@@ -4,7 +4,7 @@ module.exports = {
   },
   total: 192,
   skip: 0,
-  limit: 200,
+  limit: 250,
   items: [
     {
       fields: {

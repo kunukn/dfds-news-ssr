@@ -2,7 +2,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { urlMockNews } from '~/constants/urls'
 
-let count = 200
+let count = 250
 let url =
   process.env.NODE_ENV === 'development'
     ? //? 'https://shipping-news.tech/api/mock-news'
